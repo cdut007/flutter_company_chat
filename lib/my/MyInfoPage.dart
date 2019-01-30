@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fluwx/fluwx.dart';
+//import 'package:fluwx/fluwx.dart';
 import 'package:flutter_app/Login/LoginPage.dart';
 import 'package:flutter_app/news/NewsWebPage.dart';
 import 'package:flutter_app/my/WechatPage.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+//import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:share/share.dart';
 
 /**
@@ -43,7 +43,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   @override
   void initState() {
     super.initState();
-    fluwx.register(appId: "wx423d7d8752fd810c");
+   // fluwx.register(appId: "wx423d7d8752fd810c");
   }
 
   Widget getIconImage(path) {
@@ -227,36 +227,36 @@ class CupertinoDessertDialog extends StatelessWidget {
         CupertinoDialogAction(
           child: const Text('微信好友'),
           onPressed: () {
-            fluwx.share(WeChatShareImageModel(
-                image: "assets://images/down_qrcode.png",
-                thumbnail: "",
-                transaction: "",
-                scene: WeChatScene.SESSION,
-                description: "image"));
+//            fluwx.share(WeChatShareImageModel(
+//                image: "assets://images/down_qrcode.png",
+//                thumbnail: "",
+//                transaction: "",
+//                scene: WeChatScene.SESSION,
+//                description: "image"));
             Navigator.pop(context, 'Cancel');
           },
         ),
         CupertinoDialogAction(
           child: const Text('微信朋友圈'),
           onPressed: () {
-            fluwx.share(WeChatShareImageModel(
-                image: "assets://images/down_qrcode.png",
-                thumbnail: "",
-                transaction: "",
-                scene: WeChatScene.TIMELINE,
-                description: "image"));
+//            fluwx.share(WeChatShareImageModel(
+//                image: "assets://images/down_qrcode.png",
+//                thumbnail: "",
+//                transaction: "",
+//                scene: WeChatScene.TIMELINE,
+//                description: "image"));
             Navigator.pop(context, 'Cancel');
           },
         ),
         CupertinoDialogAction(
           child: const Text("微信收藏"),
           onPressed: () {
-            fluwx.share(WeChatShareImageModel(
-                image: "assets://images/down_qrcode.png",
-                thumbnail: "",
-                transaction: "",
-                scene: WeChatScene.FAVORITE,
-                description: "image"));
+//            fluwx.share(WeChatShareImageModel(
+//                image: "assets://images/down_qrcode.png",
+//                thumbnail: "",
+//                transaction: "",
+//                scene: WeChatScene.FAVORITE,
+//                description: "image"));
             Navigator.pop(context, 'Cancel');
           },
         ),

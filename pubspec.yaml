@@ -30,7 +30,7 @@ dependencies:
   fluttertoast: ^2.0.9
   flutter_refresh: ^0.0.2
   gbk2utf8: ^0.0.1
-  fluwx: ^0.5.1
+#  fluwx: ^0.5.6
   share: ^0.5.3
   flutter_html: ^0.8.2
 
