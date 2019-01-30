@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/market/MarketPage.dart';
 import 'package:flutter_app/market/StockIndexPage.dart';
 import 'package:flutter_app/home/HomePage.dart';
+import 'package:flutter_app/ContactView.dart';
+import 'package:flutter_app/FindView.dart';
 import 'package:flutter_app/searchPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
@@ -90,9 +92,9 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
     body = new IndexedStack(
       children: [
         new HomePage(),
-        new StockIndexPage(),
+        new ContactView(),
         new MarketPage(),
-        new MarketPage(),
+        new FindView(),
         new MyInfoPage()
       ],
       index: currentIndex,
