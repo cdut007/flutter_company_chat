@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/market/MarketPage.dart';
 import 'package:flutter_app/market/StockIndexPage.dart';
 import 'package:flutter_app/news/FinanceNewsPage.dart';
+import 'package:flutter_app/searchPage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
 import 'package:flutter_app/widget/CustomIcon.dart';
 import 'package:flutter_app/widget/CustomInactiveIcon.dart';
@@ -122,26 +124,26 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             style: new TextStyle(color: Colors.white),
           ),
           iconTheme: new IconThemeData(color: Colors.white),
-//          actions: <Widget>[
-//            PopupMenuButton<BottomNavigationBarType>(
-//              onSelected: (BottomNavigationBarType value) {
-//                setState(() {
-//                  type = value;
-//                });
-//              },
-//              itemBuilder: (BuildContext context) =>
-//                  <PopupMenuItem<BottomNavigationBarType>>[
-//                    const PopupMenuItem<BottomNavigationBarType>(
-//                      value: BottomNavigationBarType.fixed,
-//                      child: Text('Fixed'),
-//                    ),
-//                    const PopupMenuItem<BottomNavigationBarType>(
-//                      value: BottomNavigationBarType.shifting,
-//                      child: Text('Shifting'),
-//                    )
-//                  ],
-//            )
-//          ],
+          actions: <Widget>[
+            new IconButton(
+                icon: new Icon(Icons.search),
+                tooltip: '搜索',
+                onPressed: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) {
+                        return new SearchPage();
+                      }
+                  ));
+                  // do nothing
+                }),
+            new Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            ),
+            new Icon(Icons.add),
+            new Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            )
+          ],
         ),
         body: body,
         bottomNavigationBar: botNavBar,
