@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/market/MarketPage.dart';
 import 'package:flutter_app/market/StockIndexPage.dart';
-import 'package:flutter_app/news/FinanceNewsPage.dart';
+import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/searchPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
@@ -13,14 +13,14 @@ import 'package:flutter_app/widget/NavigationIconView.dart';
 /**
  * 主页
  */
-class HomePage extends StatefulWidget {
+class IndexPage extends StatefulWidget {
   static const String routeName = '/material/bottom_navigation';
 
   @override
-  HomePageState createState() => HomePageState();
+  IndexPageState createState() => IndexPageState();
 }
 
-class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
   int currentIndex = 0;
   BottomNavigationBarType type = BottomNavigationBarType.fixed;
   List<NavigationIconView> navigationViews;
@@ -89,10 +89,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initData() {
     body = new IndexedStack(
       children: [
-        new FinanceNewsPage(),
+        new HomePage(),
         new StockIndexPage(),
         new MarketPage(),
-        new FinanceNewsPage(),
+        new MarketPage(),
         new MyInfoPage()
       ],
       index: currentIndex,
@@ -129,17 +129,61 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 icon: new Icon(Icons.search),
                 tooltip: '搜索',
                 onPressed: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) {
-                        return new SearchPage();
-                      }
-                  ));
+                  Navigator.of(context)
+                      .push(new MaterialPageRoute(builder: (context) {
+                    return new SearchPage();
+                  }));
                   // do nothing
                 }),
             new Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
             ),
-            new Icon(Icons.add),
+            new PopupMenuButton(
+                offset: new Offset(0, 100),
+                icon: new Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onSelected: (String value) {
+                  if(value == '扫一扫'){
+
+                  }else if(value == '添加名片'){
+
+                  }else if(value == '导入通讯录'){
+
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                      new PopupMenuItem<String>(
+                          value: '扫一扫',
+                          child: Row(children: <Widget>[
+                            Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                                child: Icon(Icons.camera_alt)),
+                            Text('扫一扫')
+                          ])),
+                      new PopupMenuDivider(height: 1.0),
+                      new PopupMenuItem<String>(
+                          value: '添加名片',
+                          child: Row(children: <Widget>[
+                            Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                                child: Icon(Icons.add)),
+                            Text('添加名片')
+                          ])),
+                      new PopupMenuDivider(height: 1.0),
+                      new PopupMenuItem<String>(
+                          value: '导入通讯录',
+                          child: Row(children: <Widget>[
+                            Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                                child: Icon(Icons.person_add)),
+                            Text('导入通讯录')
+                          ]))
+                    ]),
             new Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
             )
@@ -147,6 +191,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         body: body,
         bottomNavigationBar: botNavBar,
-        drawer: new MyDrawer());
+//        drawer: new MyDrawer()
+    );
   }
 }
