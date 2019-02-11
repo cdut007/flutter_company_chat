@@ -178,11 +178,6 @@ class HomePageState extends State<HomePage> {
                 onPressed: (){
                   setState((){
 
-                      GlobalConfig.themeData = new ThemeData.dark();
-                      GlobalConfig.searchBackgroundColor = Colors.white10;
-                      GlobalConfig.cardBackgroundColor = new Color(0xFF222222);
-                      GlobalConfig.fontColor = Colors.white30;
-                      GlobalConfig.dark = true;
 
                   });
                 },

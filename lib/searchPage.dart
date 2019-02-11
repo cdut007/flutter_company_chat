@@ -17,7 +17,7 @@ class SearchPageState extends State<SearchPage> {
               onPressed: (){
                 Navigator.of(context).pop();
               },
-              icon: new Icon(Icons.arrow_back, color: Colors.grey),
+              icon: new Icon(Icons.arrow_back, color: Colors.white),
               label: new Text(""),
             ),
             width: 60.0,
@@ -27,7 +27,7 @@ class SearchPageState extends State<SearchPage> {
               autofocus: true,
               decoration: new InputDecoration.collapsed(
                   hintText: "搜索 姓名/公司/职位",
-                  hintStyle: new TextStyle(color: Colors.grey)
+                  hintStyle: new TextStyle(color: Colors.white)
               ),
             ),
           )
