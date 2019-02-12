@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/market/MarketPage.dart';
-import 'package:flutter_app/market/StockIndexPage.dart';
+import 'package:flutter_app/schedule/ScheduleView.dart';
 import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/ContactView.dart';
 import 'package:flutter_app/market/SupplyChainView.dart';
@@ -9,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
 import 'package:flutter_app/widget/CustomIcon.dart';
 import 'package:flutter_app/widget/CustomInactiveIcon.dart';
-import 'package:flutter_app/my/MyDrawer.dart';
 import 'package:flutter_app/widget/NavigationIconView.dart';
 
 /**
@@ -37,14 +35,14 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         activeIcon: const Icon(Icons.home),
         icon: const Icon(Icons.home),
         title: '首页',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: Theme.of(context).primaryColor,
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.contact_phone),
         icon: const Icon(Icons.contact_phone),
         title: '名片夹',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: Theme.of(context).primaryColor,
         vsync: this,
       ),
       NavigationIconView(
@@ -58,14 +56,14 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         activeIcon: const Icon(Icons.radio_button_checked),
         icon: const Icon(Icons.radio_button_unchecked),
         title: '助理',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: Theme.of(context).primaryColor,
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.account_circle),
         icon: const Icon(Icons.account_circle),
         title: '我的',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color:Theme.of(context).primaryColor,
         vsync: this,
       )
     ];
@@ -94,7 +92,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         new HomePage(),
         new ContactView(),
         new SupplyChainView(),
-        new MarketPage(),
+        new ScheduleView(),
         new MyInfoPage()
       ],
       index: currentIndex,

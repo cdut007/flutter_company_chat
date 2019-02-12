@@ -34,7 +34,7 @@ class SplashState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return new Material(
-      color: new Color.fromARGB(255, 0, 215, 198),
+      color: Theme.of(context).primaryColor,
       child: new Padding(
         padding: const EdgeInsets.only(
           top: 150.0,

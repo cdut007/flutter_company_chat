@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: new EdgeInsets.fromLTRB(leftRightPadding,
                   topBottomPadding, leftRightPadding, topBottomPadding),
               child: new Card(
-                color:Color.fromARGB(255, 0, 215, 198),
+                color:Theme.of(context).primaryColor,
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
