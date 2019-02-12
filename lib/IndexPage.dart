@@ -4,6 +4,7 @@ import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/ContactView.dart';
 import 'package:flutter_app/market/SupplyChainView.dart';
 import 'package:flutter_app/searchPage.dart';
+import 'package:flutter_app/chat/ChatPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
 import 'package:flutter_app/widget/CustomIcon.dart';
@@ -35,14 +36,14 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         activeIcon: const Icon(Icons.home),
         icon: const Icon(Icons.home),
         title: '首页',
-        color: Theme.of(context).primaryColor,
+        color: new Color.fromARGB(255, 0, 215, 198),
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.contact_phone),
         icon: const Icon(Icons.contact_phone),
         title: '名片夹',
-        color: Theme.of(context).primaryColor,
+        color: new Color.fromARGB(255, 0, 215, 198),
         vsync: this,
       ),
       NavigationIconView(
@@ -56,14 +57,14 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         activeIcon: const Icon(Icons.radio_button_checked),
         icon: const Icon(Icons.radio_button_unchecked),
         title: '助理',
-        color: Theme.of(context).primaryColor,
+        color: new Color.fromARGB(255, 0, 215, 198),
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.account_circle),
         icon: const Icon(Icons.account_circle),
         title: '我的',
-        color:Theme.of(context).primaryColor,
+        color:new Color.fromARGB(255, 0, 215, 198),
         vsync: this,
       )
     ];
@@ -152,6 +153,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                   }else if(value == '导入通讯录'){
 
                   }
+                  Navigator.push(context, new MaterialPageRoute(builder: (context)=> new ChatPage(key:Key('chat'),peerId:'sss',peerAvatar:'ssw')));
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                       new PopupMenuItem<String>(

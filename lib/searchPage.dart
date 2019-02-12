@@ -46,7 +46,7 @@ class SearchPageState extends State<SearchPage> {
         theme: new ThemeData(
           primaryIconTheme: const IconThemeData(color: Colors.white),
           brightness: Brightness.light,
-          primaryColor: Theme.of(context).primaryColor,
+          primaryColor: new Color.fromARGB(255, 0, 215, 198),
           accentColor: Colors.cyan[300],
         ),
         home: new Scaffold(

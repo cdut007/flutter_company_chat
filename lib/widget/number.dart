@@ -223,7 +223,7 @@ class NumberButtonState extends State<NumberButton> {
                 child: new CircleAvatar(
                   backgroundColor: pressed
                       ? Colors.grey[200]
-                      : Theme.of(context).primaryColor,
+                      : new Color.fromARGB(255, 0, 215, 198),
                   radius: 50.0,
                   child: Text(
                     '${widget.number.display}',

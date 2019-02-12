@@ -66,7 +66,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   renderRow(i) {
     if (i == 0) {
       var avatarContainer = new Container(
-        color: Theme.of(context).primaryColor,
+        color: new Color.fromARGB(255, 0, 215, 198),
         height: 200.0,
         child: new Center(
           child: new Column(

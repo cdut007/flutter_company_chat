@@ -77,7 +77,7 @@ class ScheduleViewState extends State<ScheduleView> {
             width: 26.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).primaryColor,
+              color: new Color.fromARGB(255, 0, 215, 198),
             ),
             child: Container(
               margin: EdgeInsets.all(3.0),
