@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/schedule/ScheduleView.dart';
 import 'package:flutter_app/home/HomePage.dart';
+import 'package:flutter_app/home/Follow.dart';
 import 'package:flutter_app/ContactView.dart';
 import 'package:flutter_app/market/SupplyChainView.dart';
 import 'package:flutter_app/searchPage.dart';
@@ -91,7 +92,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
   void initData() {
     body = new IndexedStack(
       children: [
-        new HomePage(),
+        new Follow(),
         new ContactView(),
         new SupplyChainView(),
         new ScheduleView(),
