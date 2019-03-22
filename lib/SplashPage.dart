@@ -75,7 +75,6 @@ class SplashState extends State<SplashPage> {
   }
 
   void openBind(){
-
     var openBindData = "<open xmlns='jabber:client' to='39.108.165.171' version='1.0'  id='"+openId+"' />";
     print("客户端打开绑定："+openBindData);
     socket.add(openBindData);
@@ -102,14 +101,14 @@ class SplashState extends State<SplashPage> {
     timer = new Timer(const Duration(milliseconds: 5000), () {
       String stream =
           "<open to='39.108.165.171'  xmlns='urn:ietf:params:xml:ns:xmpp-framing'  version='1.0'/>";
-      socket.add(stream);
-//      try {
-//        Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
-//            builder: (BuildContext context) => new IndexPage()), (//跳转到主页
-//            Route route) => route == null);
-//      } catch (e) {
-//
-//      }
+//      socket.add(stream);
+      try {
+        Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
+            builder: (BuildContext context) => new IndexPage()), (//跳转到主页
+            Route route) => route == null);
+      } catch (e) {
+
+      }
     });
 
     print("初始化");

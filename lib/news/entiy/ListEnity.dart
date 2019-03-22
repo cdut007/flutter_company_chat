@@ -1,7 +1,7 @@
 /**
  * @Description  统一列表实体类
- * @Author  zhibuyu
- * @Date 2018/10/24  11:05
+ * @Author  james
+ * @Date 2019/03/24  11:05
  * @Version  1.0
  */
 class ListEnity extends Object {

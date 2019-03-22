@@ -1,7 +1,7 @@
 /**
  * @Description  行情股票实体类
- * @Author  zhibuyu
- * @Date 2018/10/26  14:35
+ * @Author  james
+ * @Date 2019/03/26  14:35
  * @Version  1.0
  */
 class Stock extends Object {

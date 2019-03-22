@@ -1,7 +1,7 @@
 /**
  * @Description  大盘指数
- * @Author  zhibuyu
- * @Date 2018/10/26  14:35
+ * @Author  james
+ * @Date 2019/03/26  14:35
  * @Version  1.0
  */
 class StockIndex extends Object {

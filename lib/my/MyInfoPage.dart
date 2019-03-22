@@ -10,8 +10,8 @@ import 'package:share/share.dart';
 
 /**
  * @Description  文我的界面
- * @Author  zhibuyu
- * @Date 2018/10/25  10:26
+ * @Author  james
+ * @Date 2019/03/25  10:26
  * @Version  1.0
  */
 

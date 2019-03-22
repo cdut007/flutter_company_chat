@@ -12,8 +12,8 @@ import 'package:http/http.dart' as http;
 import 'package:gbk2utf8/gbk2utf8.dart';
 /**
  * @Description  个股详情
- * @Author  zhibuyu
- * @Date 2018/10/29  13:36
+ * @Author  james
+ * @Date 2019/03/29  13:36
  * @Version  1.0
  */
 

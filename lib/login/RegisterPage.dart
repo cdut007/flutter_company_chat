@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/Login/RegisterPage.dart';
 /**
- * @Description  登录页面
+ * @Description  注册页面
  * @Author  james
  * @Date 2019/03/22  19:00
  * @Version  1.0
  */
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _LoginPageState();
+    return new _RegisterPageState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   var leftRightPadding = 30.0;
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
@@ -29,18 +28,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text("登录", style: new TextStyle(color: Colors.white)),
+          title: new Text("注册", style: new TextStyle(color: Colors.white)),
           iconTheme: new IconThemeData(color: Colors.white),
         ),
         body: new Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Padding(
-              padding: new EdgeInsets.fromLTRB(
-                  leftRightPadding, 50.0, leftRightPadding, 10.0),
-//              child: new Image.asset(LOGO),
-            ),
+
             new Padding(
               padding: new EdgeInsets.fromLTRB(
                   leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
@@ -48,7 +43,19 @@ class _LoginPageState extends State<LoginPage> {
                 style: hintTips,
                 controller: _userNameController,
                 decoration: new InputDecoration(
-                    hintText: "请输入手机号", prefixIcon: Icon(Icons.phone_iphone)),
+                    hintText: "全名", prefixIcon: Icon(Icons.account_box)),
+                autofocus: true,
+              ),
+            ),
+
+            new Padding(
+              padding: new EdgeInsets.fromLTRB(
+                  leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
+              child: new TextField(
+                style: hintTips,
+                controller: _userNameController,
+                decoration: new InputDecoration(
+                    hintText: "手机号（中国）", prefixIcon: Icon(Icons.phone_iphone)),
                 autofocus: true,
               ),
             ),
@@ -60,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _userPassController,
                 maxLength: 32,
                 decoration: new InputDecoration(
-                    hintText: "请输入密码", prefixIcon: Icon(Icons.lock)),
+                    hintText: "密码", prefixIcon: Icon(Icons.lock)),
                 obscureText: true, //是否隐藏正在编辑的文本
               ),
             ),
@@ -79,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: new Padding(
                       padding: new EdgeInsets.all(10.0),
                       child: new Text(
-                        '马上登录',
+                        '同意并加入',
                         style:
                         new TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
@@ -89,11 +96,7 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: buildForgetPasswordText(context),
-                  flex: 1,
-                ),
-                Expanded(
-                  child:  buildRegisterTipsText(context),
+                  child: buildLoginTipsText(context),
                   flex: 1,
                 ),
               ],
@@ -104,34 +107,15 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  Padding buildRegisterTipsText(BuildContext context) {
+  Padding buildLoginTipsText(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, right: 10),
       child: Align(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.center,
         child: FlatButton(
           child: Text(
-            '没有账号？注册',
+            '已经有账号？登录',
             style: TextStyle(fontSize: 14.0, color: new Color.fromARGB(255, 0, 215, 198)),
-          ),
-          onPressed: () {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new RegisterPage()));
-          },
-        ),
-      ),
-    );
-  }
-
-  Padding buildForgetPasswordText(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, right: 10),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: FlatButton(
-          child: Text(
-            '忘记密码？',
-            style: TextStyle(fontSize: 14.0, color: Colors.grey),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -140,4 +124,5 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 }

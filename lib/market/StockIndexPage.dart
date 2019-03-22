@@ -9,8 +9,8 @@ import 'package:flutter_app/news/entiy/ListEnity.dart';
 
 /**
  * @Description  指数
- * @Author  zhibuyu
- * @Date 2018/10/25  10:26
+ * @Author  james
+ * @Date 2019/03/25  10:26
  * @Version  1.0
  */
 

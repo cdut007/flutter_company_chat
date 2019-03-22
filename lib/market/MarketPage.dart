@@ -12,8 +12,8 @@ import 'package:flutter_app/news/entiy/ListEnity.dart';
 
 /**
  * @Description  行情界面
- * @Author  zhibuyu
- * @Date 2018/10/25  10:27
+ * @Author  james
+ * @Date 2019/03/25  10:27
  * @Version  1.0
  */
 class MarketPage extends StatefulWidget {

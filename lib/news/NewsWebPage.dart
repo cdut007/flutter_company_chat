@@ -6,8 +6,8 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 /**
  * @Description  新闻网页，h5
- * @Author  zhibuyu
- * @Date 2018/10/19  9:09
+ * @Author  james
+ * @Date 2019/03/19  9:09
  * @Version  1.0
  */
 class NewsWebPage extends StatefulWidget{

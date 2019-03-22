@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 /**
  * @Description  微信打赏
- * @Author  zhibuyu
- * @Date 2018/10/30  21:01
+ * @Author  james
+ * @Date 2019/03/30  21:01
  * @Version  1.0
  */
 class WechatPage extends StatefulWidget {

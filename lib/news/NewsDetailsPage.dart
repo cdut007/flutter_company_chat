@@ -3,7 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart' as dom;
 /**
  * @Description  新闻详情
- * @Author  zhibuyu
+ * @Author  james
  * @Date 2018/11/5  13:35
  * @Version  1.0
  */

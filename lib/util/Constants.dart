@@ -1,7 +1,7 @@
 /**
  * @Description  常量类
- * @Author  zhibuyu
- * @Date 2018/10/29  10:49
+ * @Author  james
+ * @Date 2019/03/29  10:49
  * @Version  1.0
  */
 

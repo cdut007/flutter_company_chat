@@ -1,7 +1,7 @@
 /**
  * @Description  字符串工具类
- * @Author  zhibuyu
- * @Date 2018/10/24  9:25
+ * @Author  james
+ * @Date 2019/03/24  9:25
  * @Version  1.0
  */
 

@@ -1,7 +1,7 @@
 /**
  * @Description  md5 加密工具类
- * @Author  zhibuyu
- * @Date 2018/10/19  11:29
+ * @Author  james
+ * @Date 2019/03/19  11:29
  * @Version  1.0
  */
 import 'package:crypto/crypto.dart';
