@@ -4,6 +4,7 @@ import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/ContactView.dart';
 import 'package:flutter_app/market/SupplyChainView.dart';
 import 'package:flutter_app/searchPage.dart';
+import 'package:flutter_app/news/PostMoments.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
@@ -149,11 +150,11 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                   if(value == '扫一扫'){
 
                   }else if(value == '添加名片'){
-
-                  }else if(value == '导入通讯录'){
-
+                    Navigator.push(context, new MaterialPageRoute(builder: (context)=> new ChatPage(key:Key('chat'),peerId:'sss',peerAvatar:'ssw')));
+                  }else if(value == '发动态'){
+                    Navigator.push(context, new MaterialPageRoute(builder: (context)=> new PostMoments()));
                   }
-                  Navigator.push(context, new MaterialPageRoute(builder: (context)=> new ChatPage(key:Key('chat'),peerId:'sss',peerAvatar:'ssw')));
+
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                       new PopupMenuItem<String>(
@@ -177,13 +178,13 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                           ])),
                       new PopupMenuDivider(height: 1.0),
                       new PopupMenuItem<String>(
-                          value: '导入通讯录',
+                          value: '发动态',
                           child: Row(children: <Widget>[
                             Padding(
                                 padding:
                                     EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
                                 child: Icon(Icons.person_add)),
-                            Text('导入通讯录')
+                            Text('发动态')
                           ]))
                     ]),
             new Padding(
