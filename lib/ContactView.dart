@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widget/BannerView.dart';
+import 'package:flutter_app/vcard/ContactDetailsPage.dart';
+import 'package:flutter_app/vcard/friend.dart';
+
+import 'package:http/http.dart' as http;
 
 class ContactView extends StatefulWidget {
   ContactView({Key key}) : super(key: key);
@@ -9,6 +13,23 @@ class ContactView extends StatefulWidget {
 }
 
 class _ContactViewState extends State {
+  List<Friend> _friends = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFriends();
+  }
+
+  Future<void> _loadFriends() async {
+    http.Response response =
+        await http.get('https://randomuser.me/api/?results=25');
+
+    setState(() {
+      _friends = Friend.allFromResponse(response.body);
+    });
+  }
+
   Card getBannerConainerWidget(Size deviceSize, var data) {
     return Card(
         child: Container(
@@ -96,25 +117,71 @@ class _ContactViewState extends State {
                               padding: new EdgeInsets.all(0.0),
                               child: new Text(
                                 '发送名片',
-                                style:
-                                new TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.bold,),
+                                style: new TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             )),
                       ),
                       Expanded(
                         child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Icon(
-                              Icons.contact_mail,
-                              size: 36,
-                              color: Colors.blueGrey,
-                            ),),
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.contact_mail,
+                            size: 36,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
                         flex: 1,
-
                       )
                     ]))
               ]))),
     ));
+  }
+
+  Widget getFriendList() {
+    Widget content;
+
+    if (_friends.isEmpty) {
+      content = new Center(
+        child: new CircularProgressIndicator(),
+      );
+    } else {
+      content = new ListView.builder(
+        itemCount: _friends.length,
+        itemBuilder: _buildFriendListTile,
+      );
+    }
+
+    return content;
+  }
+
+  Widget _buildFriendListTile(BuildContext context, int index) {
+    var friend = _friends[index];
+
+    return new ListTile(
+      onTap: () => _navigateToFriendDetails(friend, index),
+      leading: new Hero(
+        tag: index,
+        child: new CircleAvatar(
+          backgroundImage: new NetworkImage(friend.avatar),
+        ),
+      ),
+      title: new Text(friend.name),
+      subtitle: new Text(friend.email),
+    );
+  }
+
+  void _navigateToFriendDetails(Friend friend, Object avatarTag) {
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (c) {
+          return new ContactDetailsPage(friend, avatarTag: avatarTag);
+        },
+      ),
+    );
   }
 
   @override
@@ -122,7 +189,7 @@ class _ContactViewState extends State {
     // TODO: implement build
     Size deviceSize = MediaQuery.of(context).size;
     return new Scaffold(
-        body: new ListView(
+        body: new Column(
       children: <Widget>[
         new BannerView(
           data: ['a', 'b'],
@@ -131,276 +198,13 @@ class _ContactViewState extends State {
           },
           onBannerClickListener: (index, data) {
             print(index);
+            Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) {
+              return new ContactDetailsPage(Friend(avatar: null, name: null, email: null, location: null), avatarTag: null);
+            }));
           },
         ),
-        new Container(
-          color: Colors.grey[200],
-          padding: const EdgeInsets.only(top: 20.0),
-          child: new Container(
-            child: new ListTile(
-              title: new Text("阿panda"),
-              leading: new Image.asset(
-                "images/xk.jpg",
-                width: 35.0,
-                height: 35.0,
-              ),
-            ),
-            height: 50.0,
-            color: Colors.white,
-          ),
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("张三的歌"),
-            leading: new Image.asset(
-              "images/a001.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("班主任"),
-            leading: new Image.asset(
-              "images/a002.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("LebronJames"),
-            leading: new Image.asset(
-              "images/lebron.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("石甲州"),
-            leading: new Image.asset(
-              "images/a004.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("李思思"),
-            leading: new Image.asset(
-              "images/a005.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("迪丽热巴"),
-            leading: new Image.asset(
-              "images/img.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("古力娜扎"),
-            leading: new Image.asset(
-              "images/a003.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("张三的歌"),
-            leading: new Image.asset(
-              "images/a001.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("班主任"),
-            leading: new Image.asset(
-              "images/a002.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("LebronJames"),
-            leading: new Image.asset(
-              "images/lebron.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("石甲州"),
-            leading: new Image.asset(
-              "images/a004.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("李思思"),
-            leading: new Image.asset(
-              "images/a005.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("迪丽热巴"),
-            leading: new Image.asset(
-              "images/img.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("古力娜扎"),
-            leading: new Image.asset(
-              "images/a003.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("张三的歌"),
-            leading: new Image.asset(
-              "images/a001.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("班主任"),
-            leading: new Image.asset(
-              "images/a002.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("LebronJames"),
-            leading: new Image.asset(
-              "images/lebron.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("石甲州"),
-            leading: new Image.asset(
-              "images/a004.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("李思思"),
-            leading: new Image.asset(
-              "images/a005.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("迪丽热巴"),
-            leading: new Image.asset(
-              "images/img.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
-        new Container(
-          child: new ListTile(
-            title: new Text("古力娜扎"),
-            leading: new Image.asset(
-              "images/a003.jpg",
-              width: 35.0,
-              height: 35.0,
-            ),
-          ),
-          height: 50.0,
-          color: Colors.white,
-        ),
+        new Expanded(child: new Container(child:  getFriendList(),),flex: 1,)
       ],
     ));
   }
