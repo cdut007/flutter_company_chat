@@ -42,6 +42,13 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         vsync: this,
       ),
       NavigationIconView(
+        activeIcon: const Icon(Icons.chat),
+        icon: const Icon(Icons.chat),
+        title: '消息',
+        color: new Color.fromARGB(255, 0, 215, 198),
+        vsync: this,
+      ),
+      NavigationIconView(
         activeIcon: const Icon(Icons.contact_phone),
         icon: const Icon(Icons.contact_phone),
         title: '名片夹',
@@ -51,17 +58,11 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
       NavigationIconView(
         activeIcon: const Icon(Icons.cloud),
         icon: const Icon(Icons.cloud_queue),
-        title: '供应链',
+        title: '商业',
         color: new Color.fromARGB(255, 0, 215, 198),
         vsync: this,
       ),
-      NavigationIconView(
-        activeIcon: const Icon(Icons.radio_button_checked),
-        icon: const Icon(Icons.radio_button_unchecked),
-        title: '助理',
-        color: new Color.fromARGB(255, 0, 215, 198),
-        vsync: this,
-      ),
+
       NavigationIconView(
         activeIcon: const Icon(Icons.account_circle),
         icon: const Icon(Icons.account_circle),
@@ -93,8 +94,8 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
     body = new IndexedStack(
       children: [
         new Follow(),
+        new ScheduleView(),
         new ContactView(),
-        new SupplyChainView(),
         new ScheduleView(),
         new MyInfoPage()
       ],
@@ -121,7 +122,16 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
     );
 
     return Scaffold(
+
         appBar: AppBar(
+          centerTitle: true,
+          leading:  new IconButton(
+              icon: new Icon(Icons.camera_alt),
+              tooltip: '发动态',
+              onPressed: () {
+                Navigator.push(context, new MaterialPageRoute(builder: (context)=> new PostMoments()));
+                // do nothing
+              }),
           title: new Text(
             navigationViews[currentIndex].title,
             style: new TextStyle(color: Colors.white),
