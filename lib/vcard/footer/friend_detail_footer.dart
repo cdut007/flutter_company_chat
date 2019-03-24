@@ -23,14 +23,14 @@ class _FriendShowcaseState extends State<FriendShowcase>
   void initState() {
     super.initState();
     _tabs = [
-      new Tab(text: 'Portfolio'),
-      new Tab(text: 'Skills'),
-      new Tab(text: 'Articles'),
+      new Tab(child: Container(child: Text('个人简介',style: TextStyle(color: Colors.white),),),),
+      new Tab(child: Container(child: Text('生活',style: TextStyle(color: Colors.white),),),),
+//      new Tab(text: 'Articles'),
     ];
     _pages = [
       new PortfolioShowcase(),
       new SkillsShowcase(),
-      new ArticlesShowcase(),
+//      new ArticlesShowcase(),
     ];
     _controller = new TabController(
       length: _tabs.length,

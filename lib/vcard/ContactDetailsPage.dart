@@ -26,8 +26,8 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
         begin: FractionalOffset.centerRight,
         end: FractionalOffset.bottomLeft,
         colors: <Color>[
-          const Color(0xFF413070),
-          const Color(0xFF2B264A),
+          const Color.fromARGB(255, 0, 215, 198),
+          const  Color.fromARGB(255, 0, 215, 198),
         ],
       ),
     );

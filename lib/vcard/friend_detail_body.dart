@@ -58,9 +58,7 @@ class FriendDetailBody extends StatelessWidget {
         new Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: new Text(
-            'Lorem Ipsum is simply dummy text of the printing and typesetting '
-                'industry. Lorem Ipsum has been the industry\'s standard dummy '
-                'text ever since the 1500s.',
+            '腾讯公司企业老总',
             style:
             textTheme.body1.copyWith(color: Colors.white70, fontSize: 16.0),
           ),

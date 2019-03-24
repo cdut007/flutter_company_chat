@@ -24,7 +24,7 @@ class FriendDetailHeader extends StatelessWidget {
         height: 280.0,
         fit: BoxFit.cover,
       ),
-      color: const Color(0xBB8338f4),
+      color:   const Color.fromARGB(255, 0, 131, 198),
     );
   }
 
@@ -47,13 +47,13 @@ class FriendDetailHeader extends StatelessWidget {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Text('90 Following', style: followerStyle),
+          new Text('90 关注', style: followerStyle),
           new Text(
             ' | ',
             style: followerStyle.copyWith(
                 fontSize: 24.0, fontWeight: FontWeight.normal),
           ),
-          new Text('100 Followers', style: followerStyle),
+          new Text('100 被关注', style: followerStyle),
         ],
       ),
     );
@@ -70,19 +70,14 @@ class FriendDetailHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _createPillButton(
-            'HIRE ME',
+            '聊天',
             backgroundColor: theme.accentColor,
           ),
-          new DecoratedBox(
-            decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.white30),
-              borderRadius: new BorderRadius.circular(30.0),
-            ),
-            child: _createPillButton(
-              'FOLLOW',
-              textColor: Colors.white70,
-            ),
-          ),
+          _createPillButton(
+            '关注',
+            textColor: Colors.white70,
+            backgroundColor: Colors.teal,
+          )
         ],
       ),
     );
@@ -94,7 +89,7 @@ class FriendDetailHeader extends StatelessWidget {
         Color textColor = Colors.white70,
       }) {
     return new ClipRRect(
-      borderRadius: new BorderRadius.circular(30.0),
+      borderRadius: new BorderRadius.circular(10.0),
       child: new MaterialButton(
         minWidth: 140.0,
         color: backgroundColor,
