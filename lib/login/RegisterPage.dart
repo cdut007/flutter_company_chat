@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_app/widget/LoginFormCode.dart';
+import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/ApiManager.dart';
 /**
  * @Description  注册页面
  * @Author  james
@@ -7,6 +9,8 @@ import 'package:flutter/material.dart';
  * @Version  1.0
  */
 class RegisterPage extends StatefulWidget {
+
+  var avaliable = false;
   @override
   State<StatefulWidget> createState() {
     return new _RegisterPageState();
@@ -23,6 +27,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   var _userPassController = new TextEditingController();
   var _userNameController = new TextEditingController();
+  var _userPhoneController = new TextEditingController();
+  var _userSMSCodeController = new TextEditingController();
+
+
+  registerSuccess(){
+    //设置变量
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
               child: new TextField(
                 style: hintTips,
-                controller: _userNameController,
+                controller: _userPhoneController,
                 decoration: new InputDecoration(
                     hintText: "手机号（中国）", prefixIcon: Icon(Icons.phone_iphone)),
                 autofocus: true,
@@ -71,6 +82,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscureText: true, //是否隐藏正在编辑的文本
               ),
             ),
+            new Padding(
+              padding: new EdgeInsets.fromLTRB(
+                  leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
+              child: Row(children: <Widget>[
+                Expanded(child: new TextField(
+                  style: hintTips,
+                  controller: _userSMSCodeController,
+                  decoration: new InputDecoration(
+                      hintText: "验证码", prefixIcon: Icon(Icons.sms)),
+
+                ),flex: 1,),
+                LoginFormCode(available: widget.avaliable,)
+              ],),
+            ),
             new Container(
               width: 360.0,
               margin: new EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 0.0),
@@ -81,7 +106,47 @@ class _RegisterPageState extends State<RegisterPage> {
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
-                      print("the pass is" + _userNameController.text);
+                      if( _userNameController.text.isEmpty){
+                        showToast('请输入用户名');
+                        return;
+                      }
+
+                      if( _userPhoneController.text.isEmpty){
+                        showToast('请输入手机号');
+                        return;
+                      }
+
+                      if(_userPassController.text.isEmpty){
+                        showToast('请输入密码');
+                        return;
+                      }
+
+                      if(widget.avaliable){
+                        if( _userSMSCodeController.text.isEmpty){
+                          showToast('请输入验证码');
+                          return;
+                        }
+                      }else{
+
+                        setState(() {
+                          widget.avaliable = true;
+                        });
+                         return;
+                      }
+                      print("the pass is" + _userPassController.text);
+                      showLoadingDialog(context);
+                      var data ={"id":12,"name":"wendu"};
+                      final future = ApiManager.register(data);
+                      future.then((data){
+                        closeLoadingDialog();
+                        print('*********register callback*********');
+                        print(data);
+                        registerSuccess();
+                      },onError: (errorData){
+                        closeLoadingDialog();
+                        print('*********register callback error*********');
+                        print(errorData);
+                      });
                     },
                     child: new Padding(
                       padding: new EdgeInsets.all(10.0),
