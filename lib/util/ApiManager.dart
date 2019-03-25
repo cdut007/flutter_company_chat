@@ -13,7 +13,6 @@ var BASE_URL = "https://uc.aitelian.cn/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
-
   ///
   /// 注册请求url
   ///
@@ -28,12 +27,22 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+  static putPublicParams(var data) async {
+    String token = await getToken();
+    data['token'] = token;
+    data['device'] = 'android';
+    data['app_ver'] = '';
+    return data;
+  }
+
   ///
   /// 忘记密码url
   ///
   static Future resetPassword(var data) async {
     String resetPassword_url = BASE_URL + "/op/forgetPassword";
-    Response response = await reuqest(resetPassword_url, GlobalConfig.POST, data);
+    var requestData = await putPublicParams(data);
+    Response response =
+        await reuqest(resetPassword_url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -42,13 +51,13 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
-
   ///
   /// 获取sms code
   ///
   static Future otp(var data) async {
     String otp_url = BASE_URL + "/op/otp";
-    Response response = await reuqest(otp_url, GlobalConfig.POST, data);
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(otp_url, GlobalConfig.POST,  requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -74,7 +83,6 @@ class ApiManager {
   static getResponseData(Response response) {
     return response.data;
   }
-
 
   static Future<UserInfo> getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -201,8 +209,4 @@ class ApiManager {
     print('***************请求url参数地址结果END*************' + url);
     return response;
   }
-
-
-
-
 }

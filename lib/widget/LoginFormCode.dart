@@ -99,7 +99,7 @@ class _LoginFormCodeState extends State<LoginFormCode> {
       ),
       onTap: (_seconds == widget.countdown) ? () {
 
-        if(widget.phone.isEmpty||StringUtil.isChinaPhoneLegal(widget.phone)){
+        if(widget.phone.isEmpty||!StringUtil.isChinaPhoneLegal(widget.phone)){
           showToast(context,'请输入有效的手机号');
           setState(() {
 

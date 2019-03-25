@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                         showToast(context,'请输入手机号');
                         return;
                       }
-                      if(StringUtil.isChinaPhoneLegal(_userPhoneController.text)){
+                      if(!StringUtil.isChinaPhoneLegal(_userPhoneController.text)){
                         showToast(context,'请输入正确的手机号码');
                         return;
                       }
