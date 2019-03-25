@@ -10,7 +10,7 @@ import 'package:flutter_app/util/ApiManager.dart';
  */
 class RegisterPage extends StatefulWidget {
 
-  var avaliable = false;
+
   @override
   State<StatefulWidget> createState() {
     return new _RegisterPageState();
@@ -22,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
   var hintTips = new TextStyle(fontSize: 15.0, color: Colors.black26);
-
+  var avaliable = false;
 //  static const LOGO = "images/oschina.png";
 
   var _userPassController = new TextEditingController();
@@ -87,13 +87,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
               child: Row(children: <Widget>[
                 Expanded(child: new TextField(
+                  enabled: avaliable,
                   style: hintTips,
                   controller: _userSMSCodeController,
                   decoration: new InputDecoration(
                       hintText: "验证码", prefixIcon: Icon(Icons.sms)),
 
                 ),flex: 1,),
-                LoginFormCode(available: widget.avaliable,)
+                LoginFormCode(available: avaliable,)
               ],),
             ),
             new Container(
@@ -121,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         return;
                       }
 
-                      if(widget.avaliable){
+                      if(avaliable){
                         if( _userSMSCodeController.text.isEmpty){
                           showToast('请输入验证码');
                           return;
@@ -129,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }else{
 
                         setState(() {
-                          widget.avaliable = true;
+                          avaliable = true;
                         });
                          return;
                       }
@@ -143,9 +144,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         print(data);
                         registerSuccess();
                       },onError: (errorData){
+                       var error =  ApiManager.parseErrorInfo(errorData);
                         closeLoadingDialog();
+                        showErrorInfo('错误码：${error.code}'+' 错误原因：'+error.msg);
                         print('*********register callback error*********');
-                        print(errorData);
+                       //
                       });
                     },
                     child: new Padding(

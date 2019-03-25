@@ -64,6 +64,29 @@ class ApiManager {
     return access_token;
   }
 
+
+  static parseErrorInfo(errorData){
+    if(errorData is DioError ){
+       DioError dioError = errorData;
+       ResponseEntity responseEntity = ResponseEntity();
+       if(dioError.response == null ){
+         //check network.
+         responseEntity.code = 0;
+         responseEntity.msg = dioError.message;
+         print(dioError);
+         return responseEntity;
+       }
+       responseEntity.code = dioError.response.statusCode;
+       responseEntity.msg = dioError.message;
+       print(dioError);
+       return responseEntity;
+    }else{
+
+      return errorData;
+    }
+  }
+
+
   /**
    * 注册请求url
    */
@@ -104,11 +127,14 @@ class ApiManager {
     print('***************请求url参数地址*************');
     print(url);
     print(data);
-    if (httpRequsetType == GlobalConfig.GET) {
-      response = await dio.get(url, data: data);
-    } else if (httpRequsetType == GlobalConfig.POST) {
-      response = await dio.post(url, data: data);
-    }
+
+      if (httpRequsetType == GlobalConfig.GET) {
+        response = await dio.get(url, data: data);
+
+      } else if (httpRequsetType == GlobalConfig.POST) {
+        response = await dio.post(url, data: data);
+      }
+
     print('***************请求url参数地址结果START*************' + url);
     print(response.data);
     print(response.headers);
