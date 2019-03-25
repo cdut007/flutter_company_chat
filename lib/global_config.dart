@@ -6,4 +6,6 @@ class GlobalConfig {
   static Color searchBackgroundColor = Colors.white10;
   static Color cardBackgroundColor = new Color(0xFFEBEBEB);
   static Color fontColor = Colors.blueGrey;
+  static var POST='post';
+  static var GET='get';
 }
