@@ -70,7 +70,7 @@ class ApiManager {
   static Future register(var data) async {
     String login_url = BASE_URL + "/op/otp_regist";
     Response response = await reuqest(login_url, GlobalConfig.POST, data);
-    ResponseEntity responseErrorEntity = await responseError(response)
+    ResponseEntity responseErrorEntity = await responseError(response);
     if(responseErrorEntity!=null){
       return  new Future.error(responseErrorEntity);
     }
