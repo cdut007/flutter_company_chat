@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/util/StringUtil.dart';
 
 /// 墨水瓶（`InkWell`）可用时使用的字体样式。
 final TextStyle _availableStyle = TextStyle(
@@ -23,9 +24,11 @@ class LoginFormCode extends StatefulWidget {
   final Function onTapCallback;
   /// 是否可以获取验证码，默认为`false`。
   final bool available;
+  final String type;
 
   LoginFormCode({
     this.phone,
+    this.type,
     this.countdown: 60,
     this.onTapCallback,
     this.available: false,
@@ -96,15 +99,15 @@ class _LoginFormCodeState extends State<LoginFormCode> {
       ),
       onTap: (_seconds == widget.countdown) ? () {
 
-        if(widget.phone.isEmpty){
-          showToast(context,'请输入手机号');
+        if(widget.phone.isEmpty||StringUtil.isChinaPhoneLegal(widget.phone)){
+          showToast(context,'请输入有效的手机号');
           setState(() {
 
           });
 
           return;
         }
-        var data ={"phone":widget.phone};
+        var data ={"phone":widget.phone,'type':widget.type};
         final future = ApiManager.otp(data);
         future.then((data){
           print('*********otp callback*********');

@@ -28,6 +28,20 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+  ///
+  /// 忘记密码url
+  ///
+  static Future resetPassword(var data) async {
+    String resetPassword_url = BASE_URL + "/op/forgetPassword";
+    Response response = await reuqest(resetPassword_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(UserInfo.fromJson(responseData));
+  }
+
 
   ///
   /// 获取sms code
@@ -61,9 +75,10 @@ class ApiManager {
     return response.data;
   }
 
-  static Future<UserInfo> getUserInfo(var userId) async {
+
+  static Future<UserInfo> getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var user_result = await prefs.getString('user_info_' + userId);
+    var user_result = await prefs.getString('user_info');
     if (user_result == null || user_result.isEmpty) {
       var responseErrorEntity = ResponseEntity();
       return new Future.error(responseErrorEntity);
@@ -72,9 +87,9 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(decodedJson));
   }
 
-  static Future<bool> saveUserInfo(var userId, var userInfo) async {
+  static Future<bool> saveUserInfo(var userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var save_result = await prefs.setString('user_info_' + userId, userInfo);
+    var save_result = await prefs.setString('user_info', userInfo);
     return save_result;
   }
 
@@ -186,4 +201,8 @@ class ApiManager {
     print('***************请求url参数地址结果END*************' + url);
     return response;
   }
+
+
+
+
 }

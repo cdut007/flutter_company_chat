@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widget/LoginFormCode.dart';
 import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/StringUtil.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 /**
  * @Description  注册页面
@@ -32,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var countdown = 60;
   registerSuccess(){
     //设置变量
+    Navigator.pop(context);
   }
 
   @override
@@ -63,6 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
               child: new TextField(
                 style: hintTips,
+                keyboardType:TextInputType.phone,
                 controller: _userPhoneController,
                 decoration: new InputDecoration(
                     hintText: "手机号（中国）", prefixIcon: Icon(Icons.phone_iphone)),
@@ -118,6 +121,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         showToast(context,'请输入手机号');
                         return;
                       }
+                      if(StringUtil.isChinaPhoneLegal(_userPhoneController.text)){
+                        showToast(context,'请输入正确的手机号码');
+                        return;
+                      }
+
+
 
                       if(_userPassController.text.isEmpty){
                         showToast(context,'请输入密码');
