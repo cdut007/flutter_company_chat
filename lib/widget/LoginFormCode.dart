@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter/material.dart';
 
 /// 墨水瓶（`InkWell`）可用时使用的字体样式。
@@ -16,12 +18,14 @@ final TextStyle _unavailableStyle = TextStyle(
 class LoginFormCode extends StatefulWidget {
   /// 倒计时的秒数，默认60秒。
   final int countdown;
+  final String phone;
   /// 用户点击时的回调函数。
   final Function onTapCallback;
   /// 是否可以获取验证码，默认为`false`。
   final bool available;
 
   LoginFormCode({
+    this.phone,
     this.countdown: 60,
     this.onTapCallback,
     this.available: false,
@@ -45,6 +49,13 @@ class _LoginFormCodeState extends State<LoginFormCode> {
   void initState() {
     super.initState();
     _seconds = widget.countdown;
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    _cancelTimer();
   }
 
   /// 启动倒计时的计时器。
@@ -84,11 +95,33 @@ class _LoginFormCodeState extends State<LoginFormCode> {
         style: inkWellStyle,
       ),
       onTap: (_seconds == widget.countdown) ? () {
-        _startTimer();
-        inkWellStyle = _unavailableStyle;
-        _verifyStr = '已发送$_seconds'+'s';
-        setState(() {});
-        widget.onTapCallback();
+
+        if(widget.phone.isEmpty){
+          showToast(context,'请输入手机号');
+          setState(() {
+
+          });
+
+          return;
+        }
+        var data ={"phone":widget.phone};
+        final future = ApiManager.otp(data);
+        future.then((data){
+          print('*********otp callback*********');
+          _startTimer();
+          inkWellStyle = _unavailableStyle;
+          _verifyStr = '已发送$_seconds'+'s';
+          setState(() {});
+          widget.onTapCallback();
+          print(data);
+        },onError: (errorData){
+          var error =  ApiManager.parseErrorInfo(errorData);
+          showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+          print('*********otp callback error*********');
+          //
+        });
+
+
       } : null,
     ): InkWell(
       child: Text(

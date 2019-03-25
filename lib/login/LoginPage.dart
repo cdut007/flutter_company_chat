@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/Login/RegisterPage.dart';
+import 'dart:convert';
 /**
  * @Description  登录页面
  * @Author  james
@@ -87,6 +88,9 @@ class _LoginPageState extends State<LoginPage> {
                         closeLoadingDialog();
 
                         print(data);
+
+                        var userInfo = data as UserInfo;
+                        ApiManager.saveUserInfo(userInfo.id, json.encode(userInfo));
                       },onError: (errorData){
                         print('*********login callback error print*********');
                         var error =  ApiManager.parseErrorInfo(errorData);

@@ -13,12 +13,13 @@ var BASE_URL = "https://uc.aitelian.cn/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
-  /**
-   * 注册请求url
-   */
+
+  ///
+  /// 注册请求url
+  ///
   static Future register(var data) async {
-    String login_url = BASE_URL + "/op/otp_regist";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String regist_url = BASE_URL + "/op/otp_regist";
+    Response response = await reuqest(regist_url, GlobalConfig.POST, data);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -27,9 +28,24 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
-  /**
-   * 登录请求url
-   */
+
+  ///
+  /// 获取sms code
+  ///
+  static Future otp(var data) async {
+    String otp_url = BASE_URL + "/op/otp";
+    Response response = await reuqest(otp_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(UserInfo.fromJson(responseData));
+  }
+
+  ///
+  /// 登录请求url
+  ///
   static Future login(var data) async {
     String login_url = BASE_URL + "/authuser";
     Response response = await reuqest(login_url, GlobalConfig.POST, data);

@@ -22,15 +22,14 @@ class _RegisterPageState extends State<RegisterPage> {
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
   var hintTips = new TextStyle(fontSize: 15.0, color: Colors.black26);
-  var avaliable = false;
+  var avaliable = true;
 //  static const LOGO = "images/oschina.png";
 
   var _userPassController = new TextEditingController();
   var _userNameController = new TextEditingController();
   var _userPhoneController = new TextEditingController();
   var _userSMSCodeController = new TextEditingController();
-
-
+  var countdown = 60;
   registerSuccess(){
     //设置变量
   }
@@ -94,7 +93,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: "验证码", prefixIcon: Icon(Icons.sms)),
 
                 ),flex: 1,),
-                LoginFormCode(available: avaliable,)
+                 LoginFormCode(phone:  _userPhoneController.text, countdown: countdown, available: avaliable, onTapCallback: (){
+
+
+                },)
               ],),
             ),
             new Container(
@@ -122,21 +124,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         return;
                       }
 
-                      if(avaliable){
-                        if( _userSMSCodeController.text.isEmpty){
-                          showToast(context,'请输入验证码');
-                          return;
-                        }
-                      }else{
-
-                        setState(() {
-                          avaliable = true;
-                        });
-                         return;
+                      if( _userSMSCodeController.text.isEmpty){
+                        showToast(context,'请输入验证码');
+                        return;
                       }
+
                       print("the pass is" + _userPassController.text);
                       showLoadingDialog(context);
-                      var data ={"id":12,"name":"wendu"};
+                      var data ={"phone":_userPhoneController.text,"name":_userNameController.text,"smsCode":_userSMSCodeController.text,"password":_userPassController.text};
                       final future = ApiManager.register(data);
                       future.then((data){
                         closeLoadingDialog();
