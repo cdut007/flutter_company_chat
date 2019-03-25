@@ -108,23 +108,23 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: new FlatButton(
                     onPressed: () {
                       if( _userNameController.text.isEmpty){
-                        showToast('请输入用户名');
+                        showToast(context,'请输入用户名');
                         return;
                       }
 
                       if( _userPhoneController.text.isEmpty){
-                        showToast('请输入手机号');
+                        showToast(context,'请输入手机号');
                         return;
                       }
 
                       if(_userPassController.text.isEmpty){
-                        showToast('请输入密码');
+                        showToast(context,'请输入密码');
                         return;
                       }
 
                       if(avaliable){
                         if( _userSMSCodeController.text.isEmpty){
-                          showToast('请输入验证码');
+                          showToast(context,'请输入验证码');
                           return;
                         }
                       }else{
@@ -146,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },onError: (errorData){
                        var error =  ApiManager.parseErrorInfo(errorData);
                         closeLoadingDialog();
-                        showErrorInfo('错误码：${error.code}'+' 错误原因：'+error.msg);
+                        showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
                         print('*********register callback error*********');
                        //
                       });

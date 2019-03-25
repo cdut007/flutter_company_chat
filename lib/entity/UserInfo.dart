@@ -75,6 +75,11 @@ class UserInfo {
     return data;
   }
 
+  @override
+  String toString() {
+    return 'UserInfo{accessToken: $accessToken, age: $age, developerId: $developerId, domain: $domain, domainId: $domainId, email: $email, iconUrl: $iconUrl, id: $id, mobile: $mobile, name: $name, nickname: $nickname, privateContactPassword: $privateContactPassword, remarkname: $remarkname, roles: $roles, settingJson: $settingJson, url: $url, enable: $enable, hasCompany: $hasCompany, hasPassword: $hasPassword, gender: $gender, settings: $settings}';
+  }
+
 }
 
 class SettingsBean {
@@ -124,6 +129,7 @@ class SettingsBean {
 
   SettingsBean.fromJson(Map<String, dynamic> json) {    
     this.apiWebsocketAddr = json['api_websocket_addr'];
+    print('apiWebsocketAddr='+apiWebsocketAddr);
     this.audioCodecs = json['audio_codecs'];
     this.audioIceEnable = json['audio_ice_enable'];
     this.blockPayment = json['block_payment'];

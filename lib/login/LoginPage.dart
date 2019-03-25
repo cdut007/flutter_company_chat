@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/Login/RegisterPage.dart';
 /**
  * @Description  登录页面
@@ -23,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 //  static const LOGO = "images/oschina.png";
 
   var _userPassController = new TextEditingController();
-  var _userNameController = new TextEditingController();
+  var _userPhoneController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +47,9 @@ class _LoginPageState extends State<LoginPage> {
               padding: new EdgeInsets.fromLTRB(
                   leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
               child: new TextField(
+                keyboardType:TextInputType.phone,
                 style: hintTips,
-                controller: _userNameController,
+                controller: _userPhoneController,
                 decoration: new InputDecoration(
                     hintText: "请输入手机号", prefixIcon: Icon(Icons.phone_iphone)),
                 autofocus: true,
@@ -74,7 +77,25 @@ class _LoginPageState extends State<LoginPage> {
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
-                      print("the pass is" + _userNameController.text);
+                      print("the pass is" + _userPassController.text);
+
+                      showLoadingDialog(context);
+                      var data ={"mobile":_userPhoneController.text,"password":_userPassController.text,"domain":"uc"};
+                      final future = ApiManager.login(data);
+                      future.then((data){
+                        print('*********login callback*********');
+                        closeLoadingDialog();
+
+                        print(data);
+                      },onError: (errorData){
+                        print('*********login callback error print*********');
+                        var error =  ApiManager.parseErrorInfo(errorData);
+                        closeLoadingDialog();
+                        showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+                        print('*********login callback error print end*********');
+                        //
+                      });
+
                     },
                     child: new Padding(
                       padding: new EdgeInsets.all(10.0),

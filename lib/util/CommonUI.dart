@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/widget/LoadingDialog.dart';
 
-void showErrorInfo(var info){
-    showToast(info);
+void showErrorInfo(BuildContext context,var info){
+    showToast(context,info);
 }
 
-void showToast(var info){
+void showToast(BuildContext context,var info){
+ // Scaffold.of(context).showSnackBar(new SnackBar(content:new Text(info)));
   Fluttertoast.showToast(
       msg: info,
       toastLength: Toast.LENGTH_SHORT,
