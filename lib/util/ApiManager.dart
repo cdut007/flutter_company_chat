@@ -172,6 +172,26 @@ static var refresh_tag='refreshUserInfo';
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+
+///
+/// 刷新token url
+///
+static Future refreshToken(var data) async {
+  String login_url = BASE_URL + "/user/login";
+  Response response = await reuqest(login_url, GlobalConfig.POST, data);
+  ResponseEntity responseErrorEntity = await responseError(response);
+  if (responseErrorEntity != null) {
+    return new Future.error(responseErrorEntity);
+  }
+  var responseData = getResponseData(response);
+  return new Future.value(responseData['data']);
+}
+
+static getResponseData(Response response) {
+  return response.data;
+}
+
+
   ///
   /// 登录请求url
   ///
@@ -186,9 +206,6 @@ static var refresh_tag='refreshUserInfo';
     return new Future.value(responseData['data']);
   }
 
-  static getResponseData(Response response) {
-    return response.data;
-  }
 
   static Future<UserInfo> getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
