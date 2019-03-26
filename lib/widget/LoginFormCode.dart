@@ -107,7 +107,7 @@ class _LoginFormCodeState extends State<LoginFormCode> {
 
           return;
         }
-        var data ={"phone":widget.phone,'type':widget.type};
+        var data ={"phoneNumber":widget.phone,'otpType':widget.type};
         final future = ApiManager.otp(data);
         future.then((data){
           print('*********otp callback*********');

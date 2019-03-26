@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: "验证码", prefixIcon: Icon(Icons.sms)),
 
                 ),flex: 1,),
-                 LoginFormCode(phone:  _userPhoneController.text, countdown: countdown, available: avaliable, onTapCallback: (){
+                 LoginFormCode(type: 'REGISTER', phone:  _userPhoneController.text, countdown: countdown, available: avaliable, onTapCallback: (){
 
 
                 },)
@@ -140,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       print("the pass is" + _userPassController.text);
                       showLoadingDialog(context);
-                      var data ={"phone":_userPhoneController.text,"name":_userNameController.text,"smsCode":_userSMSCodeController.text,"password":_userPassController.text};
+                      var data ={"phoneNumber":_userPhoneController.text,"name":_userNameController.text,"registerOtp":_userSMSCodeController.text,"password":_userPassController.text};
                       final future = ApiManager.register(data);
                       future.then((data){
                         closeLoadingDialog();

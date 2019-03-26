@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       print("the pass is" + _userPassController.text);
 
                       showLoadingDialog(context);
-                      var data ={"mobile":_userPhoneController.text,"password":_userPassController.text,"domain":"uc"};
+                      var data ={"account":_userPhoneController.text,"password":_userPassController.text,"loginType":"PHONE_PWD",'deviceInfo':'android'};
                       final future = ApiManager.login(data);
                       future.then((data){
                         print('*********login callback*********');

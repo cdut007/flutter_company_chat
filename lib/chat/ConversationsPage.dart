@@ -42,6 +42,8 @@ class _ConversationsPageState extends State<ConversationsPage>{
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
+          conversation.peerId='11';
+          conversation.peerAvatar='https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg';
           return new ChatPage(key:Key('chat'),peerId:conversation.peerId,peerAvatar:conversation.peerAvatar);
         },
       ),
@@ -56,7 +58,7 @@ class _ConversationsPageState extends State<ConversationsPage>{
       leading: new Hero(
         tag: index,
         child: new CircleAvatar(
-          backgroundImage: new NetworkImage(conversation.peerAvatar),
+          backgroundImage: new NetworkImage('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg'),//conversation.peerAvatar
         ),
       ),
       title: new Text(conversation.name),

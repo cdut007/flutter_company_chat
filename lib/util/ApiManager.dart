@@ -9,7 +9,7 @@ import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-var BASE_URL = "https://uc.aitelian.cn/api";
+var BASE_URL = "http://39.96.161.237:9090/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
@@ -17,7 +17,7 @@ class ApiManager {
   /// 注册请求url
   ///
   static Future register(var data) async {
-    String regist_url = BASE_URL + "/op/otp_regist";
+    String regist_url = BASE_URL + "/user/register";
     Response response = await reuqest(regist_url, GlobalConfig.POST, data);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
@@ -72,7 +72,7 @@ class ApiManager {
   /// 获取sms code
   ///
   static Future otp(var data) async {
-    String otp_url = BASE_URL + "/op/otp";
+    String otp_url = BASE_URL + "/opt/send";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(otp_url, GlobalConfig.POST,  requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
@@ -87,7 +87,7 @@ class ApiManager {
   /// 登录请求url
   ///
   static Future login(var data) async {
-    String login_url = BASE_URL + "/authuser";
+    String login_url = BASE_URL + "/user/login";
     Response response = await reuqest(login_url, GlobalConfig.POST, data);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
@@ -177,14 +177,14 @@ class ApiManager {
     if (response.statusCode == 200) {
       var data = response.data;
       var code = data['code'];
-      var msg = data['msg'];
+      var msg = data['message'];
       if (code == null) {
         code = -100;
       }
       if (msg == null) {
         msg = '未知格式';
       }
-      if (code != 200) {
+      if (code != 100000) {
         responseData.code = code;
         responseData.msg = msg;
         return new Future.error(responseData);
