@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/vcard/header/diagonally_cut_colored_image.dart';
 import 'package:flutter_app/vcard/friend.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 
 class FriendDetailHeader extends StatelessWidget {
   static const BACKGROUND_IMAGE = 'images/profile_header_background.png';
@@ -59,7 +60,7 @@ class FriendDetailHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(ThemeData theme) {
+  Widget _buildActionButtons(BuildContext context, ThemeData theme) {
     return new Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
@@ -69,11 +70,11 @@ class FriendDetailHeader extends StatelessWidget {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          _createPillButton(
+          _createPillButton(context,
             '聊天',
             backgroundColor: theme.accentColor,
           ),
-          _createPillButton(
+          _createPillButton(context,
             '关注',
             textColor: Colors.white70,
             backgroundColor: Colors.teal,
@@ -83,7 +84,7 @@ class FriendDetailHeader extends StatelessWidget {
     );
   }
 
-  Widget _createPillButton(
+  Widget _createPillButton(BuildContext context,
       String text, {
         Color backgroundColor = Colors.transparent,
         Color textColor = Colors.white70,
@@ -94,7 +95,9 @@ class FriendDetailHeader extends StatelessWidget {
         minWidth: 140.0,
         color: backgroundColor,
         textColor: textColor,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, new MaterialPageRoute(builder: (context)=> new UserProfileQRCodePage()));
+        },
         child: new Text(text),
       ),
     );
@@ -115,7 +118,7 @@ class FriendDetailHeader extends StatelessWidget {
             children: <Widget>[
               _buildAvatar(),
               _buildFollowerInfo(textTheme),
-              _buildActionButtons(theme),
+              _buildActionButtons(context,theme),
             ],
           ),
         ),
