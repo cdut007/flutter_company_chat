@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widget/BannerView.dart';
 import 'package:flutter_app/vcard/ContactDetailsPage.dart';
 import 'package:flutter_app/vcard/friend.dart';
+import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -128,10 +130,9 @@ class _ContactViewState extends State {
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.contact_mail,
-                            size: 36,
-                            color: Colors.blueGrey,
+                          child:   new QrImage(
+                            data: "holdingFuture",
+                            size: 56.0,
                           ),
                         ),
                         flex: 1,
@@ -200,7 +201,7 @@ class _ContactViewState extends State {
             print(index);
             Navigator.of(context)
                 .push(new MaterialPageRoute(builder: (context) {
-              return new ContactDetailsPage(Friend(avatar: null, name: null, email: null, location: null), avatarTag: null);
+              return new CreateEditVcardPage();
             }));
           },
         ),
