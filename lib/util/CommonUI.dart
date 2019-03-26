@@ -33,7 +33,10 @@ void showOkCancelDialog(BuildContext context,var onPress,var title,var content) 
               Navigator.of(context).pop();
 
             },),
-            new FlatButton(child:new Text("确认"), onPressed: onPress,)
+            new FlatButton(child:new Text("确认"), onPressed:(){
+              onPress();
+              Navigator.of(context).pop();
+            } ,)
           ]
       ));
 }

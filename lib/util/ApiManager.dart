@@ -44,7 +44,7 @@ static var refresh_tag='refreshUserInfo';
   /// 忘记密码url
   ///
   static Future resetPassword(var data) async {
-    String resetPassword_url = BASE_URL + "/op/forgetPassword";
+    String resetPassword_url = BASE_URL + "/pwd/reset";
     var requestData = await putPublicParams(data);
     Response response =
         await reuqest(resetPassword_url, GlobalConfig.POST, requestData);
@@ -154,7 +154,7 @@ static var refresh_tag='refreshUserInfo';
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData));
+    return new Future.value(UserInfo.fromJson(responseData['data']));
   }
 
   ///
@@ -206,6 +206,7 @@ static var refresh_tag='refreshUserInfo';
 
   static Future<bool> saveUserInfo(var userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('保存本地用户信息：'+userInfo);
     var save_result = await prefs.setString('user_info', userInfo);
     return save_result;
   }

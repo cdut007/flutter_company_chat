@@ -123,7 +123,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 
                       print("the pass is" + _userPassController.text);
                       showLoadingDialog(context);
-                      var data ={"phone":_userPhoneController.text,"smsCode":_userSMSCodeController.text,"password":_userPassController.text};
+                      var data ={"phoneNumber":_userPhoneController.text,"otp":_userSMSCodeController.text,"newPwd":_userPassController.text};
                       final future = ApiManager.resetPassword(data);
                       future.then((data){
                         closeLoadingDialog();

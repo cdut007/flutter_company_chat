@@ -84,6 +84,9 @@ class MyInfoPageState extends State<MyInfoPage> {
         if(_userInfo!=null){
           userName = _userInfo.username;
           userAvatar = _userInfo.avatar;
+        }else{
+          userName = null;
+          userAvatar = null;
         }
       });
     },onError: (errorInfo){
