@@ -251,24 +251,37 @@ static var refresh_tag='refreshUserInfo';
         //check network.
         responseEntity.code = 0;
         responseEntity.msg = dioError.message;
+        if(dioError.type == DioErrorType.CONNECT_TIMEOUT){
+          responseEntity.msg = '服务不可用，连接超时，请检查网络';
+        }else if(dioError.type == DioErrorType.RECEIVE_TIMEOUT){
+          responseEntity.msg = '请求服务响应超时，请检查网络';
+        }
         print(dioError);
         return responseEntity;
       }
       responseEntity.code = dioError.response.statusCode;
       responseEntity.msg = dioError.message;
-      if (dioError.response.data != null) {
-        var msg = dioError.response.data['description'];
-        if (msg == null) {
-          msg = dioError.response.data['message'];
-        }
-        if (msg == null) {
-          msg = dioError.response.data.toString();
-        }
+      print(dioError.type);
+      if(dioError.type == DioErrorType.CONNECT_TIMEOUT){
+        responseEntity.msg = '服务不可用，连接超时，请检查网络';
+      }else if(dioError.type == DioErrorType.RECEIVE_TIMEOUT){
+        responseEntity.msg = '请求服务响应超时，请检查网络';
+      }else{
+        if (dioError.response.data != null) {
+          var msg = dioError.response.data['description'];
+          if (msg == null) {
+            msg = dioError.response.data['message'];
+          }
+          if (msg == null) {
+            msg = dioError.response.data.toString();
+          }
 
-        if (msg != null) {
-          responseEntity.msg = msg;
+          if (msg != null) {
+            responseEntity.msg = msg;
+          }
         }
       }
+
       print(dioError);
       return responseEntity;
     } else {
