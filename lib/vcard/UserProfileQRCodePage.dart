@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 
 class UserProfileQRCodePage extends StatefulWidget {
@@ -87,20 +88,10 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
                             color: Colors.grey),
                       ),
                       SizedBox(height: 10.0),
-                      Container(  margin: const EdgeInsets.only(top: 10.0),height: 240, child:  FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0),
-                        ),
-                        color: new Color.fromARGB(255, 0, 215, 198),
-                        onPressed: () {},
-                        child: Text(
-                          '二维码区域用手机扫码关注添加',
-                          style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: Colors.white),
-                        ),
+                      Container(  margin: const EdgeInsets.only(top: 10.0),height: 240, child:
+                      new QrImage(
+                        data: "1234567890",
+                        size: 240.0,
                       ),)
 
                     ],
