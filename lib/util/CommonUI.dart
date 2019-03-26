@@ -18,6 +18,27 @@ void showToast(BuildContext context,var info){
       textColor: Colors.white);
 }
 
+void showOkCancelDialog(BuildContext context,var onPress,var title,var content) {
+  NavigatorState navigator= context.rootAncestorStateOfType(const TypeMatcher<NavigatorState>());
+  debugPrint("navigator is null?"+(navigator==null).toString());
+
+
+  showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+          title: new Text(title),
+          content: new Text(content),
+          actions:<Widget>[
+            new FlatButton(child:new Text("取消"), onPressed: (){
+              Navigator.of(context).pop();
+
+            },),
+            new FlatButton(child:new Text("确认"), onPressed: onPress,)
+          ]
+      ));
+}
+
+
 LoadingDialog pr;
 void showLoadingDialog(BuildContext context,[info]){
   closeLoadingDialog();

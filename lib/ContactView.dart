@@ -165,7 +165,7 @@ class _ContactViewState extends State {
     return new ListTile(
       onTap: () => _navigateToFriendDetails(friend, index),
       leading: new Hero(
-        tag: index,
+        tag: 'contact_$index',
         child: new CircleAvatar(
           backgroundImage: new NetworkImage(friend.avatar),
         ),

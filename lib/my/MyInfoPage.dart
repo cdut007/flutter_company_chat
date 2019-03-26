@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:fluwx/fluwx.dart';
+import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 import 'package:flutter_app/Login/LoginPage.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/news/NewsWebPage.dart';
 import 'package:flutter_app/my/WechatPage.dart';
+import 'package:flutter_app/entity/UserInfo.dart';
+import 'package:flutter_app/util/ApiManager.dart';
 //import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:share/share.dart';
 
@@ -24,9 +27,9 @@ class MyInfoPageState extends State<MyInfoPage> {
   static const double IMAGE_ICON_WIDTH = 30.0;
   static const double ARROW_ICON_WIDTH = 16.0;
 
-  var titles = ["", "安全空间", "vip会员", "公司认证", "联系我们", "分享"];
+  var titles = ["", "退出登录", "vip会员", "公司认证", "联系我们", "分享"];
   List icons = [
-    Icons.security,
+    Icons.all_out,
     Icons.payment,
     Icons.verified_user,
     Icons.phone_forwarded,
@@ -40,10 +43,37 @@ class MyInfoPageState extends State<MyInfoPage> {
     height: ARROW_ICON_WIDTH,
   );
 
+  bool _loggedIn=false;
+  UserInfo _userInfo;
   @override
   void initState() {
     super.initState();
    // fluwx.register(appId: "wx423d7d8752fd810c");
+
+   checkLoginStatus();
+  }
+
+  checkLoginStatus(){
+    ApiManager.getUserInfo().then((userInfo){
+      setState(() {
+        _userInfo = userInfo;
+        print('******** load user info *******');
+        print(_userInfo);
+        if(_userInfo!=null){
+          userName = _userInfo.username;
+          userAvatar = _userInfo.avatar;
+        }
+      });
+    },onError: (errorInfo){
+      setState(() {
+        _userInfo=null;
+      });
+    });
+    ApiManager.isLoggedIn().then((loggedIn){
+      setState(() {
+        _loggedIn = loggedIn;
+      });
+    });
   }
 
   Widget getIconImage(path) {
@@ -105,8 +135,20 @@ class MyInfoPageState extends State<MyInfoPage> {
       );
       return new GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => new LoginPage()));
+          if(!_loggedIn){
+            Navigator.push(context,
+                new MaterialPageRoute<String>(builder: (context) => new LoginPage())).then((String result){
+
+              //处理代码
+              print('********获取上一个页面返回的参数*******');
+              print(result);
+
+            });
+          }else{
+            //my profile
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => new UserProfileQRCodePage()));
+          }
         },
         child: avatarContainer,
       );
@@ -146,11 +188,13 @@ class MyInfoPageState extends State<MyInfoPage> {
   _handleListItemClick(int index) {
     switch (index) {
       case 1:
-        String h5_url = "https://blog.csdn.net/u010123643";
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new NewsWebPage(h5_url, '我的博客')));
+         if(_loggedIn){
+           showOkCancelDialog(context, (){
+             ApiManager.logout().then((logout){
+               checkLoginStatus();
+             });
+           }, '登出', '确认登出吗？');
+         }
         break;
       case 2:
         String h5_url = "https://github.com/zhibuyu";

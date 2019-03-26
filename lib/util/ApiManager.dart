@@ -190,6 +190,8 @@ class ApiManager {
     var user_result = await prefs.getString('user_info');
     if (user_result == null || user_result.isEmpty) {
       var responseErrorEntity = ResponseEntity();
+      responseErrorEntity.code="-10002";
+      responseErrorEntity.msg="no user found in local";
       return new Future.error(responseErrorEntity);
     }
     var decodedJson = json.decode(user_result).cast<String, dynamic>();
@@ -201,6 +203,12 @@ class ApiManager {
     var save_result = await prefs.setString('user_info', userInfo);
     return save_result;
   }
+
+  static Future<bool> logout() async {
+    var logout = await clearUserInfo();
+    return logout;
+  }
+
 
   static Future<bool> clearUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -216,6 +224,12 @@ class ApiManager {
     var success = await prefs.setString('access_token', token);
     return success;
   }
+
+  static Future<bool> isLoggedIn() async {
+     var token = await  getToken();
+    return token!=null;
+  }
+
 
   static Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
