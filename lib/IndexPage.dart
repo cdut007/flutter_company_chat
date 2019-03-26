@@ -3,7 +3,7 @@ import 'package:flutter_app/schedule/ScheduleView.dart';
 import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/home/Follow.dart';
 import 'package:flutter_app/ContactView.dart';
-import 'package:flutter_app/market/SupplyChainView.dart';
+import 'package:flutter_app/chat/ConversationsPage.dart';
 import 'package:flutter_app/searchPage.dart';
 import 'package:flutter_app/news/PostMoments.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
@@ -94,7 +94,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
     body = new IndexedStack(
       children: [
         new Follow(),
-        new ScheduleView(),
+        new ConversationsPage(),
         new ContactView(),
         new ScheduleView(),
         new MyInfoPage()
