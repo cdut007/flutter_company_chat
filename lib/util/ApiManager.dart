@@ -51,6 +51,23 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+
+  ///
+  /// 获取用户个人信息
+  ///
+  static Future getUserProfile(var data) async {
+    String user_profile_url = BASE_URL + "/profile";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(user_profile_url, GlobalConfig.POST,  requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(UserInfo.fromJson(responseData));
+  }
+
+
   ///
   /// 获取sms code
   ///

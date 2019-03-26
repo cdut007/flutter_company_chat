@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.flutterapp"
+        applicationId "com.holdingfuture.flutterapp"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode flutterVersionCode.toInteger()
@@ -41,11 +41,24 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+//    证书指纹:
+//    MD5: 85:B9:EE:41:B7:A2:24:8E:37:1D:1E:D8:C7:9B:F5:BA
+//    SHA1: 04:CC:9C:BB:8A:D0:3A:13:93:07:37:35:00:EC:78:AB:DE:7F:31:05
+//    SHA256: 42:EB:DC:A3:3A:EA:5B:2E:B2:75:69:A7:0F:53:74:4F:DF:5A:76:A7:C9:06:87:2B:95:71:FC:CE:E3:D9:11:DE
+    signingConfigs { //签名配置
+        release {
+            storeFile file("../android.jks")
+            storePassword "20190222"
+            keyAlias "android_key"
+            keyPassword "20190222"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }

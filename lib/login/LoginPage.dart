@@ -122,11 +122,14 @@ class _LoginPageState extends State<LoginPage> {
                       future.then((data){
                         print('*********login callback*********');
                         closeLoadingDialog();
-
                         print(data);
+                        var userProfileData = {'id':'ss'};
+                        final userInfoFuture = ApiManager.getUserProfile(userProfileData);
+                        userInfoFuture.then((data){
+                          var userInfo = data as UserInfo;
+                          ApiManager.saveUserInfo(json.encode(userInfo));
+                        });
 
-                        var userInfo = data as UserInfo;
-                        ApiManager.saveUserInfo(json.encode(userInfo));
                       },onError: (errorData){
                         print('*********login callback error print*********');
                         var error =  ApiManager.parseErrorInfo(errorData);
