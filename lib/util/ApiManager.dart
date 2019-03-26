@@ -51,14 +51,14 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
-
   ///
-  /// 获取用户个人信息
+  /// 更新用户个人信息
   ///
-  static Future getUserProfile(var data) async {
-    String user_profile_url = BASE_URL + "/profile";
+  static Future updateUserProfile(var data) async {
+    String user_profile_url = BASE_URL + "/user/profile";
     var requestData = await putPublicParams(data);
-    Response response = await reuqest(user_profile_url, GlobalConfig.POST,  requestData);
+    Response response =
+    await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -67,14 +67,29 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+  ///
+  /// 获取用户个人信息
+  ///
+  static Future getUserProfile(var data) async {
+    String user_profile_url = BASE_URL + "/user/profile";
+    var requestData = await putPublicParams(data);
+    Response response =
+        await reuqest(user_profile_url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(UserInfo.fromJson(responseData));
+  }
 
   ///
   /// 获取sms code
   ///
   static Future otp(var data) async {
-    String otp_url = BASE_URL + "/opt/send";
+    String otp_url = BASE_URL + "/otp/send";
     var requestData = await putPublicParams(data);
-    Response response = await reuqest(otp_url, GlobalConfig.POST,  requestData);
+    Response response = await reuqest(otp_url, GlobalConfig.GET, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -94,7 +109,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData));
+    return new Future.value(responseData['data']);
   }
 
   static getResponseData(Response response) {
@@ -179,12 +194,13 @@ class ApiManager {
       var code = data['code'];
       var msg = data['message'];
       if (code == null) {
-        code = -100;
+        code = '-100';
       }
       if (msg == null) {
         msg = '未知格式';
       }
-      if (code != 100000) {
+      print(code);
+      if (code != '100000') {
         responseData.code = code;
         responseData.msg = msg;
         return new Future.error(responseData);
@@ -193,7 +209,7 @@ class ApiManager {
       }
     } else {
       responseData.code = response.statusCode;
-      //responseData.msg = response.toString();
+      responseData.msg = response.toString();
       return new Future.error(responseData);
     }
   }
@@ -206,6 +222,10 @@ class ApiManager {
         connectTimeout: 7000,
         receiveTimeout: 3000,
         contentType: ContentType.json);
+    var token = data['token'];
+    if (token != null) {
+      options.headers['Authorization'] = 'Bear ' + token;
+    }
 
     Response response;
     print('***************请求url参数地址*************');
@@ -216,6 +236,10 @@ class ApiManager {
       response = await dio.get(url, options: options, data: data);
     } else if (httpRequsetType == GlobalConfig.POST) {
       response = await dio.post(url, options: options, data: data);
+    } else if (httpRequsetType == GlobalConfig.POST) {
+      response = await dio.patch(url, options: options, data: data);
+    } else if (httpRequsetType == GlobalConfig.PUT) {
+      response = await dio.put(url, options: options, data: data);
     }
 
     print('***************请求url参数地址结果START*************' + url);

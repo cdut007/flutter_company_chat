@@ -123,7 +123,8 @@ class _LoginPageState extends State<LoginPage> {
                         print('*********login callback*********');
                         closeLoadingDialog();
                         print(data);
-                        var userProfileData = {'id':'ss'};
+                        ApiManager.saveToken(data);
+                        var userProfileData = {};
                         final userInfoFuture = ApiManager.getUserProfile(userProfileData);
                         userInfoFuture.then((data){
                           var userInfo = data as UserInfo;
