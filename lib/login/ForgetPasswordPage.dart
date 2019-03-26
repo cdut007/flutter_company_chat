@@ -83,7 +83,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       hintText: "验证码", prefixIcon: Icon(Icons.sms)),
 
                 ),flex: 1,),
-                 LoginFormCode(phone:  _userPhoneController.text, countdown: countdown, available: avaliable, onTapCallback: (){
+                 LoginFormCode(type: 'RESET_PWD', phone:  _userPhoneController.text, countdown: countdown, available: avaliable, onTapCallback: (){
 
 
                 },)

@@ -5,7 +5,7 @@ class ConversationsPage extends StatefulWidget{
   @override
   _ConversationsPageState createState() => new _ConversationsPageState();
 }
-class _ConversationsPageState extends State<ConversationsPage>{
+class _ConversationsPageState extends State{
 
   List<Conversation> _conversations = [];
 

@@ -40,12 +40,16 @@ class _LoginPageState extends State<LoginPage> {
      userInfoFuture.then((userInfo){
        setState(() {
          UserInfo userInfoData = userInfo as UserInfo;
-         phone = userInfoData.mobile;
+         phone = userInfoData.phoneNumber;
          _userPhoneController.text = phone;
        });
      });
   }
 
+  _go2HomePage(){
+    //设置变量
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,13 +127,17 @@ class _LoginPageState extends State<LoginPage> {
                         print('*********login callback*********');
                         closeLoadingDialog();
                         print(data);
-                        ApiManager.saveToken(data);
-                        var userProfileData = {};
-                        final userInfoFuture = ApiManager.getUserProfile(userProfileData);
-                        userInfoFuture.then((data){
-                          var userInfo = data as UserInfo;
-                          ApiManager.saveUserInfo(json.encode(userInfo));
-                        });
+                         Future<bool> saved = ApiManager.saveToken(data);
+                         saved.then((success){
+                           var userProfileData = {};
+                           final userInfoFuture = ApiManager.getUserProfile(userProfileData);
+                           userInfoFuture.then((data){
+                             var userInfo = data as UserInfo;
+                             ApiManager.saveUserInfo(json.encode(userInfo));
+                             _go2HomePage();
+                           });
+                         });
+
 
                       },onError: (errorData){
                         print('*********login callback error print*********');

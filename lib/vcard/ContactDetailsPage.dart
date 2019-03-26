@@ -18,6 +18,7 @@ class ContactDetailsPage extends StatefulWidget {
   _ContactDetailsPageState createState() => new _ContactDetailsPageState();
 }
 
+
 class _ContactDetailsPageState extends State<ContactDetailsPage> {
   @override
   Widget build(BuildContext context) {

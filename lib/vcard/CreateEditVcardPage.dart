@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:flutter_app/util/ApiManager.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CreateEditVcardPage extends StatefulWidget {
   @override
@@ -10,6 +15,19 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
+
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    var fileName = image.path.substring(image.parent.path.length+1,image.path.length);
+    ApiManager.uploadFile(fileName, image.path);
+    setState(() {
+      _image = image;
+
+    });
+  }
 
   @override
   void initState() {
@@ -37,7 +55,8 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(top: 20.0),
-                          child: new Stack(fit: StackFit.loose, children: <Widget>[
+                          child:
+                              new Stack(fit: StackFit.loose, children: <Widget>[
                             new Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +66,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                     height: 140.0,
                                     decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
-                                      image: new DecorationImage(
+                                      image:  new DecorationImage(
                                         image: new ExactAssetImage(
                                             'images/a001.jpg'),
                                         fit: BoxFit.cover,
@@ -56,20 +75,27 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                               ],
                             ),
                             Padding(
-                                padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new CircleAvatar(
-                                      backgroundColor: Color.fromARGB(255, 0, 215, 198),
-                                      radius: 25.0,
-                                      child: new Icon(
-                                        Icons.camera_alt,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                )),
+                                padding:
+                                    EdgeInsets.only(top: 90.0, right: 100.0),
+                                child: new GestureDetector(
+                                    onTapUp: (details) {
+                                      getImage();
+                                    },
+                                    child: new Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new CircleAvatar(
+                                          backgroundColor:
+                                              Color.fromARGB(255, 0, 215, 198),
+                                          radius: 25.0,
+                                          child: new Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    ))),
                           ]),
                         )
                       ],
@@ -87,7 +113,8 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                               padding: EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 0.0),
                               child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   new Column(
@@ -106,7 +133,9 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      _status ? _getEditIcon() : new Container(),
+                                      _status
+                                          ? _getEditIcon()
+                                          : new Container(),
                                     ],
                                   )
                                 ],
@@ -144,7 +173,6 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                       ),
                                       enabled: !_status,
                                       autofocus: !_status,
-
                                     ),
                                   ),
                                 ],
@@ -307,36 +335,32 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child:
-              new Card(
+              child: new Card(
                 color: new Color.fromARGB(255, 0, 215, 198),
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
-                        setState(() {
+                      setState(() {
                         _status = true;
                         FocusScope.of(context).requestFocus(new FocusNode());
                       });
-
                     },
                     child: new Padding(
                       padding: new EdgeInsets.all(10.0),
                       child: new Text(
                         '保存',
                         style:
-                        new TextStyle(color: Colors.white, fontSize: 16.0),
+                            new TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
                     )),
               ),
-
             ),
             flex: 2,
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 10.0),
-              child:
-              new Card(
+              child: new Card(
                 color: Colors.red,
                 elevation: 6.0,
                 child: new FlatButton(
@@ -345,14 +369,13 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                         _status = true;
                         FocusScope.of(context).requestFocus(new FocusNode());
                       });
-
                     },
                     child: new Padding(
                       padding: new EdgeInsets.all(10.0),
                       child: new Text(
                         '取消',
                         style:
-                        new TextStyle(color: Colors.white, fontSize: 16.0),
+                            new TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
                     )),
               ),

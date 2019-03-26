@@ -52,6 +52,75 @@ class ApiManager {
   }
 
   ///
+  /// 获取七牛token信息
+  ///
+  static Future uploadFile(var fileName,var filePath) async {
+    var token = await getToken();
+    Map<String, dynamic> qiNiuJson = await getQiNiuToken({'token':token});
+    String qiniu_upload_url = qiNiuJson['domain'];
+    var  qiNiuToken = qiNiuJson['token'];
+    Dio dio = new Dio();
+    print('qiniu_upload_url='+qiniu_upload_url);
+    print('upload file info='+fileName+';filePath='+filePath);
+    FormData formData = new FormData.from({
+      "upload_token": qiNiuToken,
+      "fileName": fileName,
+      "fileBinaryData": new UploadFileInfo(new File(filePath), fileName)
+    });
+    Response response = await dio.post(qiniu_upload_url, data: formData);
+    ResponseEntity responseErrorEntity = await responseQiuniuError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(UserInfo.fromJson(responseData));
+  }
+
+  static Future responseQiuniuError(Response response) async {
+    var responseData = ResponseEntity();
+    if (response.statusCode == 200) {
+      var data = response.data;
+      var code = data['code'];
+      var msg = data['message'];
+      if (code == null) {
+        code = '-100';
+      }
+      if (msg == null) {
+        msg = '未知格式';
+      }
+      print(code);
+      if (code != '100000') {
+        responseData.code = code;
+        responseData.msg = msg;
+        return new Future.error(responseData);
+      } else {
+        return null;
+      }
+    } else {
+      responseData.code = response.statusCode;
+      responseData.msg = response.toString();
+      return new Future.error(responseData);
+    }
+  }
+
+  ///
+  /// 获取七牛token信息
+  ///
+  static Future getQiNiuToken(var data) async {
+    String qiniu_token_url = BASE_URL + "/qiniu/token";
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(qiniu_token_url, GlobalConfig.GET, requestData);
+//    ResponseEntity responseErrorEntity = await responseError(response);
+//    if (responseErrorEntity != null) {
+//      return new Future.error(responseErrorEntity);
+//    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData);
+  }
+
+
+  ///
   /// 更新用户个人信息
   ///
   static Future updateUserProfile(var data) async {
@@ -224,7 +293,7 @@ class ApiManager {
         contentType: ContentType.json);
     var token = data['token'];
     if (token != null) {
-      options.headers['Authorization'] = 'Bear ' + token;
+      options.headers['Authorization'] = 'Bearer ' + token;
     }
 
     Response response;
