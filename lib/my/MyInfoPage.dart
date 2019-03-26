@@ -53,9 +53,31 @@ class MyInfoPageState extends State<MyInfoPage> {
    checkLoginStatus();
   }
 
+  reloadMenuInfo(){
+    if(_loggedIn){
+      titles = ["", "退出登录", "vip会员", "公司认证", "联系我们", "分享"];
+      icons = [
+        Icons.all_out,
+        Icons.payment,
+        Icons.verified_user,
+        Icons.phone_forwarded,
+        Icons.share
+      ];
+    }else{
+      titles = ["",  "vip会员", "公司认证", "联系我们", "分享"];
+      icons = [
+        Icons.payment,
+        Icons.verified_user,
+        Icons.phone_forwarded,
+        Icons.share
+      ];
+    }
+  }
+
   checkLoginStatus(){
     ApiManager.getUserInfo().then((userInfo){
       setState(() {
+
         _userInfo = userInfo;
         print('******** load user info *******');
         print(_userInfo);
@@ -72,6 +94,7 @@ class MyInfoPageState extends State<MyInfoPage> {
     ApiManager.isLoggedIn().then((loggedIn){
       setState(() {
         _loggedIn = loggedIn;
+        reloadMenuInfo();
       });
     });
   }
@@ -142,6 +165,9 @@ class MyInfoPageState extends State<MyInfoPage> {
               //处理代码
               print('********获取上一个页面返回的参数*******');
               print(result);
+              if(result == ApiManager.refresh_tag){
+                checkLoginStatus();
+              }
 
             });
           }else{

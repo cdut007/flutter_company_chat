@@ -9,10 +9,15 @@ import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+
 var BASE_URL = "http://39.96.161.237:9090/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
+
+static var refresh_tag='refreshUserInfo';
+
   ///
   /// 注册请求url
   ///
@@ -194,6 +199,7 @@ class ApiManager {
       responseErrorEntity.msg="no user found in local";
       return new Future.error(responseErrorEntity);
     }
+    print('获取本地用户信息：'+user_result);
     var decodedJson = json.decode(user_result).cast<String, dynamic>();
     return new Future.value(UserInfo.fromJson(decodedJson));
   }

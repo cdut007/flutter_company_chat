@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _go2HomePage(){
     //设置变量
-    Navigator.pop(context,'refreshUserInfo');
+    Navigator.pop(context,ApiManager.refresh_tag);
   }
 
   @override
