@@ -188,8 +188,9 @@ class ApiManager {
   ///
   static Future postMoments(var data) async {
 
-    String login_url = BASE_URL + "/post/moment";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String url = BASE_URL + "/post/moment";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -205,8 +206,9 @@ class ApiManager {
     if(true){
       return new Future.value([]);
     }
-    String login_url = BASE_URL + "/post/moment";
-    Response response = await reuqest(login_url, GlobalConfig.GET, data);
+    String url = BASE_URL + "/post/moment";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.GET, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -220,8 +222,8 @@ class ApiManager {
   /// 刷新token url
   ///
   static Future refreshToken(var data) async {
-    String login_url = BASE_URL + "/user/token/refresh";
-    Response response = await reuqest(login_url, GlobalConfig.GET, data);
+    String url = BASE_URL + "/user/token/refresh";
+    Response response = await reuqest(url, GlobalConfig.GET, data);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -239,8 +241,9 @@ class ApiManager {
   /// 申请发送名片请求url
   ///
   static Future applyCard(var data) async {
-    String login_url = BASE_URL + "/card/applyCard";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String url = BASE_URL + "/card/applyCard";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -253,8 +256,9 @@ class ApiManager {
   /// 接收申请名片请求url
   ///
   static Future acceptedCard(var data) async {
-    String login_url = BASE_URL + "/card/acceptedCard";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String url = BASE_URL + "/card/acceptedCard";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -267,8 +271,9 @@ class ApiManager {
   /// 新增名片请求url
   ///
   static Future updateCard(var data) async {
-    String login_url = BASE_URL + "/card/updateCard";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String url = BASE_URL + "/card/updateCard";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -281,8 +286,9 @@ class ApiManager {
   /// 更新名片请求url
   ///
   static Future createCard(var data) async {
-    String login_url = BASE_URL + "/card/addCard";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String url = BASE_URL + "/card/addCard";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -295,8 +301,8 @@ class ApiManager {
   /// 登录请求url
   ///
   static Future login(var data) async {
-    String login_url = BASE_URL + "/user/login";
-    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    String url = BASE_URL + "/user/login";
+    Response response = await reuqest(url, GlobalConfig.POST, data);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
