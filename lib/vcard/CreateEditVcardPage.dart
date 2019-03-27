@@ -324,6 +324,9 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     myFocusNode.dispose();
     super.dispose();
   }
+  createOrEditCard(){
+
+  }
 
   Widget _getActionButtons() {
     return Padding(
@@ -340,6 +343,9 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
+
+                      createOrEditCard();
+
                       setState(() {
                         _status = true;
                         FocusScope.of(context).requestFocus(new FocusNode());

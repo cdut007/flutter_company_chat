@@ -9,14 +9,11 @@ import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 var BASE_URL = "http://39.96.161.237:9090/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
-
-static var refresh_tag='refreshUserInfo';
+  static var refresh_tag = 'refreshUserInfo';
 
   ///
   /// 注册请求url
@@ -59,14 +56,14 @@ static var refresh_tag='refreshUserInfo';
   ///
   /// 获取七牛token信息
   ///
-  static Future uploadFile(var fileName,var filePath) async {
+  static Future uploadFile(var fileName, var filePath) async {
     var token = await getToken();
-    Map<String, dynamic> qiNiuJson = await getQiNiuToken({'token':token});
+    Map<String, dynamic> qiNiuJson = await getQiNiuToken({'token': token});
     String qiniu_upload_url = qiNiuJson['domain'];
-    var  qiNiuToken = qiNiuJson['token'];
+    var qiNiuToken = qiNiuJson['token'];
     Dio dio = new Dio();
-    print('qiniu_upload_url='+qiniu_upload_url);
-    print('upload file info='+fileName+';filePath='+filePath);
+    print('qiniu_upload_url=' + qiniu_upload_url);
+    print('upload file info=' + fileName + ';filePath=' + filePath);
     FormData formData = new FormData.from({
       "upload_token": qiNiuToken,
       "fileName": fileName,
@@ -115,7 +112,7 @@ static var refresh_tag='refreshUserInfo';
     String qiniu_token_url = BASE_URL + "/qiniu/token";
     var requestData = await putPublicParams(data);
     Response response =
-    await reuqest(qiniu_token_url, GlobalConfig.GET, requestData);
+        await reuqest(qiniu_token_url, GlobalConfig.GET, requestData);
 //    ResponseEntity responseErrorEntity = await responseError(response);
 //    if (responseErrorEntity != null) {
 //      return new Future.error(responseErrorEntity);
@@ -124,7 +121,6 @@ static var refresh_tag='refreshUserInfo';
     return new Future.value(responseData);
   }
 
-
   ///
   /// 更新用户个人信息
   ///
@@ -132,7 +128,7 @@ static var refresh_tag='refreshUserInfo';
     String user_profile_url = BASE_URL + "/user/profile";
     var requestData = await putPublicParams(data);
     Response response =
-    await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
+        await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -172,25 +168,37 @@ static var refresh_tag='refreshUserInfo';
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
-
-///
-/// 刷新token url
-///
-static Future refreshToken(var data) async {
-  String login_url = BASE_URL + "/user/login";
-  Response response = await reuqest(login_url, GlobalConfig.POST, data);
-  ResponseEntity responseErrorEntity = await responseError(response);
-  if (responseErrorEntity != null) {
-    return new Future.error(responseErrorEntity);
+  ///
+  /// 刷新token url
+  ///
+  static Future refreshToken(var data) async {
+    String login_url = BASE_URL + "/user/token/refresh";
+    Response response = await reuqest(login_url, GlobalConfig.GET, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
   }
-  var responseData = getResponseData(response);
-  return new Future.value(responseData['data']);
-}
 
-static getResponseData(Response response) {
-  return response.data;
-}
+  static getResponseData(Response response) {
+    return response.data;
+  }
 
+  ///
+  /// 新增名片请求url
+  ///
+  static Future createCard(var data) async {
+    String login_url = BASE_URL + "/card/addCard";
+    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
 
   ///
   /// 登录请求url
@@ -203,9 +211,19 @@ static getResponseData(Response response) {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
-  }
+    var token = responseData['data'];
+    var refreshTokeInfo =
+        await refreshToken({'token': token, 'expireDay': '30'});
 
+    if (refreshTokeInfo is ResponseEntity) {
+      return new Future.error(refreshTokeInfo);
+    } else {
+      token = refreshTokeInfo;
+      print('refresh token:' + token);
+    }
+
+    return new Future.value(token);
+  }
 
   static Future<UserInfo> getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -213,18 +231,18 @@ static getResponseData(Response response) {
     if (user_result == null || user_result.isEmpty) {
       print('获取本地用户信息失败');
       var responseErrorEntity = ResponseEntity();
-      responseErrorEntity.code="-10002";
-      responseErrorEntity.msg="no user found in local";
+      responseErrorEntity.code = "-10002";
+      responseErrorEntity.msg = "no user found in local";
       return new Future.error(responseErrorEntity);
     }
-    print('获取本地用户信息：'+user_result);
+    print('获取本地用户信息：' + user_result);
     var decodedJson = json.decode(user_result).cast<String, dynamic>();
     return new Future.value(UserInfo.fromJson(decodedJson));
   }
 
   static Future<bool> saveUserInfo(var userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('保存本地用户信息：'+userInfo);
+    print('保存本地用户信息：' + userInfo);
     var save_result = await prefs.setString('user_info', userInfo);
     return save_result;
   }
@@ -233,7 +251,6 @@ static getResponseData(Response response) {
     var logout = await clearUserInfo();
     return logout;
   }
-
 
   static Future<bool> clearUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -251,10 +268,9 @@ static getResponseData(Response response) {
   }
 
   static Future<bool> isLoggedIn() async {
-     var token = await  getToken();
-    return token!=null;
+    var token = await getToken();
+    return token != null;
   }
-
 
   static Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -270,27 +286,33 @@ static getResponseData(Response response) {
         //check network.
         responseEntity.code = 0;
         responseEntity.msg = dioError.message;
-        if(dioError.type == DioErrorType.CONNECT_TIMEOUT){
+        if (dioError.type == DioErrorType.CONNECT_TIMEOUT) {
           responseEntity.msg = '服务不可用，连接超时，请检查网络';
-        }else if(dioError.type == DioErrorType.RECEIVE_TIMEOUT){
+        } else if (dioError.type == DioErrorType.RECEIVE_TIMEOUT) {
           responseEntity.msg = '请求服务响应超时，请检查网络';
         }
+        print('no response found');
         print(dioError);
         return responseEntity;
       }
       responseEntity.code = dioError.response.statusCode;
       responseEntity.msg = dioError.message;
       print(dioError.type);
-      if(dioError.type == DioErrorType.CONNECT_TIMEOUT){
+      if (dioError.type == DioErrorType.CONNECT_TIMEOUT) {
         responseEntity.msg = '服务不可用，连接超时，请检查网络';
-      }else if(dioError.type == DioErrorType.RECEIVE_TIMEOUT){
+      } else if (dioError.type == DioErrorType.RECEIVE_TIMEOUT) {
         responseEntity.msg = '请求服务响应超时，请检查网络';
-      }else{
+      } else if (dioError.type == DioErrorType.RESPONSE) {
+        responseEntity.msg = dioError.response.toString();
+        var data = dioError.response.data;
+        if(data!=null){
+          responseEntity.code = data['code'];
+          responseEntity.msg = data['message'];
+        }
+
+      } else {
         if (dioError.response.data != null) {
-          var msg = dioError.response.data['description'];
-          if (msg == null) {
-            msg = dioError.response.data['message'];
-          }
+          var msg = dioError.response.data['message'];
           if (msg == null) {
             msg = dioError.response.data.toString();
           }
@@ -331,6 +353,14 @@ static getResponseData(Response response) {
     } else {
       responseData.code = response.statusCode;
       responseData.msg = response.toString();
+      print('****** parse http request response error ******');
+      print(responseData.msg);
+      var data = response.data;
+      if(data!=null){
+        responseData.code = data['code'];
+        responseData.msg = data['message'];
+      }
+
       return new Future.error(responseData);
     }
   }

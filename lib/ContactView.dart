@@ -162,17 +162,20 @@ class _ContactViewState extends State {
   Widget _buildFriendListTile(BuildContext context, int index) {
     var friend = _friends[index];
 
-    return new ListTile(
-      onTap: () => _navigateToFriendDetails(friend, index),
-      leading: new Hero(
-        tag: 'contact_$index',
-        child: new CircleAvatar(
-          backgroundImage: new NetworkImage(friend.avatar),
+    return new Column(children: <Widget>[
+      new ListTile(
+        onTap: () => _navigateToFriendDetails(friend, index),
+        leading: new Hero(
+          tag: 'contact_$index',
+          child: new CircleAvatar(
+            backgroundImage: new NetworkImage(friend.avatar),
+          ),
         ),
+        title: new Text(friend.name),
+        subtitle: new Text(friend.email),
       ),
-      title: new Text(friend.name),
-      subtitle: new Text(friend.email),
-    );
+      new Divider(height: 1,)
+    ],);
   }
 
   void _navigateToFriendDetails(Friend friend, Object avatarTag) {

@@ -53,18 +53,21 @@ class _ConversationsPageState extends State{
   Widget _buildConversationListTile(BuildContext context, int index) {
     var conversation = _conversations[index];
 
-    return new ListTile(
-      onTap: () => _navigateToConversationDetails(conversation, index),
-      leading: new Hero(
-        tag: index,
-        child: new CircleAvatar(
-          backgroundImage: new NetworkImage('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg'),//conversation.peerAvatar
+    return new Column(children: <Widget>[
+      new ListTile(
+        onTap: () => _navigateToConversationDetails(conversation, index),
+        leading: new Hero(
+          tag: index,
+          child: new CircleAvatar(
+            backgroundImage: new NetworkImage('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg'),//conversation.peerAvatar
+          ),
         ),
+        title: new Text(conversation.name),
+        subtitle: new Text(conversation.content),
+        trailing: new Text("9:00"),
       ),
-      title: new Text(conversation.name),
-      subtitle: new Text(conversation.content),
-      trailing: new Text("9:00"),
-    );
+      new Divider(height: 1,)
+    ],);
   }
 
   Widget getConversationList() {

@@ -135,6 +135,11 @@ class _LoginPageState extends State<LoginPage> {
                              var userInfo = data as UserInfo;
                              ApiManager.saveUserInfo(json.encode(userInfo));
                              _go2HomePage();
+                           },onError: (errorData){
+                             print('*********getUserProfile callback error print*********');
+                             var error =  ApiManager.parseErrorInfo(errorData);
+                             closeLoadingDialog();
+                             showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
                            });
                          });
 
