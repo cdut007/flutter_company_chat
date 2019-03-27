@@ -303,6 +303,28 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(decodedJson));
   }
 
+  static Future<UserInfo> getVcardListInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user_result = await prefs.getString('vcard_list_info');
+    if (user_result == null || user_result.isEmpty) {
+      print('获取本地用户名片夹信息失败');
+      var responseErrorEntity = ResponseEntity();
+      responseErrorEntity.code = "-10002";
+      responseErrorEntity.msg = "no user vcardInfo found in local";
+      return new Future.error(responseErrorEntity);
+    }
+    print('获取本地用户名片夹信息：' + user_result);
+    var decodedJson = json.decode(user_result).cast<String, dynamic>();
+    return new Future.value(UserInfo.fromJson(decodedJson));
+  }
+
+  static Future<bool> saveVcardListInfo(var vcardListInfo) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('保存本地用户名片夹信息：' + vcardListInfo);
+    var save_result = await prefs.setString('vcard_list_info', vcardListInfo);
+    return save_result;
+  }
+
   static Future<bool> saveUserInfo(var userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print('保存本地用户信息：' + userInfo);
