@@ -353,6 +353,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
       print('*********createCard callback*********');
       closeLoadingDialog();
       print(data);
+      showToast(context, '添加名片成功');
       var vcardData = {};
       final vcardInfoFuture = ApiManager.getUserVcardList(vcardData);
       setState(() {
