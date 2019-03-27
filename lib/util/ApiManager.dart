@@ -213,7 +213,7 @@ class ApiManager {
     var responseData = getResponseData(response);
     var token = responseData['data'];
     var refreshTokeInfo =
-        await refreshToken({'token': token, 'expireDay': '30'});
+        await refreshToken({'token': token, 'expireDay': '15'});
 
     if (refreshTokeInfo is ResponseEntity) {
       return new Future.error(refreshTokeInfo);
