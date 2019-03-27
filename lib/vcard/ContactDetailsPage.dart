@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/vcard/footer/friend_detail_footer.dart';
 import 'package:flutter_app/vcard/friend_detail_body.dart';
 import 'package:flutter_app/vcard/header/friend_detail_header.dart';
@@ -14,21 +15,25 @@ class ContactDetailsPage extends StatefulWidget {
   final Friend friend;
   final Object avatarTag;
 
+
+
   @override
   _ContactDetailsPageState createState() => new _ContactDetailsPageState();
 }
 
-
 class _ContactDetailsPageState extends State<ContactDetailsPage> {
+  Color themeColor = GlobalConfig.themeColor();
   @override
   Widget build(BuildContext context) {
+
+
     var linearGradient = const BoxDecoration(
       gradient: const LinearGradient(
         begin: FractionalOffset.centerRight,
         end: FractionalOffset.bottomLeft,
         colors: <Color>[
+          const Color.fromARGB(255, 0, 215, 198) ,
           const Color.fromARGB(255, 0, 215, 198),
-          const  Color.fromARGB(255, 0, 215, 198),
         ],
       ),
     );

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import '../global_config.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+
 import 'package:flutter_app/home/QuestionPage.dart';
-import '../global_config.dart';
+
 
 class Common {
   static Widget searchInput(BuildContext context) {

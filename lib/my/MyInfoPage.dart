@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 //import 'package:fluwx/fluwx.dart';
 import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 import 'package:flutter_app/Login/LoginPage.dart';
@@ -135,7 +135,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   renderRow(i) {
     if (i == 0) {
       var avatarContainer = new Container(
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: GlobalConfig.themeColor(),
         height: 200.0,
         child: new Center(
           child: new Column(

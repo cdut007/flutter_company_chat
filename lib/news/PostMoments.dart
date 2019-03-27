@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 //import 'package:image_picker/image_picker.dart';
 
 class PostMoments extends StatefulWidget{

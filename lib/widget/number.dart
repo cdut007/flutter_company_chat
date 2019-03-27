@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter/cupertino.dart';
 
 typedef void PressOperationCallback(Number number);
@@ -223,7 +223,7 @@ class NumberButtonState extends State<NumberButton> {
                 child: new CircleAvatar(
                   backgroundColor: pressed
                       ? Colors.grey[200]
-                      : new Color.fromARGB(255, 0, 215, 198),
+                      : GlobalConfig.themeColor(),
                   radius: 50.0,
                   child: Text(
                     '${widget.number.display}',

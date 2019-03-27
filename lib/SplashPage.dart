@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/IndexPage.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -123,7 +123,7 @@ class SplashState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return new Material(
-      color: new Color.fromARGB(255, 0, 215, 198),
+      color: GlobalConfig.themeColor(),
       child: new Padding(
         padding: const EdgeInsets.only(
           top: 150.0,

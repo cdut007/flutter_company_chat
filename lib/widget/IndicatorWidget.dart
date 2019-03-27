@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/BannerView.dart';
 //indicator view of banner
 class IndicatorWidget extends StatelessWidget {

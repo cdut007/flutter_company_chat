@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 class FindView extends StatefulWidget{
   @override
   _FindViewState createState() => new _FindViewState();

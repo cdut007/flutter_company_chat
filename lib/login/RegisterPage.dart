@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/LoginFormCode.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/StringUtil.dart';
@@ -109,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: new EdgeInsets.fromLTRB(10,
                   topBottomPadding, 10, topBottomPadding),
               child: new Card(
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
@@ -188,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: FlatButton(
           child: Text(
             '已经有账号？登录',
-            style: TextStyle(fontSize: 14.0, color: new Color.fromARGB(255, 0, 215, 198)),
+            style: TextStyle(fontSize: 14.0, color: GlobalConfig.themeColor()),
           ),
           onPressed: () {
             Navigator.pop(context);

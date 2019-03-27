@@ -4,11 +4,10 @@ import 'dart:async';
 import 'package:http/http.dart' as Http;
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_app/global_config.dart';
 import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_app/util/GlobalConfig.dart';
 var BASE_URL = "http://39.96.161.237:9090/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 

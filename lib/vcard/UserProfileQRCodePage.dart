@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 
@@ -22,7 +22,7 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
                 Container(
                   height: 200.0,
                   width: double.infinity,
-                  color: new Color.fromARGB(255, 0, 215, 198),
+                  color: GlobalConfig.themeColor(),
                 ),
                 Align(
                   alignment: Alignment.topLeft,

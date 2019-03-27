@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/entity/Conversation.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
 class ConversationsPage extends StatefulWidget{

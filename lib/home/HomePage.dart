@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import '../global_config.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+
 
 class HomePage extends StatefulWidget {
 

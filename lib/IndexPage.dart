@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/schedule/ScheduleView.dart';
 import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/home/Follow.dart';
@@ -38,28 +38,28 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         activeIcon: const Icon(Icons.home),
         icon: const Icon(Icons.home),
         title: '首页',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: GlobalConfig.themeColor(),
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.chat),
         icon: const Icon(Icons.chat),
         title: '消息',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: GlobalConfig.themeColor(),
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.contact_phone),
         icon: const Icon(Icons.contact_phone),
         title: '名片夹',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: GlobalConfig.themeColor(),
         vsync: this,
       ),
       NavigationIconView(
         activeIcon: const Icon(Icons.cloud),
         icon: const Icon(Icons.cloud_queue),
         title: '商业',
-        color: new Color.fromARGB(255, 0, 215, 198),
+        color: GlobalConfig.themeColor(),
         vsync: this,
       ),
 
@@ -67,7 +67,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         activeIcon: const Icon(Icons.account_circle),
         icon: const Icon(Icons.account_circle),
         title: '我的',
-        color:new Color.fromARGB(255, 0, 215, 198),
+        color:GlobalConfig.themeColor(),
         vsync: this,
       )
     ];

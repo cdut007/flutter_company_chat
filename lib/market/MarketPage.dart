@@ -1,5 +1,5 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/market/StockDetailsPage.dart';
 import 'package:flutter_app/market/enity/Stock.dart';

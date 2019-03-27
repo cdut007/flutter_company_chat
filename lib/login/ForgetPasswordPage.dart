@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/LoginFormCode.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/StringUtil.dart';
@@ -32,7 +32,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   var countdown = 60;
   resetSuccess(){
 
-    showToast(context,'注册重置密码成功');
+    showToast(context,'重置密码成功');
     //设置变量
     Navigator.pop(context);
   }
@@ -97,7 +97,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               padding: new EdgeInsets.fromLTRB(10,
                   topBottomPadding, 10, topBottomPadding),
               child: new Card(
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {

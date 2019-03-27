@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/flutter_calendar.dart';
 import 'package:flutter_app/market/enity/Stock.dart';
 import 'package:http/http.dart' as http;
@@ -77,7 +77,7 @@ class ScheduleViewState extends State<ScheduleView> {
             width: 26.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: new Color.fromARGB(255, 0, 215, 198),
+              color: GlobalConfig.themeColor(),
             ),
             child: Container(
               margin: EdgeInsets.all(3.0),

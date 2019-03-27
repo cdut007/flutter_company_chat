@@ -4,7 +4,7 @@
  * @Date 2019/03/26  14:09
  * @Version  1.0
  */
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 
 class NavigationIconView {
   NavigationIconView({

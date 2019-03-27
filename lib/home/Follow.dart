@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/home/ReplyPage.dart';
 import 'package:flutter_app/home/Article.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/Util/Constants.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_refresh/flutter_refresh.dart';
-import '../global_config.dart';
+
 
 class Follow extends StatefulWidget {
   @override

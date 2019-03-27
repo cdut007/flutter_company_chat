@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:date_utils/date_utils.dart';
 
 class CalendarTile extends StatelessWidget {
@@ -58,7 +58,7 @@ class CalendarTile extends StatelessWidget {
           decoration: isSelected
               ? new BoxDecoration(
             shape: BoxShape.circle,
-            color: new Color.fromARGB(255, 0, 215, 198),
+            color: GlobalConfig.themeColor(),
           )
               : new BoxDecoration(),
           alignment: Alignment.center,

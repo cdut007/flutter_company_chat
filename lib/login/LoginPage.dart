@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: new EdgeInsets.fromLTRB(10,
                   topBottomPadding, 10, topBottomPadding),
               child: new Card(
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
         child: FlatButton(
           child: Text(
             '没有账号？注册',
-            style: TextStyle(fontSize: 14.0, color: new Color.fromARGB(255, 0, 215, 198)),
+            style: TextStyle(fontSize: 14.0, color: GlobalConfig.themeColor()),
           ),
           onPressed: () {
             Navigator.push(context,

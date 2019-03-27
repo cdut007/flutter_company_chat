@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -87,7 +87,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                       children: <Widget>[
                                         new CircleAvatar(
                                           backgroundColor:
-                                              Color.fromARGB(255, 0, 215, 198),
+                                              GlobalConfig.themeColor(),
                                           radius: 25.0,
                                           child: new Icon(
                                             Icons.camera_alt,
@@ -339,7 +339,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
               child: new Card(
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
@@ -396,7 +396,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   Widget _getEditIcon() {
     return new GestureDetector(
       child: new CircleAvatar(
-        backgroundColor: Color.fromARGB(255, 0, 215, 198),
+        backgroundColor: GlobalConfig.themeColor(),
         radius: 14.0,
         child: new Icon(
           Icons.edit,

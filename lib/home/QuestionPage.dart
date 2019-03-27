@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import '../global_config.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+
 import 'package:flutter_app/home/ReplyPage.dart';
-import '../global_config.dart';
+
 
 class QuestionPage extends StatefulWidget {
   @override

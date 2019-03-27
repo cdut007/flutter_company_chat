@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +20,7 @@ class ChatPage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text(
           '聊天',
-          style: TextStyle(color: new Color.fromARGB(255, 0, 215, 198), fontWeight: FontWeight.bold),
+          style: TextStyle(color: GlobalConfig.themeColor(), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -176,7 +176,7 @@ class ChatScreenState extends State<ChatScreen> {
 //              ? Container(
 //            child: Text(
 //              document['content'],
-//              style: TextStyle(color: new Color.fromARGB(255, 0, 215, 198)),
+//              style: TextStyle(color: GlobalConfig.themeColor()),
 //            ),
 //            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
 //            width: 200.0,
@@ -190,7 +190,7 @@ class ChatScreenState extends State<ChatScreen> {
 //              child: CachedNetworkImage(
 //                placeholder: Container(
 //                  child: CircularProgressIndicator(
-//                    valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198)),
+//                    valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor()),
 //                  ),
 //                  width: 200.0,
 //                  height: 200.0,
@@ -250,7 +250,7 @@ class ChatScreenState extends State<ChatScreen> {
 //                    placeholder: Container(
 //                      child: CircularProgressIndicator(
 //                        strokeWidth: 1.0,
-//                        valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198)),
+//                        valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor()),
 //                      ),
 //                      width: 35.0,
 //                      height: 35.0,
@@ -275,7 +275,7 @@ class ChatScreenState extends State<ChatScreen> {
 //                  ),
 //                  padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
 //                  width: 200.0,
-//                  decoration: BoxDecoration(color: new Color.fromARGB(255, 0, 215, 198), borderRadius: BorderRadius.circular(8.0)),
+//                  decoration: BoxDecoration(color: GlobalConfig.themeColor(), borderRadius: BorderRadius.circular(8.0)),
 //                  margin: EdgeInsets.only(left: 10.0),
 //                )
 //                    : document['type'] == 1
@@ -284,7 +284,7 @@ class ChatScreenState extends State<ChatScreen> {
 //                    child: CachedNetworkImage(
 //                      placeholder: Container(
 //                        child: CircularProgressIndicator(
-//                          valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198)),
+//                          valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor()),
 //                        ),
 //                        width: 200.0,
 //                        height: 200.0,
@@ -518,7 +518,7 @@ class ChatScreenState extends State<ChatScreen> {
       child: isLoading
           ? Container(
         child: Center(
-          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198))),
+          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor())),
         ),
         color: Colors.white.withOpacity(0.8),
       )
@@ -537,7 +537,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                 icon: new Icon(Icons.image),
                 onPressed: getImage,
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
               ),
             ),
             color: Colors.white,
@@ -548,7 +548,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                 icon: new Icon(Icons.face),
                 onPressed: getSticker,
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
               ),
             ),
             color: Colors.white,
@@ -558,7 +558,7 @@ class ChatScreenState extends State<ChatScreen> {
           Flexible(
             child: Container(
               child: TextField(
-                style: TextStyle(color: new Color.fromARGB(255, 0, 215, 198), fontSize: 15.0),
+                style: TextStyle(color: GlobalConfig.themeColor(), fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Type your message...',
@@ -576,7 +576,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                 icon: new Icon(Icons.send),
                 onPressed: () => onSendMessage(textEditingController.text, 0),
-                color: new Color.fromARGB(255, 0, 215, 198),
+                color: GlobalConfig.themeColor(),
               ),
             ),
             color: Colors.white,
@@ -593,11 +593,11 @@ class ChatScreenState extends State<ChatScreen> {
   Widget buildListMessage() {
 
     return Flexible(child: Center(
-    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198)))));
+    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor()))));
 
 //    return Flexible(
 //      child: groupChatId == ''
-//          ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198))))
+//          ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor())))
 //          : StreamBuilder(
 //        stream: Firestore.instance
 //            .collection('messages')
@@ -609,7 +609,7 @@ class ChatScreenState extends State<ChatScreen> {
 //        builder: (context, snapshot) {
 //          if (!snapshot.hasData) {
 //            return Center(
-//                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(new Color.fromARGB(255, 0, 215, 198))));
+//                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor())));
 //          } else {
 //            listMessage = snapshot.data.documents;
 //            return ListView.builder(

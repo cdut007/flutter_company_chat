@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/BannerView.dart';
 import 'package:flutter_app/vcard/ContactDetailsPage.dart';
 import 'package:flutter_app/vcard/friend.dart';
@@ -110,7 +110,7 @@ class _ContactViewState extends State {
                     padding: EdgeInsets.all(8.0),
                     child: Row(children: <Widget>[
                       new Card(
-                        color: new Color.fromARGB(255, 0, 215, 198),
+                        color: GlobalConfig.themeColor(),
                         elevation: 3.0,
                         child: new FlatButton(
                             onPressed: () {
