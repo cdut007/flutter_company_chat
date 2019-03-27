@@ -137,6 +137,22 @@ class ApiManager {
   }
 
   ///
+  /// 获取用户名片信息
+  ///
+  static Future getUserVcardList(var data) async {
+    String user_profile_url = BASE_URL + "/user/cardList";
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(user_profile_url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(UserInfo.fromJson(responseData['data']));
+  }
+
+  ///
   /// 获取用户个人信息
   ///
   static Future getUserProfile(var data) async {
@@ -218,8 +234,23 @@ class ApiManager {
     return response.data;
   }
 
+
   ///
   /// 新增名片请求url
+  ///
+  static Future updateCard(var data) async {
+    String login_url = BASE_URL + "/card/updateCard";
+    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
+  /// 更新名片请求url
   ///
   static Future createCard(var data) async {
     String login_url = BASE_URL + "/card/addCard";
@@ -338,8 +369,22 @@ class ApiManager {
         responseEntity.msg = dioError.response.toString();
         var data = dioError.response.data;
         if(data!=null){
-          responseEntity.code = data['code'];
-          responseEntity.msg = data['message'];
+          if(dioError.response.statusCode == 500){
+            try{
+              responseEntity.code ='500';
+              responseEntity.msg = '服务不可用，请稍后再试';
+            }catch (e){
+              print(e);
+            }
+          }else{
+            try{
+              responseEntity.code = data['code'];
+              responseEntity.msg = data['message'];
+            }catch (e){
+              print(e);
+            }
+          }
+
           //如果 token 过期 跳到登录页面。
 //          if(code == "-100021"){
 //            responseEntity.msg = "用户信息已过期，请重新登录";

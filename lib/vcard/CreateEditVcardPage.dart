@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CreateEditVcardPage extends StatefulWidget {
@@ -16,6 +17,13 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
+
+
+  var _nameController = new TextEditingController();
+  var _mailController = new TextEditingController();
+  var _phoneController = new TextEditingController();
+  var _telController = new TextEditingController();
+  var _addressController = new TextEditingController();
 
   File _image;
 
@@ -174,6 +182,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                       ),
                                       enabled: !_status,
                                       autofocus: !_status,
+                                      controller: _nameController,
                                     ),
                                   ),
                                 ],
@@ -209,6 +218,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                       decoration: const InputDecoration(
                                           hintText: "输入邮箱"),
                                       enabled: !_status,
+                                      controller: _mailController,
                                     ),
                                   ),
                                 ],
@@ -258,6 +268,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                         decoration: const InputDecoration(
                                             hintText: "输入移动电话"),
                                         enabled: !_status,
+                                        controller: _phoneController,
                                       ),
                                     ),
                                     flex: 2,
@@ -267,6 +278,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                       decoration: const InputDecoration(
                                           hintText: "输入办公电话"),
                                       enabled: !_status,
+                                      controller: _telController,
                                     ),
                                     flex: 2,
                                   ),
@@ -303,6 +315,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                       decoration: const InputDecoration(
                                           hintText: "输入地址"),
                                       enabled: !_status,
+                                      controller: _addressController,
                                     ),
                                   ),
                                 ],
@@ -326,7 +339,28 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     super.dispose();
   }
   createOrEditCard(){
+    showLoadingDialog(context);
+    var data ={"mobile":_phoneController.text,"name":_nameController.text,"mail":_mailController.text};
+    final future = ApiManager.createCard(data);
+    future.then((data){
+      print('*********createCard callback*********');
+      closeLoadingDialog();
+      print(data);
+      var vcardData = {};
+      final vcardInfoFuture = ApiManager.getUserVcardList(vcardData);
+      setState(() {
+        _status = true;
+        FocusScope.of(context).requestFocus(new FocusNode());
+      });
 
+    },onError: (errorData){
+      print('********* createCard error print*********');
+      var error =  ApiManager.parseErrorInfo(errorData);
+      closeLoadingDialog();
+      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+      print('*********createCard callback error print end*********');
+      //
+    });
   }
 
   Widget _getActionButtons() {
@@ -344,13 +378,22 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                 elevation: 6.0,
                 child: new FlatButton(
                     onPressed: () {
+                      if( _nameController.text.isEmpty){
+                        showToast(context,'请输入全名');
+                        return;
+                      }
+                      if( _mailController.text.isEmpty){
+                        showToast(context,'请输入邮箱');
+                        return;
+                      }
+                      if( _phoneController.text.isEmpty){
+                        showToast(context,'请输入手机号');
+                        return;
+                      }
 
                       createOrEditCard();
 
-                      setState(() {
-                        _status = true;
-                        FocusScope.of(context).requestFocus(new FocusNode());
-                      });
+
                     },
                     child: new Padding(
                       padding: new EdgeInsets.all(10.0),
