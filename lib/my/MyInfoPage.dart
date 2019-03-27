@@ -75,6 +75,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   }
 
   checkLoginStatus(){
+    print("checkLoginStatus... ");
     ApiManager.getUserInfo().then((userInfo){
       setState(() {
 
@@ -89,17 +90,29 @@ class MyInfoPageState extends State<MyInfoPage> {
           userAvatar = null;
         }
       });
+
+      ApiManager.isLoggedIn().then((loggedIn){
+        setState(() {
+          _loggedIn = loggedIn;
+          reloadMenuInfo();
+        });
+      });
+
     },onError: (errorInfo){
+      print("checkLoginStatus has error... ");
       setState(() {
         _userInfo=null;
+        userName = null;
+        userAvatar = null;
+      });
+      ApiManager.isLoggedIn().then((loggedIn){
+        setState(() {
+          _loggedIn = loggedIn;
+          reloadMenuInfo();
+        });
       });
     });
-    ApiManager.isLoggedIn().then((loggedIn){
-      setState(() {
-        _loggedIn = loggedIn;
-        reloadMenuInfo();
-      });
-    });
+
   }
 
   Widget getIconImage(path) {
@@ -215,11 +228,15 @@ class MyInfoPageState extends State<MyInfoPage> {
   }
 
   _handleListItemClick(int index) {
+    if(!_loggedIn){
+      index=index+1;
+    }
     switch (index) {
       case 1:
          if(_loggedIn){
            showOkCancelDialog(context, (){
              ApiManager.logout().then((logout){
+               print("clear logout info... ");
                checkLoginStatus();
              });
            }, '登出', '确认登出吗？');
@@ -262,13 +279,7 @@ class MyInfoPageState extends State<MyInfoPage> {
       builder: (BuildContext context) => child,
     ).then<void>((T value) {
       // The value passed to Navigator.pop() or null.
-      if (value != null) {
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text('You selected: $value'),
-          ),
-        );
-      }
+
     });
   }
 }

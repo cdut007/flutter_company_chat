@@ -33,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var countdown = 60;
   registerSuccess(){
     //设置变量
+    showToast(context,'注册成功');
     Navigator.pop(context);
   }
 

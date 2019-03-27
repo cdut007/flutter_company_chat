@@ -47,13 +47,13 @@ static var refresh_tag='refreshUserInfo';
     String resetPassword_url = BASE_URL + "/pwd/reset";
     var requestData = await putPublicParams(data);
     Response response =
-        await reuqest(resetPassword_url, GlobalConfig.POST, requestData);
+        await reuqest(resetPassword_url, GlobalConfig.PATCH, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData));
+    return new Future.value(responseData['data']);
   }
 
   ///
@@ -211,6 +211,7 @@ static getResponseData(Response response) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user_result = await prefs.getString('user_info');
     if (user_result == null || user_result.isEmpty) {
+      print('获取本地用户信息失败');
       var responseErrorEntity = ResponseEntity();
       responseErrorEntity.code="-10002";
       responseErrorEntity.msg="no user found in local";
@@ -356,7 +357,7 @@ static getResponseData(Response response) {
       response = await dio.get(url, options: options, data: data);
     } else if (httpRequsetType == GlobalConfig.POST) {
       response = await dio.post(url, options: options, data: data);
-    } else if (httpRequsetType == GlobalConfig.POST) {
+    } else if (httpRequsetType == GlobalConfig.PATCH) {
       response = await dio.patch(url, options: options, data: data);
     } else if (httpRequsetType == GlobalConfig.PUT) {
       response = await dio.put(url, options: options, data: data);

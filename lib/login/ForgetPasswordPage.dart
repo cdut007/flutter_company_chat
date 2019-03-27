@@ -30,7 +30,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   var _userPhoneController = new TextEditingController();
   var _userSMSCodeController = new TextEditingController();
   var countdown = 60;
-  registerSuccess(){
+  resetSuccess(){
+
+    showToast(context,'注册重置密码成功');
     //设置变量
     Navigator.pop(context);
   }
@@ -129,7 +131,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                         closeLoadingDialog();
                         print('*********resetPassword callback*********');
                         print(data);
-                        registerSuccess();
+                        resetSuccess();
                       },onError: (errorData){
                        var error =  ApiManager.parseErrorInfo(errorData);
                         closeLoadingDialog();
