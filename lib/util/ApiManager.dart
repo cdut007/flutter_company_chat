@@ -236,6 +236,34 @@ class ApiManager {
 
 
   ///
+  /// 申请发送名片请求url
+  ///
+  static Future applyCard(var data) async {
+    String login_url = BASE_URL + "/card/applyCard";
+    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
+  /// 接收申请名片请求url
+  ///
+  static Future acceptedCard(var data) async {
+    String login_url = BASE_URL + "/card/acceptedCard";
+    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
   /// 新增名片请求url
   ///
   static Future updateCard(var data) async {
