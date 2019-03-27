@@ -340,7 +340,17 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   }
   createOrEditCard(){
     showLoadingDialog(context);
-    var data ={"mobile":_phoneController.text,"name":_nameController.text,"mail":_mailController.text};
+    var hfCardDetails=[];
+    hfCardDetails.add({"cardSide": "FRONT",
+      "companyName": "公司名称",
+      "jobPosition": "职位信息",
+      "language": "语言",
+      "name": _nameController.text,
+      "phoneNumber": _phoneController.text});
+    var data ={"avatar": "头像路径",
+      "cardBgImg": "背景图路径",
+      "cardStyle": "名片样式",
+      "cardType": "名片类型",'hfCardDetails':hfCardDetails};
     final future = ApiManager.createCard(data);
     future.then((data){
       print('*********createCard callback*********');
