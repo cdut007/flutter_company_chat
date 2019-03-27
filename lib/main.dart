@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/SplashPage.dart';
 
+
 void main() {
   runApp(new MaterialApp(
-      title: "智能供应链",
+      title: "掌起",
       theme: new ThemeData(
         primaryIconTheme: const IconThemeData(color: Colors.white),
         brightness: Brightness.light,

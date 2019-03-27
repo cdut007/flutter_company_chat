@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 import 'Mine/MInfoVC.dart';
 import 'Mine/MWalletVC.dart';
 class MineView extends StatefulWidget{

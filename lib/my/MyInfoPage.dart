@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 //import 'package:fluwx/fluwx.dart';
 import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 import 'package:flutter_app/Login/LoginPage.dart';
@@ -244,21 +245,21 @@ class MyInfoPageState extends State<MyInfoPage> {
         break;
       case 2:
         String h5_url = "https://github.com/zhibuyu";
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new NewsWebPage(h5_url, '我的开源')));
+//        Navigator.push(
+//            context,
+//            new MaterialPageRoute(
+//                builder: (context) => new NewsWebPage(h5_url, '我的开源')));
         break;
       case 3:
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => new WechatPage()));
+//        Navigator.push(context,
+//            new MaterialPageRoute(builder: (context) => new WechatPage()));
         break;
       case 4:
         String h5_url = "https://github.com/zhibuyu/Flutter_Stocks/issues";
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new NewsWebPage(h5_url, '意见反馈')));
+//        Navigator.push(
+//            context,
+//            new MaterialPageRoute(
+//                builder: (context) => new NewsWebPage(h5_url, '意见反馈')));
         break;
       case 5:
         showDemoDialog<String>(
