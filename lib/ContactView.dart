@@ -4,6 +4,7 @@ import 'package:flutter_app/vcard/ContactDetailsPage.dart';
 import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter_app/widget/HeaderListView.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -150,10 +151,37 @@ class _ContactViewState extends State {
         child: new CircularProgressIndicator(),
       );
     } else {
-      content = new ListView.builder(
-        itemCount: _friends.length,
-        itemBuilder: _buildFriendListTile,
+
+      Size deviceSize = MediaQuery.of(context).size;
+      content = new HeaderListView(
+        _friends,
+        headerList: [1],
+        itemWidgetCreator: _buildFriendListTile,
+        headerCreator: (BuildContext context, int position) {
+          if(position == 0) {
+            return    new BannerView(
+              data: ['a', 'b'],
+              buildShowView: (index, data) {
+                return getBannerConainerWidget(deviceSize, data);
+              },
+              onBannerClickListener: (index, data) {
+                print(index);
+                Navigator.of(context)
+                    .push(new MaterialPageRoute(builder: (context) {
+                  return new CreateEditVcardPage();
+                }));
+              },
+            );
+          }else {
+            return new Padding(padding: EdgeInsets.all(10.0), child:
+            Text('$position -----header------- '),);
+          }
+        },
       );
+//      content = new ListView.builder(
+//        itemCount: _friends.length,
+//        itemBuilder: _buildFriendListTile,
+//      );
     }
 
     return content;
@@ -195,19 +223,19 @@ class _ContactViewState extends State {
     return new Scaffold(
         body: new Column(
       children: <Widget>[
-        new BannerView(
-          data: ['a', 'b'],
-          buildShowView: (index, data) {
-            return getBannerConainerWidget(deviceSize, data);
-          },
-          onBannerClickListener: (index, data) {
-            print(index);
-            Navigator.of(context)
-                .push(new MaterialPageRoute(builder: (context) {
-              return new CreateEditVcardPage();
-            }));
-          },
-        ),
+//        new BannerView(
+//          data: ['a', 'b'],
+//          buildShowView: (index, data) {
+//            return getBannerConainerWidget(deviceSize, data);
+//          },
+//          onBannerClickListener: (index, data) {
+//            print(index);
+//            Navigator.of(context)
+//                .push(new MaterialPageRoute(builder: (context) {
+//              return new CreateEditVcardPage();
+//            }));
+//          },
+//        ),
         new Expanded(child: new Container(child:  getFriendList(),),flex: 1,)
       ],
     ));

@@ -169,6 +169,24 @@ class ApiManager {
   }
 
   ///
+  /// 获取动态 url
+  ///
+  static Future getPostMomentsList(var data) async {
+    if(true){
+      return new Future.value([]);
+    }
+    String login_url = BASE_URL + "/post/moment";
+    Response response = await reuqest(login_url, GlobalConfig.GET, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+
+  ///
   /// 刷新token url
   ///
   static Future refreshToken(var data) async {
@@ -278,7 +296,7 @@ class ApiManager {
     return access_token;
   }
 
-  static parseErrorInfo(errorData) {
+  static parseErrorInfo( errorData) {
     if (errorData is DioError) {
       DioError dioError = errorData;
       ResponseEntity responseEntity = ResponseEntity();
@@ -308,6 +326,10 @@ class ApiManager {
         if(data!=null){
           responseEntity.code = data['code'];
           responseEntity.msg = data['message'];
+          //如果 token 过期 跳到登录页面。
+//          if(code == "-100021"){
+//            responseEntity.msg = "用户信息已过期，请重新登录";
+//          }
         }
 
       } else {
