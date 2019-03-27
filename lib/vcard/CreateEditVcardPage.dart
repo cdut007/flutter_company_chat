@@ -347,7 +347,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
       "language": "语言",
       "name": _nameController.text,
       "phoneNumber": _phoneController.text});
-    var data ={'hfCardDetails':hfCardDetails};
+    Map<String, dynamic> data ={'hfCardDetails':hfCardDetails};
     final future = ApiManager.createCard(data);
     future.then((data){
       print('*********createCard callback*********');
