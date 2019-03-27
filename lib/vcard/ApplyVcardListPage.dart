@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/entity/Conversation.dart';
+import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
 class ApplyVcardListPage extends StatefulWidget{
   @override
@@ -25,10 +26,15 @@ class _ApplyVcardListPageState extends State{
   @override
   void initState() {
     super.initState();
-    _loadConversations();
+    _loadApplyVcardLists();
   }
 
-  Future<void> _loadConversations() async {
+  Future<void> _loadApplyVcardLists() async {
+    var requestData={};
+    ApiManager.getApplyVcardList(requestData).then((items){
+
+    });
+
     var conersations = List<Conversation>();
     for(var index = 0; index < 10; index++) {
       Conversation value = Conversation();
@@ -42,6 +48,12 @@ class _ApplyVcardListPageState extends State{
     });
   }
 
+  void applyVcard(var data ,int index){
+    var requestData = {};
+    ApiManager.acceptedCard(requestData).then((info){
+
+    });
+  }
 
   void _navigateToConversationDetails(Conversation conversation, Object avatarTag) {
     Navigator.of(context).push(
@@ -75,6 +87,7 @@ class _ApplyVcardListPageState extends State{
           child: new FlatButton(
               onPressed: () {
                 print("apply vcard call");
+                applyVcard(conversation,index);
               },
               child: new Padding(
                 padding: new EdgeInsets.all(0.0),
