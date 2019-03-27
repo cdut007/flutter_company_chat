@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/BannerView.dart';
 import 'package:flutter_app/vcard/ContactDetailsPage.dart';
 import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
+import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -155,7 +157,7 @@ class _ContactViewState extends State {
       Size deviceSize = MediaQuery.of(context).size;
       content = new HeaderListView(
         _friends,
-        headerList: [1],
+        headerList: [1,2],
         itemWidgetCreator: _buildFriendListTile,
         headerCreator: (BuildContext context, int position) {
           if(position == 0) {
@@ -173,8 +175,42 @@ class _ContactViewState extends State {
               },
             );
           }else {
-            return new Padding(padding: EdgeInsets.all(10.0), child:
-            Text('$position -----header------- '),);
+            return new Padding(padding: EdgeInsets.all(6.0), child:
+            Column(
+              children: <Widget>[
+            InkWell(child:new Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+                  child: new Row(
+                    children: <Widget>[
+                      Container(
+                        child: Icon(Icons.contacts,color: Colors.blueGrey,),
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                      ),
+                      new Expanded(
+                          child: new Text(
+                            '新的名片申请',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),flex: 1,),
+//                      Icon(
+//                        Icons.keyboard_arrow_right,
+//                        size: 36,
+//                        color: Colors.grey,
+//                      )
+                    ],
+                  )),
+              onTap: () {
+
+        Navigator.push(
+            context,
+            new MaterialPageRoute(
+                builder: (context) => new ApplyVcardListPage()));
+              },
+                ),
+                Divider(
+                  height: 1.0,
+                )
+              ],
+            ),);
           }
         },
       );

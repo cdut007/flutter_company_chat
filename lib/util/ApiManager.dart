@@ -14,6 +14,8 @@ var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 class ApiManager {
   static var refresh_tag = 'refreshUserInfo';
 
+
+
   ///
   /// 注册请求url
   ///
@@ -140,7 +142,7 @@ class ApiManager {
   /// 获取用户名片信息
   ///
   static Future getUserVcardList(var data) async {
-    String user_profile_url = BASE_URL + "/user/cardList";
+    String user_profile_url = BASE_URL + "/card/findCard";
     var requestData = await putPublicParams(data);
     Response response =
     await reuqest(user_profile_url, GlobalConfig.GET, requestData);
@@ -241,7 +243,7 @@ class ApiManager {
   /// 申请发送名片请求url
   ///
   static Future applyCard(var data) async {
-    String url = BASE_URL + "/card/applyCard";
+    String url = BASE_URL + "/card/apply";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
@@ -256,7 +258,7 @@ class ApiManager {
   /// 接收申请名片请求url
   ///
   static Future acceptedCard(var data) async {
-    String url = BASE_URL + "/card/acceptedCard";
+    String url = BASE_URL + "/card/"+data['applyId']+"/exchange";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
@@ -273,7 +275,7 @@ class ApiManager {
   static Future updateCard(var data) async {
     String url = BASE_URL + "/card/updateCard";
     var requestData = await putPublicParams(data);
-    Response response = await reuqest(url, GlobalConfig.POST, requestData);
+    Response response = await reuqest(url, GlobalConfig.PUT, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
