@@ -1,14 +1,29 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
-//import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/ApiManager.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
+
+List<File> photoFileList = [];
 
 class PostMoments extends StatefulWidget{
+
   @override
   _PostMomentsState createState() => new _PostMomentsState();
 }
 
+
 class _PostMomentsState extends State<PostMoments>{
   var textController = new TextEditingController();
   var fsNode = new FocusNode();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    photoFileList = [];
+  }
 
   @override
   Widget build(BuildContext context){
@@ -22,7 +37,25 @@ class _PostMomentsState extends State<PostMoments>{
                   color: Colors.white,
               )),
               onPressed: () {
-                print('发表文字');
+                var text = textController.text;
+                if(text.isEmpty){
+                  showToast(context, '请输入内容');
+                  return;
+                }
+                for(var i=0;i<photoFileList.length;i++){
+                  print('上传文件路径：'+photoFileList[i].path);
+                 // GlobalConfig.getFileName(widget.photoFileList[i]);
+                }
+                //photoList
+                print('发表文字:'+text);
+                var data = {'text':textController.text,};
+                ApiManager.postMoments(data).then((result){
+
+                },onError: (errorData){
+                  print('*********postMoments callback error print*********');
+                  var error =  ApiManager.parseErrorInfo(errorData);
+                  showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+                });
               },
             )
           ],
@@ -72,6 +105,7 @@ class _PostMomentsState extends State<PostMoments>{
 
 
 class SelectPhoto extends StatefulWidget{
+
   @override
   SelectPhotoState createState() => new SelectPhotoState();
 }
@@ -100,6 +134,11 @@ class SelectPhotoState extends State<SelectPhoto>{
                   )
               ),
               onTap: (){
+//                print('remove size= ${widget._photoFileList.length}');
+              if( photoFileList.length>0){
+                photoFileList.removeAt(i);
+              }
+
                 photoList.removeAt(i);
                 getWrapList();
               },
@@ -123,7 +162,6 @@ class SelectPhotoState extends State<SelectPhoto>{
                 )
             ),
             onTap: (){
-              // photoList.insert(photoList.length, photoList.length);
               openImage();
             },
           )
@@ -148,12 +186,14 @@ class SelectPhotoState extends State<SelectPhoto>{
   }
 
   Future openImage() async{
-//    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-//
-//    if (image != null) {
-//      photoList.insert(photoList.length, new Image.file(image));
-//      getWrapList();
-//    }
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      photoFileList.add(image);
+      var width = (MediaQuery.of(context).size.width - 40) / 3;
+      photoList.insert(photoList.length, new Image.file(image,fit:BoxFit.cover,width: width,height: width,));
+      getWrapList();
+    }
   }
 
   Widget build(BuildContext context){

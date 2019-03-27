@@ -168,6 +168,21 @@ class ApiManager {
   }
 
   ///
+  /// 发布动态 url
+  ///
+  static Future postMoments(var data) async {
+
+    String login_url = BASE_URL + "/post/moment";
+    Response response = await reuqest(login_url, GlobalConfig.POST, data);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
   /// 获取动态 url
   ///
   static Future getPostMomentsList(var data) async {

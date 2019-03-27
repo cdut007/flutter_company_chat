@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -21,7 +22,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    var fileName = image.path.substring(image.parent.path.length+1,image.path.length);
+    var fileName = GlobalConfig.getFileName(image);
     ApiManager.uploadFile(fileName, image.path);
     setState(() {
       _image = image;

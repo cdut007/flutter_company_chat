@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'dart:io';
+import 'dart:async';
 
 class GlobalConfig{
   static bool dark = true;
@@ -16,5 +18,10 @@ class GlobalConfig{
 
    static  Color themeColor(){
     return new Color.fromARGB(255, 0, 35, 198);//(255, 0, 215, 198
+  }
+
+  static String getFileName(File image){
+    var fileName = image.path.substring(image.parent.path.length+1,image.path.length);
+    return fileName;
   }
 }
