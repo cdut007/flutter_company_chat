@@ -38,7 +38,7 @@ android {
         applicationId "com.holdingfuture.flutterapp"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode flutterVersionCode.toInteger()
+        versionCode 2 //flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

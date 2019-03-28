@@ -1,20 +1,27 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_refresh/flutter_refresh.dart';
 
 typedef HeaderWidgetBuild = Widget Function(BuildContext context, int position);
 
 typedef ItemWidgetBuild = Widget Function(BuildContext context, int position);
+
 
 class HeaderListView extends StatefulWidget {
   List headerList;
   List listData;
   ItemWidgetBuild itemWidgetCreator;
   HeaderWidgetBuild headerCreator;
+  bool usePullToRefresh=false;
+  var  onFooterRefresh;
+  var  onHeaderRefresh;
 
   HeaderListView(List this.listData,
       {Key key,
         List this.headerList,
         ItemWidgetBuild this.itemWidgetCreator,
-        HeaderWidgetBuild this.headerCreator})
+        HeaderWidgetBuild this.headerCreator, bool this.usePullToRefresh, var  this.onFooterRefresh,
+       var  this.onHeaderRefresh,})
       : super(key: key);
 
   @override
@@ -26,13 +33,31 @@ class HeaderListView extends StatefulWidget {
 class HeaderListViewState extends State<HeaderListView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: new ListView.builder(
-          itemBuilder: (BuildContext context, int position) {
-            return buildItemWidget(context, position);
-          },
-          itemCount: _getListCount()),
-    );
+
+    if(widget.usePullToRefresh == true){
+      return  new Refresh(
+          onFooterRefresh: widget.onFooterRefresh,
+          onHeaderRefresh:  widget.onHeaderRefresh,
+          child: new ListView.builder(
+        itemBuilder: (BuildContext context, int position) {
+          return buildItemWidget(context, position);
+        },
+        itemCount: _getListCount(),
+        physics: new AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+      ));
+    }else{
+      return new ListView.builder(
+        itemBuilder: (BuildContext context, int position) {
+          return buildItemWidget(context, position);
+        },
+        itemCount: _getListCount(),
+        physics: new AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+      );
+    }
+
+
   }
 
   int _getListCount() {

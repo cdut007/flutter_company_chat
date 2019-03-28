@@ -17,7 +17,7 @@ class GlobalConfig{
   static var file_domain;
 
    static  Color themeColor(){
-    return new Color.fromARGB(255, 0, 35, 198);//(255, 0, 215, 198
+    return new Color.fromARGB(255, 1, 110, 197);//(255, 0, 215, 198
   }
 
   static String getFileName(File image){

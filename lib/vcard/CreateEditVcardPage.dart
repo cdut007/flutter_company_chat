@@ -42,6 +42,8 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   void initState() {
     // TODO: implement initState
     super.initState();
+    var vcardData = {};
+    final vcardInfoFuture = ApiManager.getUserVcardList(vcardData);
   }
 
   @override

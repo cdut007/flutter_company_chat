@@ -6,6 +6,7 @@ import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
+import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
 
 import 'package:http/http.dart' as http;
@@ -161,19 +162,8 @@ class _ContactViewState extends State {
         itemWidgetCreator: _buildFriendListTile,
         headerCreator: (BuildContext context, int position) {
           if(position == 0) {
-            return    new BannerView(
-              data: ['a', 'b'],
-              buildShowView: (index, data) {
-                return getBannerConainerWidget(deviceSize, data);
-              },
-              onBannerClickListener: (index, data) {
-                print(index);
-                Navigator.of(context)
-                    .push(new MaterialPageRoute(builder: (context) {
-                  return new CreateEditVcardPage();
-                }));
-              },
-            );
+            return new Container();
+            //return   new VcardBannerView();
           }else {
             return new Padding(padding: EdgeInsets.all(6.0), child:
             Column(

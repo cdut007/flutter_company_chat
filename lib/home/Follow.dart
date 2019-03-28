@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/home/ReplyPage.dart';
 import 'package:flutter_app/home/Article.dart';
 import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/Util/Constants.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_refresh/flutter_refresh.dart';
-
+import 'package:flutter_app/widget/HeaderListView.dart';
 
 class Follow extends StatefulWidget {
   @override
@@ -177,14 +179,12 @@ class _FollowState extends State<Follow> {
         setState(() {
           if (request_type != LOADMORE_REQIEST) {
             // 不是加载更多，则直接为变量赋值
-            if(request_type ==START_REQUEST){
-              listData =   new List<Article>();
-
+            if (request_type == START_REQUEST) {
+              listData = new List<Article>();
             }
             for (Article data in datas) {
               listData.add(data);
             }
-
           } else {
             // 是加载更多，则需要将取到的news数据追加到原来的数据后面
             List<Article> list1 = new List<Article>();
@@ -219,17 +219,25 @@ class _FollowState extends State<Follow> {
         child: new CircularProgressIndicator(),
       );
     } else {
-      return new Refresh(
-          onFooterRefresh: onFooterRefresh,
-          onHeaderRefresh: pullToRefresh,
-          child: ListView.builder(
-            itemCount: (listData == null) ? 0 : listData.length,
-            itemBuilder: (BuildContext context, int position) {
-              return  wordsCard(listData[position]);
-            },
-            physics: new AlwaysScrollableScrollPhysics(),
-            shrinkWrap: true,
-          ));
+      Widget content = new HeaderListView(
+        listData,
+        headerList: [1],
+        headerCreator: (BuildContext context, int position) {
+          if (position == 0) {
+              return   new VcardBannerView();
+          }
+        },
+        itemWidgetCreator: (BuildContext context, int position) {
+          return wordsCard(listData[position]);
+        },
+        usePullToRefresh:true,
+        onFooterRefresh: onFooterRefresh,
+        onHeaderRefresh: pullToRefresh,
+      );
+
+
+    return new Container(
+          child: content );
     }
   }
 
@@ -237,9 +245,14 @@ class _FollowState extends State<Follow> {
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Column(
-          children: <Widget>[
-            new Expanded(child: new Container(child:  getBody(),),flex: 1,)
-          ],
-        ));
+      children: <Widget>[
+        new Expanded(
+          child: new Container(
+            child: getBody(),
+          ),
+          flex: 1,
+        )
+      ],
+    ));
   }
 }
