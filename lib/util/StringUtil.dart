@@ -19,16 +19,28 @@ class StringUtil{
 }
 
  getUserVcardName(VcardEntity vcardEntiy){
+  if(vcardEntiy.hfCardDetails == null){
+    return '';
+  }
   return vcardEntiy.hfCardDetails[0].name;
 }
  getUserVcardPhone(VcardEntity vcardEntiy){
+   if(vcardEntiy.hfCardDetails == null){
+     return '';
+   }
   return vcardEntiy.hfCardDetails[0].phoneNumber;
 }
  getUserVcardCompany(VcardEntity vcardEntiy){
+   if(vcardEntiy.hfCardDetails == null){
+     return '';
+   }
   return vcardEntiy.hfCardDetails[0].companyName;
 }
 
 getUserVcardJobPosition(VcardEntity vcardEntiy){
+  if(vcardEntiy.hfCardDetails == null){
+    return '';
+  }
   return vcardEntiy.hfCardDetails[0].jobPosition;
 }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
-import 'package:flutter_app/entity/VcardEntity.dart';
+import 'package:flutter_app/entity/ApplyVcardEntity.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 class ApplyVcardListPage extends StatefulWidget{
@@ -9,7 +9,7 @@ class ApplyVcardListPage extends StatefulWidget{
 }
 class _ApplyVcardListPageState extends State{
 
-  List<VcardEntity> _applyList = [];
+  List<ApplyVcardEntity> _applyList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +31,11 @@ class _ApplyVcardListPageState extends State{
 
   _loadApplyVcardLists()  {
     var requestData={};
-    ApiManager.getApplyVcardList(requestData).then((items){
-      var applyList = List<VcardEntity>();
-      for(var index = 0; index < 10; index++) {
-        VcardEntity value = VcardEntity();
-        applyList.add(value);
-      }
+    ApiManager.getApplyVcardList(requestData).then((datas){
+      List<ApplyVcardEntity> vcardList = (datas as List) != null
+          ? (datas as List).map((i) => ApplyVcardEntity.fromJson(i)).toList()
+          : null;
+      var applyList = vcardList;
       print('applyList  load length：${applyList.length}');
       setState(() {
         _applyList = applyList;
@@ -52,10 +51,12 @@ class _ApplyVcardListPageState extends State{
 
   }
 
-  void applyVcard(var data ,int index){
-    var requestData = {'approve':true,'applyId':'applyId'};
+  void applyVcard(ApplyVcardEntity data ,int index){
+    var requestData = {'approve':true,'applyId':data.id};
     ApiManager.acceptedCard(requestData).then((info){
-
+      showToast(context, '名片添加成功');
+      //event bus.
+      Navigator.pop(context);
     },onError: (errorData){
       print('*********acceptedCard callback error print*********');
       var error =  ApiManager.parseErrorInfo(errorData);
@@ -64,7 +65,7 @@ class _ApplyVcardListPageState extends State{
     });
   }
 
-  void _navigateToConversationDetails(VcardEntity vcardEntity, Object avatarTag) {
+  void _navigateToConversationDetails(ApplyVcardEntity vcardEntity, Object avatarTag) {
 //    Navigator.of(context).push(
 //      new MaterialPageRoute(
 //        builder: (c) {
@@ -84,12 +85,10 @@ class _ApplyVcardListPageState extends State{
         onTap: () => _navigateToConversationDetails(apply, index),
         leading: new Hero(
           tag: 'vcard apply ${index}',
-          child: new CircleAvatar(
-            backgroundImage: new NetworkImage('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg'),//conversation.peerAvatar
-          ),
+          child:  CommonUI.getAvatarWidget(apply.userAvatar),
         ),
-        title: new Text('conversation.name'),
-        subtitle: new Text('conversation.content'),
+        title: new Text(apply.userName),
+        subtitle: new Text(apply.userCompany),
         trailing: new Container(child: new Card(
           color: GlobalConfig.themeColor(),
           elevation: 2.0,

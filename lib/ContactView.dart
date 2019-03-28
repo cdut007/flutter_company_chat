@@ -10,6 +10,7 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/entity/VcardEntity.dart';
+import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'dart:async';
 import 'package:event_bus/event_bus.dart';
@@ -25,7 +26,7 @@ class ContactView extends StatefulWidget {
 }
 
 class _ContactViewState extends State {
-  List<Friend> _friends = [];
+  List<VcardEntity> _friends = [];
 
   EventBus eventBus = GlobalConfig.getEventBus();
   StreamSubscription loginSubscription;
@@ -56,12 +57,14 @@ class _ContactViewState extends State {
 
 
   Future<void> _loadFriends() async {
-    http.Response response =
-        await http.get('https://randomuser.me/api/?results=25');
 
     ApiManager.getVcardList({}).then((datas){
+      List<VcardEntity> vcardList = (datas as List) != null
+          ? (datas as List).map((i) => VcardEntity.fromJson(i)).toList()
+          : null;
+      var applyList = vcardList;
       setState(() {
-        _friends = Friend.allFromResponse(response.body);
+        _friends = applyList;
       });
     },onError: (errorData){
       print('*********getVcardList callback error print*********');
@@ -265,18 +268,18 @@ class _ContactViewState extends State {
           tag: 'contact_$index',
           child:  CommonUI.getAvatarWidget(friend.avatar),
         ),
-        title: new Text(friend.name),
-        subtitle: new Text(friend.email),
+        title: new Text(getUserVcardName(friend)),
+        subtitle: new Text(getUserVcardCompany(friend)),
       ),
       new Divider(height: 1,)
     ],);
   }
 
-  void _navigateToFriendDetails(Friend friend, Object avatarTag) {
+  void _navigateToFriendDetails(VcardEntity friend, Object avatarTag) {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-          return new ContactDetailsPage(friend, avatarTag: avatarTag);
+          return new ContactDetailsPage(Friend(avatar: 'http://res', name: 'test', email: 'ww@ww', location: 'china'), avatarTag: avatarTag);
         },
       ),
     );

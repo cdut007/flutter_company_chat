@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/schedule/ScheduleView.dart';
-import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/home/Follow.dart';
 import 'package:flutter_app/ContactView.dart';
 import 'package:flutter_app/chat/ConversationsPage.dart';
-import 'package:flutter_app/searchPage.dart';
+import 'package:flutter_app/QRCodeScanPage.dart';
 import 'package:flutter_app/news/PostMoments.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
-import 'package:flutter_app/vcard/ApplyVcardPage.dart';
+import 'package:flutter_app/searchPage.dart';
 import 'package:flutter_app/widget/CustomIcon.dart';
 import 'package:flutter_app/widget/CustomInactiveIcon.dart';
 import 'package:flutter_app/widget/NavigationIconView.dart';
@@ -161,10 +159,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                 ),
                 onSelected: (String value) {
                   if(value == '扫一扫'){
-//                    FlutterBarcodeScanner.scanBarcode('#106ec5','取消').then((barcodeScanRes){
-//                      //
-//                      Navigator.push(context, new MaterialPageRoute(builder: (context)=> new ApplyVcardPage(key:Key('applyVcard'),applyUrl: barcodeScanRes)));
-//                    });
+                    Navigator.push(context, new MaterialPageRoute(builder: (context)=> new QrCodeScanPage()));
                   }else if(value == '添加名片'){
                     Navigator.push(context, new MaterialPageRoute(builder: (context)=> new CreateEditVcardPage()));
                   }else if(value == '发动态'){
