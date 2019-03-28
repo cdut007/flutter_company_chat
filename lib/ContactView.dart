@@ -24,7 +24,6 @@ class ContactView extends StatefulWidget {
 
 class _ContactViewState extends State {
   List<Friend> _friends = [];
-
   @override
   void initState() {
     super.initState();
@@ -50,6 +49,9 @@ class _ContactViewState extends State {
       var error =  ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
       print('*********getVcardList callback error print end*********');
+      setState(() {
+
+      });
     });
 
   }
@@ -166,6 +168,7 @@ class _ContactViewState extends State {
 
   Widget getFriendList() {
     Widget content;
+
 
     if (_friends.isEmpty) {
       content = new Center(

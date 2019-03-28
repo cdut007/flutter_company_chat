@@ -51,6 +51,9 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     // TODO: implement initState
     super.initState();
     _vcardEntity = widget.vcardEntity;
+    if(_vcardEntity == null){
+      _vcardEntity = new VcardEntity();
+    }
     if(_vcardEntity.hfCardDetails!=null && _vcardEntity.hfCardDetails.length>0){
       _nameController.text = getUserVcardName(_vcardEntity);
       _phoneController.text = getUserVcardPhone(_vcardEntity);

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:event_bus/event_bus.dart';
 import 'dart:io';
 import 'dart:async';
 
@@ -31,6 +32,15 @@ class GlobalConfig{
      }
     var fileName = 'http://39.96.161.237:9090/api/'+filePath;
     return fileName;
+  }
+
+  static EventBus _eventBus;
+
+  static getEventBus(){
+     if(_eventBus == null){
+       _eventBus = new EventBus();
+     }
+     return _eventBus;
   }
 
 

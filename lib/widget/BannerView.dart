@@ -81,7 +81,7 @@ class BannerViewState extends State<BannerView> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQueryData.fromWindow(ui.window).size.width;
     if(pageController == null){
-      pageController = new PageController(initialPage: widget.data.length);
+      pageController = new PageController(initialPage: 0);
     }
     return new Container(
         child: new Column(
@@ -119,7 +119,9 @@ class BannerViewState extends State<BannerView> {
             },
             itemCount: widget.data.length,
             onPageChanged: (index) {
+
               this._currentIndex = index % widget.data.length;
+              print('onPageChanged _currentIndex=$_currentIndex');
               setState(() {});
 
             },
@@ -138,7 +140,7 @@ class BannerViewState extends State<BannerView> {
 
   /// indicator widget
   Widget _renderIndicator() {
-    print("index==$_currentIndex");
+    print("_renderIndicator index==$_currentIndex");
     var index = this._currentIndex;
     index = index <= 0 ? 0 : index;
     return new IndicatorWidget(

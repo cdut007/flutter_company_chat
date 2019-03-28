@@ -8,9 +8,11 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/news/NewsWebPage.dart';
 import 'package:flutter_app/my/WechatPage.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
+import 'package:flutter_app/entity/VcardEntity.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 //import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:share/share.dart';
+import 'package:event_bus/event_bus.dart';
 
 /**
  * @Description  文我的界面
@@ -165,6 +167,8 @@ class MyInfoPageState extends State<MyInfoPage> {
               print(result);
               if(result == ApiManager.refresh_tag){
                 checkLoginStatus();
+                EventBus eventBus = GlobalConfig.getEventBus();
+                eventBus.fire(VcardEntity());
               }
 
             });

@@ -43,6 +43,8 @@ class _LoginPageState extends State<LoginPage> {
          phone = userInfoData.phoneNumber;
          _userPhoneController.text = phone;
        });
+     },onError: (empty){
+       //
      });
   }
 

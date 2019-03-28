@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/ApiManager.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:event_bus/event_bus.dart';
 
 class VcardBannerView extends StatefulWidget {
   VcardBannerView({Key key}) : super(key: key);
@@ -20,9 +22,17 @@ class VcardBannerView extends StatefulWidget {
 class _VcardBannerState extends State {
   List<VcardEntity> vcardList = [];
   var currentIndex=-1;
+  EventBus eventBus = GlobalConfig.getEventBus();
+  StreamSubscription loginSubscription;
   @override
   void initState() {
     super.initState();
+    print('*********【初始化名片订阅事件】*********');
+     loginSubscription = eventBus.on<VcardEntity>().listen((event) {
+       print('*********收到名片订阅事件*********');
+      print(event);
+      _loadVcardLists();
+    });
 
     ApiManager.getVcardListInfo().then((vcard_list_result_Str) {
       var   decodedJson = json.decode(vcard_list_result_Str);
@@ -35,6 +45,13 @@ class _VcardBannerState extends State {
     });
   }
 
+  @override
+  void dispose(){
+    super.dispose();
+    loginSubscription.cancel();
+    print('*********【取消名片订阅事件】*********');
+
+  }
   _renderInfo() {
     setState(() {});
   }
@@ -173,6 +190,38 @@ class _VcardBannerState extends State {
     ));
   }
 
+  Widget createAddCard(){
+    return   Card(
+        child:  new InkWell(child:Container(
+          child: Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget>[
+            Padding(
+                padding:
+                EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                child: Icon(Icons.add,size: 56,)),
+            Text('添加名片',style: TextStyle(fontSize: 16),)
+          ]),
+          height: 200.0,
+          padding: EdgeInsets.only(
+          ), alignment: Alignment.center,),onTap: () {
+          Navigator.of(context)
+              .push(new MaterialPageRoute<String>(builder: (context) {
+            return new CreateEditVcardPage();
+          })).then((String result){
+
+            //处理代码
+            print('********vcard banner获取上一个页面返回的参数*******');
+            print(result);
+
+
+            if(result == ApiManager.vcard_list_refresh_tag){
+              _loadVcardLists();
+            }
+
+          });
+        })
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -181,47 +230,25 @@ class _VcardBannerState extends State {
     if (vcardList.isEmpty) {
       return new Column(
         children: <Widget>[
-          Card(
-              child:  new InkWell(child:Container(
-                  child: Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget>[
-                    Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                        child: Icon(Icons.add,size: 56,)),
-                    Text('添加名片',style: TextStyle(fontSize: 16),)
-                  ]),
-                  height: 200.0,
-                  padding: EdgeInsets.only(
-                  ), alignment: Alignment.center,),onTap: () {
-                Navigator.of(context)
-                    .push(new MaterialPageRoute<String>(builder: (context) {
-                  return new CreateEditVcardPage();
-                })).then((String result){
-
-                  //处理代码
-                  print('********vcard banner获取上一个页面返回的参数*******');
-                  print(result);
-
-
-                  if(result == ApiManager.vcard_list_refresh_tag){
-                    _loadVcardLists();
-                  }
-
-                });
-              })
-          )
+        createAddCard()
         ],
       );
     } else {
+      List<VcardEntity> vcardItemList = new List();
+      vcardItemList.addAll(vcardList);
+      vcardItemList.add(new VcardEntity());
       return new Column(
         children: <Widget>[
           new BannerView(
-            data: vcardList,
+            data: vcardItemList,
             buildShowView: (index, data) {
+              if((data as VcardEntity).id == null){
+                return createAddCard();
+              }
               return getBannerConainerWidget(deviceSize, data);
             },
             onBannerClickListener: (index, data) {
-              print(index);
+              print('onBannerClickListener=$index');
               currentIndex = index;
               Navigator.of(context)
                   .push(new MaterialPageRoute<String>(builder: (context) {
