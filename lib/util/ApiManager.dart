@@ -13,6 +13,7 @@ var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
   static var refresh_tag = 'refreshUserInfo';
+  static var vcard_list_refresh_tag = 'vcard_list_refresh_tag';
 
 
 
@@ -167,7 +168,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData['data']));
+    return new Future.value(responseData['data']);
   }
 
   ///
@@ -355,7 +356,7 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(decodedJson));
   }
 
-  static Future<UserInfo> getVcardListInfo() async {
+  static Future<String> getVcardListInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user_result = await prefs.getString('vcard_list_info');
     if (user_result == null || user_result.isEmpty) {
@@ -366,8 +367,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     print('获取本地用户名片夹信息：' + user_result);
-    var decodedJson = json.decode(user_result).cast<String, dynamic>();
-    return new Future.value(UserInfo.fromJson(decodedJson));
+    return new Future.value(user_result);
   }
 
   static Future<bool> saveVcardListInfo(var vcardListInfo) async {

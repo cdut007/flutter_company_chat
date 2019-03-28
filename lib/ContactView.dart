@@ -6,6 +6,7 @@ import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
 
@@ -221,9 +222,7 @@ class _ContactViewState extends State {
         onTap: () => _navigateToFriendDetails(friend, index),
         leading: new Hero(
           tag: 'contact_$index',
-          child: new CircleAvatar(
-            backgroundImage: new NetworkImage(friend.avatar),
-          ),
+          child:  CommonUI.getAvatarWidget(friend.avatar),
         ),
         title: new Text(friend.name),
         subtitle: new Text(friend.email),

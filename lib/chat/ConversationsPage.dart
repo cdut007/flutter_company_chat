@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/entity/Conversation.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
 class ConversationsPage extends StatefulWidget{
@@ -58,9 +60,7 @@ class _ConversationsPageState extends State{
         onTap: () => _navigateToConversationDetails(conversation, index),
         leading: new Hero(
           tag: index,
-          child: new CircleAvatar(
-            backgroundImage: new NetworkImage('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg'),//conversation.peerAvatar
-          ),
+          child: CommonUI.getAvatarWidget('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg',size: 24),//conversation.peerAvatar
         ),
         title: new Text(conversation.name),
         subtitle: new Text(conversation.content),

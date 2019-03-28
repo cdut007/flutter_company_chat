@@ -66,5 +66,34 @@ void closeLoadingDialog(){
     }
 
  }
+}
 
+
+class CommonUI {
+  static Widget getAvatarWidget(String avatarUrl,{double size,Color color,String defaultImgIcon}){
+    double _size = 28;
+    if(size!=null){
+      _size =size;
+    }
+    Color _color= Colors.blueAccent;
+    if(color!=null){
+      _color = color;
+    }
+    String _defaultImgIcon=
+        "images/ic_avatar_default.png";
+    if(defaultImgIcon!=null){
+      _defaultImgIcon = defaultImgIcon;
+    }
+
+    if(avatarUrl!=null){
+      return new CircleAvatar(
+          backgroundImage: new NetworkImage(GlobalConfig.getHttpFilePath(avatarUrl)),
+          radius: _size);
+    }else{
+      return new Image.asset(_defaultImgIcon,
+        width: _size*2,
+        color: _color,
+      );
+    }
+  }
 }

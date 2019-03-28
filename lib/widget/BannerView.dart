@@ -22,6 +22,7 @@ class BannerView<T> extends StatefulWidget {
   final double height;
   final List<T> data;
   final BuildShowView<T> buildShowView;
+  int index=-1;
 
   BannerView(
       {Key key,
@@ -30,7 +31,7 @@ class BannerView<T> extends StatefulWidget {
         this.onBannerClickListener,
         this.delayTime = 3,
         this.scrollTime = 200,
-        this.height = 200.0})
+        this.height = 200.0,this.index})
       : super(key: key);
 
   @override
@@ -46,6 +47,10 @@ class BannerViewState extends State<BannerView> {
   @override
   void initState() {
     super.initState();
+    if(widget.index!=-1){
+      _currentIndex = widget.index;
+      jumpToPage(_currentIndex);
+    }
     resetTimer();
   }
 
@@ -121,6 +126,14 @@ class BannerViewState extends State<BannerView> {
           ),
         )),
         this._renderIndicator()]));
+  }
+
+  jumpToPage(var index){
+  _currentIndex = index;
+    pageController.jumpToPage(_currentIndex);
+    setState(() {
+
+    });
   }
 
   /// indicator widget

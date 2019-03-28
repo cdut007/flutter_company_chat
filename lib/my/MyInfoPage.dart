@@ -142,26 +142,7 @@ class MyInfoPageState extends State<MyInfoPage> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              userAvatar == null
-                  ? new Image.asset(
-                      "images/ic_avatar_default.png",
-                      width: 60.0,
-                    )
-                  : new Container(
-                      width: 60.0,
-                      height: 60.0,
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.transparent,
-                        image: new DecorationImage(
-                            image: new NetworkImage(userAvatar),
-                            fit: BoxFit.cover),
-                        border: new Border.all(
-                          color: Colors.white,
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
+              CommonUI.getAvatarWidget(userAvatar,size:30,color: Colors.white),
               Container(
                 margin: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                 child: Text(

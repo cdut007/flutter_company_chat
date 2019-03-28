@@ -67,10 +67,7 @@ class _FollowState extends State<Follow> {
                     child: new Row(
                       children: <Widget>[
                         new Container(
-                          child: new CircleAvatar(
-                              backgroundImage:
-                                  new NetworkImage(article.headUrl),
-                              radius: 28.0),
+                          child: CommonUI.getAvatarWidget(article.headUrl),
                         ),
                         new Padding(
                           padding: const EdgeInsets.only(left: 8),

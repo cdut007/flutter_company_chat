@@ -24,4 +24,15 @@ class GlobalConfig{
     var fileName = image.path.substring(image.parent.path.length+1,image.path.length);
     return fileName;
   }
+
+  static String getHttpFilePath(String filePath){
+     if(filePath.startsWith('http')){
+       return filePath;
+     }
+    var fileName = 'http://39.96.161.237:9090/api/'+filePath;
+    return fileName;
+  }
+
+
+
 }
