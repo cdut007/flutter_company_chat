@@ -1,13 +1,47 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/StringUtil.dart';
+import 'package:flutter_app/entity/VcardEntity.dart';
 
 
 class UserProfileQRCodePage extends StatefulWidget {
+  VcardEntity vcardEntity = new VcardEntity();
+
+  UserProfileQRCodePage({Key key,  this.vcardEntity}) : super(key: key);
+
+
   @override
   _UserProfileQRCodePageState createState() => _UserProfileQRCodePageState();
 }
 
 class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
+
+  VcardEntity _vcardEntity = new VcardEntity();
+  var qrUrl='';
+  String name='',company='',avatar;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _vcardEntity = widget.vcardEntity;
+    if(_vcardEntity!=null){
+      qrUrl = _vcardEntity.id;
+      if(_vcardEntity.hfCardDetails!=null && _vcardEntity.hfCardDetails.length>0){
+        name = getUserVcardName(_vcardEntity);
+        company = getUserVcardCompany(_vcardEntity);
+        avatar = getUserVcardAvatar(_vcardEntity);
+        setState(() {
+
+        });
+    }
+
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,11 +90,7 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
                   child: Container(
                     height: 100.0,
                     width: 100.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50.0),
-                        image: DecorationImage(
-                            image: AssetImage('images/a001.jpg'),
-                            fit: BoxFit.cover)),
+                    child: CommonUI.getAvatarWidget(avatar,size: 100,color: Colors.orange),
                   ),
                 ),
                 Container(
@@ -71,16 +101,14 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'James chen',
+                      Text(name,
                         style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
                             fontSize: 17.0),
                       ),
                       SizedBox(height: 7.0),
-                      Text(
-                        '中国',
+                      Text(company,
                         style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -90,7 +118,7 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
                       SizedBox(height: 10.0),
                       Container(  margin: const EdgeInsets.only(top: 10.0),height: 240, child:
                       new QrImage(
-                        data: "1234567890",
+                        data: qrUrl,
                         size: 240.0,
                       ),)
 

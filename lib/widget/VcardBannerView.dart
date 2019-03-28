@@ -7,6 +7,7 @@ import 'package:flutter_app/entity/VcardEntity.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
+import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class VcardBannerView extends StatefulWidget {
@@ -141,6 +142,9 @@ class _VcardBannerState extends State {
                         child: new FlatButton(
                             onPressed: () {
                               print("send vcard");
+                              Navigator.push(context,
+                                  new MaterialPageRoute(builder: (context) => new UserProfileQRCodePage( key:Key('profile'),vcardEntity:data)));
+
                             },
                             child: new Padding(
                               padding: new EdgeInsets.all(0.0),

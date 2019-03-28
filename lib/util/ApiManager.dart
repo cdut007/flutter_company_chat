@@ -159,7 +159,7 @@ class ApiManager {
   /// 获取申请用户名片信息列表
   ///
   static Future getApplyVcardList(var data) async {
-    String user_profile_url = BASE_URL + "/card/findCard";
+    String user_profile_url = BASE_URL + "/application/all";
     var requestData = await putPublicParams(data);
     Response response =
     await reuqest(user_profile_url, GlobalConfig.GET, requestData);
@@ -168,7 +168,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData['data']));
+    return new Future.value(responseData['data']);
   }
 
   ///
@@ -291,9 +291,9 @@ class ApiManager {
   /// 接收申请名片请求url
   ///
   static Future acceptedCard(var data) async {
-    String url = BASE_URL + "/card/"+data['applyId']+"/exchange";
+    String url = BASE_URL + "/card/exchange";
     var requestData = await putPublicParams(data);
-    Response response = await reuqest(url, GlobalConfig.POST, requestData);
+    Response response = await reuqest(url, GlobalConfig.PATCH, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
