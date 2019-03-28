@@ -9,6 +9,8 @@ import 'package:flutter_app/news/PostMoments.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/my/MyInfoPage.dart';
+import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
+import 'package:flutter_app/vcard/ApplyVcardPage.dart';
 import 'package:flutter_app/widget/CustomIcon.dart';
 import 'package:flutter_app/widget/CustomInactiveIcon.dart';
 import 'package:flutter_app/widget/NavigationIconView.dart';
@@ -159,9 +161,12 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                 ),
                 onSelected: (String value) {
                   if(value == '扫一扫'){
-
+//                    FlutterBarcodeScanner.scanBarcode('#106ec5','取消').then((barcodeScanRes){
+//                      //
+//                      Navigator.push(context, new MaterialPageRoute(builder: (context)=> new ApplyVcardPage(key:Key('applyVcard'),applyUrl: barcodeScanRes)));
+//                    });
                   }else if(value == '添加名片'){
-                    Navigator.push(context, new MaterialPageRoute(builder: (context)=> new ChatPage(key:Key('chat'),peerId:'sss',peerAvatar:'ssw')));
+                    Navigator.push(context, new MaterialPageRoute(builder: (context)=> new CreateEditVcardPage()));
                   }else if(value == '发动态'){
                     Navigator.push(context, new MaterialPageRoute(builder: (context)=> new PostMoments()));
                   }

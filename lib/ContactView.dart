@@ -11,6 +11,8 @@ import 'package:flutter_app/util/StringUtil.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/entity/VcardEntity.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
+import 'dart:async';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
 
 import 'package:http/http.dart' as http;
@@ -24,10 +26,27 @@ class ContactView extends StatefulWidget {
 
 class _ContactViewState extends State {
   List<Friend> _friends = [];
+
+  EventBus eventBus = GlobalConfig.getEventBus();
+  StreamSubscription loginSubscription;
   @override
   void initState() {
     super.initState();
     _loadFriends();
+    print('*********【初始化名片列表订阅事件】*********');
+    loginSubscription = eventBus.on<VcardEntity>().listen((event) {
+      print('*********收到名片列表订阅事件*********');
+      print(event);
+      _loadFriends();
+    });
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    loginSubscription.cancel();
+    print('*********【取消名片列表订阅事件】*********');
+
   }
 
   Future<Null> pullToRefresh() async {

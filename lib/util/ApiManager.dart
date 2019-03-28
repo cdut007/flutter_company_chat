@@ -139,6 +139,23 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+
+  ///
+  /// 获取名片信息
+  ///
+  static Future findVcardById(var data) async {
+    String user_profile_url = BASE_URL + "/card/"+data['id'];
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(user_profile_url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
   ///
   /// 获取用户列表名片信息列表
   ///
@@ -410,6 +427,9 @@ class ApiManager {
     bool rm_access_token = await prefs.remove('access_token');
     if (rm_access_token) {
       rm_access_token = await prefs.remove('user_info');
+    }
+    if(rm_access_token){
+      rm_access_token = await prefs.remove('vcard_list_info');
     }
     return rm_access_token;
   }
