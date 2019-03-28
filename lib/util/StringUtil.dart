@@ -6,6 +6,7 @@
  */
 
 import 'package:flutter_app/Util/MD5Utils.dart';
+import 'package:flutter_app/entity/VcardEntity.dart';
 
 class StringUtil{
   ///大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
@@ -15,6 +16,24 @@ class StringUtil{
     return new RegExp('^((13[0-9])|(15[^4])|(166)|(17[0-8])|(18[0-9])|(19[8-9])|(147,145))\\d{8}\$').hasMatch(str);
   }
 
+}
+
+ getUserVcardName(VcardEntity vcardEntiy){
+  return vcardEntiy.hfCardDetails[0].name;
+}
+ getUserVcardPhone(VcardEntity vcardEntiy){
+  return vcardEntiy.hfCardDetails[0].phoneNumber;
+}
+ getUserVcardCompany(VcardEntity vcardEntiy){
+  return vcardEntiy.hfCardDetails[0].companyName;
+}
+
+getUserVcardJobPosition(VcardEntity vcardEntiy){
+  return vcardEntiy.hfCardDetails[0].jobPosition;
+}
+
+ getUserVcardAvatar(VcardEntity vcardEntiy){
+  return vcardEntiy.avatar;
 }
 
 /**

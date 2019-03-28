@@ -6,9 +6,16 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/StringUtil.dart';
+import 'package:flutter_app/entity/VcardEntity.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CreateEditVcardPage extends StatefulWidget {
+
+   VcardEntity vcardEntity = new VcardEntity();
+
+  CreateEditVcardPage({Key key,  this.vcardEntity}) : super(key: key);
+
   @override
   CreateEditVcardPageState createState() => CreateEditVcardPageState();
 }
@@ -18,12 +25,13 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
 
+  VcardEntity _vcardEntity = VcardEntity();
 
   var _nameController = new TextEditingController();
   var _mailController = new TextEditingController();
   var _phoneController = new TextEditingController();
-  var _telController = new TextEditingController();
-  var _addressController = new TextEditingController();
+  var _jobPostionController = new TextEditingController();
+  var _companyController = new TextEditingController();
 
   File _image;
 
@@ -42,8 +50,17 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    var vcardData = {};
-    final vcardInfoFuture = ApiManager.getUserVcardList(vcardData);
+    _vcardEntity = widget.vcardEntity;
+    if(_vcardEntity.hfCardDetails!=null && _vcardEntity.hfCardDetails.length>0){
+      _nameController.text = getUserVcardName(_vcardEntity);
+      _phoneController.text = getUserVcardPhone(_vcardEntity);
+      _jobPostionController.text = getUserVcardJobPosition(_vcardEntity);
+      _companyController.text = getUserVcardCompany(_vcardEntity);
+      setState(() {
+
+      });
+    }
+
   }
 
   @override
@@ -75,14 +92,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                 new Container(
                                     width: 140.0,
                                     height: 140.0,
-                                    decoration: new BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image:  new DecorationImage(
-                                        image: new ExactAssetImage(
-                                            'images/a001.jpg'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    )),
+                                    child:  CommonUI.getAvatarWidget(_vcardEntity.avatar),),
                               ],
                             ),
                             Padding(
@@ -246,7 +256,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                   Expanded(
                                     child: Container(
                                       child: new Text(
-                                        '办公电话',
+                                        '职位',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -267,6 +277,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 10.0),
                                       child: new TextField(
+                                        keyboardType:TextInputType.phone,
                                         decoration: const InputDecoration(
                                             hintText: "输入移动电话"),
                                         enabled: !_status,
@@ -278,9 +289,9 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                   Flexible(
                                     child: new TextField(
                                       decoration: const InputDecoration(
-                                          hintText: "输入办公电话"),
+                                          hintText: "输入职位"),
                                       enabled: !_status,
-                                      controller: _telController,
+                                      controller: _jobPostionController,
                                     ),
                                     flex: 2,
                                   ),
@@ -297,7 +308,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       new Text(
-                                        '地址',
+                                        '公司',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -315,9 +326,9 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                   new Flexible(
                                     child: new TextField(
                                       decoration: const InputDecoration(
-                                          hintText: "输入地址"),
+                                          hintText: "输入公司"),
                                       enabled: !_status,
-                                      controller: _addressController,
+                                      controller: _companyController,
                                     ),
                                   ),
                                 ],
@@ -343,34 +354,56 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   createOrEditCard(){
     showLoadingDialog(context);
     var hfCardDetails=[];
+    var hfCardDetailsId;
+    if(_vcardEntity.id!=null){
+      hfCardDetailsId=_vcardEntity.hfCardDetails[0].id;
+    }
     hfCardDetails.add({"cardSide": "FRONT",
-      "companyName": "公司名称",
-      "jobPosition": "职位信息",
-      "language": "语言",
+      "companyName": _companyController.text,
+      "jobPosition": _jobPostionController.text,
+      "language": "中文",
+      "id":hfCardDetailsId,
       "name": _nameController.text,
       "phoneNumber": _phoneController.text});
     Map<String, dynamic> data ={'hfCardDetails':hfCardDetails};
-    final future = ApiManager.createCard(data);
-    future.then((data){
-      print('*********createCard callback*********');
-      closeLoadingDialog();
-      print(data);
-      showToast(context, '添加名片成功');
-      var vcardData = {};
-      final vcardInfoFuture = ApiManager.getUserVcardList(vcardData);
-      setState(() {
-        _status = true;
-        FocusScope.of(context).requestFocus(new FocusNode());
-      });
+    if(_vcardEntity.id!=null){
+      data['id']=_vcardEntity.id;
 
-    },onError: (errorData){
-      print('********* createCard error print*********');
-      var error =  ApiManager.parseErrorInfo(errorData);
-      closeLoadingDialog();
-      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
-      print('*********createCard callback error print end*********');
-      //
-    });
+      final future = ApiManager.updateCard(data);
+      future.then((data){
+        print('*********updateCard callback*********');
+        closeLoadingDialog();
+        print(data);
+        showToast(context, '修改名片成功');
+        Navigator.pop(context,ApiManager.vcard_list_refresh_tag);
+
+      },onError: (errorData){
+        print('********* updateCard error print*********');
+        var error =  ApiManager.parseErrorInfo(errorData);
+        closeLoadingDialog();
+        showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+        print('*********updateCard callback error print end*********');
+        //
+      });
+    }else{
+      final future = ApiManager.createCard(data);
+      future.then((data){
+        print('*********createCard callback*********');
+        closeLoadingDialog();
+        print(data);
+        showToast(context, '添加名片成功');
+        Navigator.pop(context,ApiManager.vcard_list_refresh_tag);
+
+      },onError: (errorData){
+        print('********* createCard error print*********');
+        var error =  ApiManager.parseErrorInfo(errorData);
+        closeLoadingDialog();
+        showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+        print('*********createCard callback error print end*********');
+        //
+      });
+    }
+
   }
 
   Widget _getActionButtons() {
@@ -392,12 +425,19 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                         showToast(context,'请输入全名');
                         return;
                       }
-                      if( _mailController.text.isEmpty){
-                        showToast(context,'请输入邮箱');
-                        return;
-                      }
+
                       if( _phoneController.text.isEmpty){
                         showToast(context,'请输入手机号');
+                        return;
+                      }
+
+                      if( _jobPostionController.text.isEmpty){
+                        showToast(context,'请输入职位');
+                        return;
+                      }
+
+                      if( _companyController.text.isEmpty){
+                        showToast(context,'请输入公司');
                         return;
                       }
 

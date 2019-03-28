@@ -4,6 +4,8 @@ import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/widget/BannerView.dart';
 import 'package:flutter_app/entity/VcardEntity.dart';
+import 'package:flutter_app/util/StringUtil.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -55,34 +57,8 @@ class _VcardBannerState extends State {
   }
 
   
-  _getUserVcardName(VcardEntity vcardEntiy){
-    return vcardEntiy.hfCardDetails[0].name;
-  }
-  _getUserVcardPhone(VcardEntity vcardEntiy){
-    return vcardEntiy.hfCardDetails[0].phoneNumber;
-  }
-  _getUserVcardCompany(VcardEntity vcardEntiy){
-    return vcardEntiy.hfCardDetails[0].companyName;
-  }
 
-  _getUserVcardAvatar(VcardEntity vcardEntiy){
-    return vcardEntiy.avatar;
-  }
-
-  Widget _getAvatarWidget(VcardEntity data){
-    var avatar = _getUserVcardAvatar(data);
-    if(avatar!=null){
-      return new CircleAvatar(
-          backgroundImage: new NetworkImage(GlobalConfig.getHttpFilePath(avatar)),
-          radius: 28.0);
-    }else{
-      return new Image.asset(
-        "images/ic_avatar_default.png",
-        width: 56.0,
-        color: Colors.blueAccent,
-      );
-    }
-  }
+  
   
   Card getBannerConainerWidget(Size deviceSize, VcardEntity data) {
     return Card(
@@ -103,7 +79,7 @@ class _VcardBannerState extends State {
                   child: Row(
                     children: <Widget>[
                       new Container(
-                        child: _getAvatarWidget(data),
+                        child: CommonUI.getAvatarWidget(getUserVcardAvatar(data)),
                       ),
                       new Expanded(
                         child: new Padding(
@@ -112,13 +88,13 @@ class _VcardBannerState extends State {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               new Container(
-                                  child: new Text(_getUserVcardName(data),
+                                  child: new Text(getUserVcardName(data),
                                       style: new TextStyle(color: Colors.black),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis)),
-                              new Text(_getUserVcardPhone(data),
+                              new Text(getUserVcardPhone(data),
                                   style: new TextStyle(color: Colors.grey)),
-                              new Text(_getUserVcardCompany(data),
+                              new Text(getUserVcardCompany(data),
                                   style: new TextStyle(color: Colors.grey)),
                             ],
                           ),
@@ -245,7 +221,7 @@ class _VcardBannerState extends State {
               currentIndex = index;
               Navigator.of(context)
                   .push(new MaterialPageRoute<String>(builder: (context) {
-                return new CreateEditVcardPage();
+                return new CreateEditVcardPage(key:Key('vcard'),vcardEntity:data);
               })).then((String result){
 
                 //处理代码
