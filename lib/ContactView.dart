@@ -7,6 +7,9 @@ import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
 import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/util/StringUtil.dart';
+import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/entity/VcardEntity.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
 
@@ -28,13 +31,27 @@ class _ContactViewState extends State {
     _loadFriends();
   }
 
+  Future<Null> pullToRefresh() async {
+    _loadFriends();
+    return null;
+  }
+
+
   Future<void> _loadFriends() async {
     http.Response response =
         await http.get('https://randomuser.me/api/?results=25');
 
-    setState(() {
-      _friends = Friend.allFromResponse(response.body);
+    ApiManager.getVcardList({}).then((datas){
+      setState(() {
+        _friends = Friend.allFromResponse(response.body);
+      });
+    },onError: (errorData){
+      print('*********getVcardList callback error print*********');
+      var error =  ApiManager.parseErrorInfo(errorData);
+      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+      print('*********getVcardList callback error print end*********');
     });
+
   }
 
   Card getBannerConainerWidget(Size deviceSize, var data) {
@@ -204,6 +221,8 @@ class _ContactViewState extends State {
             ),);
           }
         },
+        usePullToRefresh: true,
+          onHeaderRefresh: pullToRefresh,
       );
 //      content = new ListView.builder(
 //        itemCount: _friends.length,

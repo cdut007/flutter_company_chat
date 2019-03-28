@@ -6,7 +6,6 @@ import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/Util/Constants.dart';
 import 'package:flutter_app/util/CommonUI.dart';
-import 'package:flutter_refresh/flutter_refresh.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
 
 class Follow extends StatefulWidget {

@@ -140,6 +140,22 @@ class ApiManager {
   }
 
   ///
+  /// 获取用户列表名片信息列表
+  ///
+  static Future getVcardList(var data) async {
+    String user_profile_url = BASE_URL + "/package/all";
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(user_profile_url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
   /// 获取申请用户名片信息列表
   ///
   static Future getApplyVcardList(var data) async {
