@@ -89,6 +89,60 @@ class _ApplyVcardListPageState extends State{
 //      ),
 //    );
   }
+  Widget _renderStatus(ApplyVcardEntity apply,int index){
+    if(apply.applyStatus == 'UNPROCESSED'){
+      return  new Card(
+        color: GlobalConfig.themeColor(),
+        elevation: 2.0,
+        child: new FlatButton(
+          onPressed: () {
+            print("apply vcard call");
+            applyVcard(apply,index);
+          },
+          child: new Padding(
+            padding: new EdgeInsets.all(0.0),
+            child: new Text(
+              '同 意',
+              style: new TextStyle(
+                color: Colors.white,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )));
+    }else if (apply.applyStatus == 'REJECT'){
+      return new Container(
+
+          child: new Padding(
+            padding: new EdgeInsets.all(0.0),
+            child: Container(child: new Text(
+              '已拒绝',
+              style: new TextStyle(
+                color: Colors.orangeAccent,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),alignment: Alignment.center,width: 100,),
+          ));
+    }else{
+
+      return new Container(
+
+          child: new Padding(
+            padding: new EdgeInsets.all(0.0),
+            child: Container(child: new Text(
+              '已添加',
+              style: new TextStyle(
+                color: Colors.grey,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),alignment: Alignment.center,width: 100,),
+          ));
+    }
+  }
 
   Widget _buildConversationListTile(BuildContext context, int index) {
     var apply = _applyList[index];
@@ -102,26 +156,8 @@ class _ApplyVcardListPageState extends State{
         ),
         title: new Text(apply.userName),
         subtitle: new Text(apply.userCompany),
-        trailing: new Container(child: new Card(
-          color: GlobalConfig.themeColor(),
-          elevation: 2.0,
-          child: new FlatButton(
-              onPressed: () {
-                print("apply vcard call");
-                applyVcard(apply,index);
-              },
-              child: new Padding(
-                padding: new EdgeInsets.all(0.0),
-                child: new Text(
-                  '同 意',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )),
-        ),height: 44,),
+        trailing: new Container(child: _renderStatus(apply,index)
+        ,height: 44,),
       ),
       new Divider(height: 1,)
     ],);

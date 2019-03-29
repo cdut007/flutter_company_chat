@@ -164,7 +164,7 @@ class ApiManager {
     String user_profile_url = BASE_URL + "/card/share/"+data['id'];
     var requestData = await putPublicParams(data);
     Response response =
-    await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
+    await reuqest(user_profile_url, GlobalConfig.GET, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
