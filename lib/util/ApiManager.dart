@@ -79,17 +79,25 @@ class ApiManager {
   static Future uploadFile(var fileName, var filePath) async {
     var token = await getToken();
     Map<String, dynamic> qiNiuJson = await getQiNiuToken({'token': token});
-    String qiniu_upload_url = qiNiuJson['domain'];
-    var qiNiuToken = qiNiuJson['token'];
+    Map<String, dynamic> qiNiuDataJson = qiNiuJson['data'];
+    var accessid = qiNiuDataJson['accessid'];
+    var policy = qiNiuDataJson['policy'];
+    var signature = qiNiuDataJson['signature'];
+    var host = qiNiuDataJson['host'];
+    var dir = qiNiuDataJson['dir'];
     Dio dio = new Dio();
-    print('qiniu_upload_url=' + qiniu_upload_url);
+    print('host=' + host);
     print('upload file info=' + fileName + ';filePath=' + filePath);
     FormData formData = new FormData.from({
-      "upload_token": qiNiuToken,
-      "fileName": fileName,
-      "fileBinaryData": new UploadFileInfo(new File(filePath), fileName)
+      "OSSAccessKeyId": accessid,
+      "policy": policy,
+      "key": dir+fileName,
+      "Signature": signature,
+      "file": new UploadFileInfo(new File(filePath), fileName)
     });
-    Response response = await dio.post(qiniu_upload_url, data: formData);
+    Response response = await dio.post(host, data: formData);
+    print('sssss==${response.statusCode}');
+
     ResponseEntity responseErrorEntity = await responseQiuniuError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -129,7 +137,7 @@ class ApiManager {
   /// 获取七牛token信息
   ///
   static Future getQiNiuToken(var data) async {
-    String qiniu_token_url = BASE_URL + "/qiniu/token";
+    String qiniu_token_url = BASE_URL + "/aliy/oss/policy";
     var requestData = await putPublicParams(data);
     Response response =
         await reuqest(qiniu_token_url, GlobalConfig.GET, requestData);

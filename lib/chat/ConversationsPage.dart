@@ -3,6 +3,7 @@ import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/entity/Conversation.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
+import 'package:flutter_app/widget/LoadingWidget.dart';
 class ConversationsPage extends StatefulWidget{
   @override
   _ConversationsPageState createState() => new _ConversationsPageState();
@@ -11,6 +12,7 @@ class _ConversationsPageState extends State{
 
   List<Conversation> _conversations = [];
 
+  LoadingType loadingType = LoadingType.Loading;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
