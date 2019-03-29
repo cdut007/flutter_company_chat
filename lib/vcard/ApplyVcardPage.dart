@@ -74,13 +74,22 @@ class ApplyVcardPageState extends State<ApplyVcardPage>
 
     });
 
-    var data={'id':widget.applyUrl};
-    ApiManager.findVcardById(data).then((vcardInfo){
-      _appliedVcardEntity = VcardEntity.fromJson(vcardInfo);
-      setState(() {
+    var data={'url':widget.applyUrl};
+    ApiManager.parseQRCodeLink(data).then((result){
 
-      });
+//      ApiManager.findVcardById(data).then((vcardInfo){
+//      _appliedVcardEntity = VcardEntity.fromJson(vcardInfo);
+//      setState(() {
+//
+//      });
+//    });
+    },onError: (errorData){
+      print('*********parseQRCodeLink callback error print*********');
+      var error =  ApiManager.parseErrorInfo(errorData);
+      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+      print('*********parseQRCodeLink callback error print end*********');
     });
+
   }
   _parseVcardList(List<dynamic> datas) {
     List<VcardEntity> vcardList = (datas as List) != null
@@ -101,7 +110,7 @@ class ApplyVcardPageState extends State<ApplyVcardPage>
           child:
               Column(
                 children: <Widget>[
-               VcardWidget(vcardEntity: _appliedVcardEntity),
+               VcardWidget(vcardEntity: _appliedVcardEntity,),
                   _getActionButtons()
                 ],
               ),

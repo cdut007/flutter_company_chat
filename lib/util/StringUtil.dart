@@ -24,6 +24,14 @@ class StringUtil{
   }
   return vcardEntiy.hfCardDetails[0].name;
 }
+
+//getUserVcardMail(VcardEntity vcardEntiy){
+//  if(vcardEntiy.hfCardDetails == null){
+//    return '';
+//  }
+//  return vcardEntiy.hfCardDetails[0].mail;
+//}
+
  getUserVcardPhone(VcardEntity vcardEntiy){
    if(vcardEntiy.hfCardDetails == null){
      return '';

@@ -4,6 +4,7 @@ import 'package:flutter_app/home/ReplyPage.dart';
 import 'package:flutter_app/home/Article.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
+import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:flutter_app/Util/Constants.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
@@ -16,6 +17,7 @@ class Follow extends StatefulWidget {
 class _FollowState extends State<Follow> {
   var currentPage = 0;
   List<Article> listData = [];
+  LoadingType loadingType = LoadingType.Loading;
 
   Widget wordsCard(Article article) {
     Widget markWidget;
@@ -198,23 +200,58 @@ class _FollowState extends State<Follow> {
           if (request_type == REFRESH_REQIEST) {
             showToast(context, '刷新成功');
           }
+
+          if(listData.length>0){
+            loadingType = LoadingType.End;
+          }else{
+            loadingType = LoadingType.Empty;
+          }
         });
       } else {
+        if(listData.length>0){
+          loadingType = LoadingType.End;
+        }else{
+          loadingType = LoadingType.Empty;
+        }
         showToast(context, '已经没有更多了');
       }
+
     }, onError: (errorData) {
+      if(listData.length>0){
+        loadingType = LoadingType.End;
+      }else{
+        loadingType = LoadingType.Error;
+      }
       var error = ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context, '错误码：${error.code}' + ' 错误原因：' + error.msg);
     });
   }
 
   getBody() {
-    if (listData.isEmpty) {
-      // 加载菊花
-      return new Center(
-        child: new CircularProgressIndicator(),
-      );
-    } else {
+    if(loadingType == LoadingType.Loading){
+      return Column(children: <Widget>[
+        new LoadingWidget(loadingType: LoadingType.Loading,)
+      ],);
+    }
+
+    if(loadingType == LoadingType.Empty){
+      return Column(children: <Widget>[
+        new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
+          pullToRefresh();
+        },)
+      ],);
+
+    }
+
+    if(loadingType == LoadingType.Error){
+      return Column(children: <Widget>[
+        new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
+          pullToRefresh();
+        },)
+      ],);
+
+    }
+
       Widget content = new HeaderListView(
         listData,
         headerList: [1],
@@ -234,7 +271,7 @@ class _FollowState extends State<Follow> {
 
     return new Container(
           child: content );
-    }
+
   }
 
   @override

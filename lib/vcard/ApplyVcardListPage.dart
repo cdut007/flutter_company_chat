@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/entity/ApplyVcardEntity.dart';
 import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 class ApplyVcardListPage extends StatefulWidget{
   @override
@@ -10,6 +11,8 @@ class ApplyVcardListPage extends StatefulWidget{
 class _ApplyVcardListPageState extends State{
 
   List<ApplyVcardEntity> _applyList = [];
+
+  LoadingType loadingType = LoadingType.Loading;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +42,19 @@ class _ApplyVcardListPageState extends State{
       print('applyList  load length：${applyList.length}');
       setState(() {
         _applyList = applyList;
+        if(_applyList.length>0){
+          loadingType = LoadingType.End;
+        }else{
+          loadingType = LoadingType.Empty;
+        }
       });
     },onError: (errorData){
       //重试
+      if(_applyList.length>0){
+        loadingType = LoadingType.End;
+      }else{
+        loadingType = LoadingType.Error;
+      }
       print('*********getApplyVcardList callback error print*********');
       var error =  ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
@@ -118,16 +131,36 @@ class _ApplyVcardListPageState extends State{
     Widget content;
 
     print('applyList length：${_applyList.length}');
-    if (_applyList.isEmpty) {
-      content = new Center(
-        child: new CircularProgressIndicator(),
-      );
-    } else {
+
+    if(loadingType == LoadingType.Loading){
+      return Column(children: <Widget>[
+        new LoadingWidget(loadingType: LoadingType.Loading,)
+      ],);
+    }
+
+    if(loadingType == LoadingType.Empty){
+    return Column(children: <Widget>[
+      new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
+        _loadApplyVcardLists();
+      },)
+    ],);
+
+    }
+
+    if(loadingType == LoadingType.Error){
+    return Column(children: <Widget>[
+    new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
+    _loadApplyVcardLists();
+    },)
+    ],);
+
+    }
+
       content = new ListView.builder(
         itemCount: _applyList.length,
         itemBuilder: _buildConversationListTile,
       );
-    }
+
 
     return content;
   }

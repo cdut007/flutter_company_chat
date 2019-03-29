@@ -71,9 +71,10 @@ class _VcardBannerState extends State {
     });
   }
 
-  
 
-  
+
+
+  var cardHeight = 286.00;
 
   Widget createAddCard(){
     return   Card(
@@ -85,7 +86,7 @@ class _VcardBannerState extends State {
                 child: Icon(Icons.add,size: 56,)),
             Text('添加名片',style: TextStyle(fontSize: 16),)
           ]),
-          height: 200.0,
+          height: cardHeight,
           padding: EdgeInsets.only(
           ), alignment: Alignment.center,),onTap: () {
           Navigator.of(context)
@@ -96,6 +97,7 @@ class _VcardBannerState extends State {
             //处理代码
             print('********vcard banner获取上一个页面返回的参数*******');
             print(result);
+
 
 
             if(result == ApiManager.vcard_list_refresh_tag){
@@ -130,7 +132,7 @@ class _VcardBannerState extends State {
               if((data as VcardEntity).id == null){
                 return createAddCard();
               }
-              return VcardWidget(vcardEntity: data);
+              return VcardWidget(vcardEntity: data,size: cardHeight,);
             },
             onBannerClickListener: (index, data) {
               print('onBannerClickListener=$index');
@@ -150,6 +152,7 @@ class _VcardBannerState extends State {
               });
             },
             index: currentIndex,
+            height: cardHeight,
           )
         ],
       );

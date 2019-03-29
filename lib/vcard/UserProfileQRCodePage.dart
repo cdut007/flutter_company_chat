@@ -20,7 +20,7 @@ class UserProfileQRCodePage extends StatefulWidget {
 class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
 
   VcardEntity _vcardEntity = new VcardEntity();
-  var qrUrl='';
+  var qrUrl=ApiManager.getDomain();
   String name='',company='',avatar;
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
     super.initState();
     _vcardEntity = widget.vcardEntity;
     if(_vcardEntity!=null){
-      qrUrl = _vcardEntity.id;
+     // qrUrl = _vcardEntity.id;
       if(_vcardEntity.hfCardDetails!=null && _vcardEntity.hfCardDetails.length>0){
         name = getUserVcardName(_vcardEntity);
         company = getUserVcardCompany(_vcardEntity);
@@ -37,6 +37,16 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
 
         });
     }
+
+    ApiManager.getVcardQRCodeLink({'id':_vcardEntity.id}).then((result){
+      setState(() {
+        qrUrl = result;
+      });
+    },onError: (errorData){
+      print('*********getVcardQRCodeLink callback error print*********');
+      var error =  ApiManager.parseErrorInfo(errorData);
+      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+    });
 
     }
 
@@ -116,10 +126,11 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
                             color: Colors.grey),
                       ),
                       SizedBox(height: 10.0),
-                      Container(  margin: const EdgeInsets.only(top: 10.0),height: 240, child:
+                      Container(  margin: const EdgeInsets.only(top: 10.0),height: 240,width: 240,  child:
                       new QrImage(
                         data: qrUrl,
                         size: 240.0,
+                        version: 7,
                       ),)
 
                     ],

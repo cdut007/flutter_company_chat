@@ -15,7 +15,25 @@ class ApiManager {
   static var refresh_tag = 'refreshUserInfo';
   static var vcard_list_refresh_tag = 'vcard_list_refresh_tag';
 
+  static init()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String  domain = prefs.getString('api_domain');
+    if(domain!=null && domain.isNotEmpty){
+      BASE_URL = domain;
+    }
+  }
 
+  static setDomain(var url) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print('保存本地domain信息：' + url);
+      var save_result = await prefs.setString('api_domain', url);
+
+  }
+
+  static getDomain(){
+
+    return BASE_URL;
+  }
 
   ///
   /// 注册请求url
@@ -139,6 +157,38 @@ class ApiManager {
     return new Future.value(UserInfo.fromJson(responseData));
   }
 
+  ///
+  /// 获取名片信息
+  ///
+  static Future getVcardQRCodeLink(var data) async {
+    String user_profile_url = BASE_URL + "/card/share/"+data['id'];
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+
+  ///
+  /// 获取名片二维码信息
+  ///
+  static Future parseQRCodeLink(var data) async {
+    String url = data['url'];
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
 
   ///
   /// 获取名片信息
