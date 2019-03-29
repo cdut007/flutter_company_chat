@@ -3,6 +3,7 @@ import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/login/RegisterPage.dart';
+import 'package:flutter_app/IndexPage.dart';
 import 'package:flutter_app/login/ForgetPasswordPage.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 import 'dart:convert';
@@ -14,6 +15,8 @@ import 'dart:convert';
  */
 class LoginPage extends StatefulWidget {
 
+  bool fromSplashPage=false;
+  LoginPage({Key key,  this.fromSplashPage}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -49,8 +52,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _go2HomePage(){
-    //设置变量
-    Navigator.pop(context,ApiManager.refresh_tag);
+    if(widget.fromSplashPage!=null && widget.fromSplashPage){
+      try {
+        Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
+            builder: (BuildContext context) => new IndexPage()), (//跳转到主页
+            Route route) => route == null);
+      } catch (e) {
+        print(e);
+      }
+    }else{
+      //设置变量
+      Navigator.pop(context,ApiManager.refresh_tag);
+    }
+
   }
 
   @override

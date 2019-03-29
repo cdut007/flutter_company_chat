@@ -85,9 +85,9 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
   }
 
   void rebuild() {
-    setState(() {
-      // Rebuild in order to animate views.
-    });
+//    setState(() {
+//      // Rebuild in order to animate views.
+//    });
   }
 
   void initData() {
@@ -117,6 +117,7 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
           navigationViews[currentIndex].controller.reverse();
           currentIndex = index;
           navigationViews[currentIndex].controller.forward();
+          GlobalConfig.setCurrentHomeTabIndex(currentIndex);
         });
       },
     );

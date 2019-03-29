@@ -208,20 +208,24 @@ class _FollowState extends State<Follow> {
           }
         });
       } else {
-        if(listData.length>0){
-          loadingType = LoadingType.End;
-        }else{
-          loadingType = LoadingType.Empty;
-        }
+       setState(() {
+         if(listData.length>0){
+           loadingType = LoadingType.End;
+         }else{
+           loadingType = LoadingType.Empty;
+         }
+       });
         showToast(context, '已经没有更多了');
       }
 
     }, onError: (errorData) {
-      if(listData.length>0){
-        loadingType = LoadingType.End;
-      }else{
-        loadingType = LoadingType.Error;
-      }
+      setState(() {
+        if(listData.length>0){
+          loadingType = LoadingType.End;
+        }else{
+          loadingType = LoadingType.Error;
+        }
+      });
       var error = ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context, '错误码：${error.code}' + ' 错误原因：' + error.msg);
     });
@@ -230,13 +234,18 @@ class _FollowState extends State<Follow> {
   getBody() {
     if(loadingType == LoadingType.Loading){
       return Column(children: <Widget>[
+        new VcardBannerView(),
         new LoadingWidget(loadingType: LoadingType.Loading,)
       ],);
     }
 
     if(loadingType == LoadingType.Empty){
       return Column(children: <Widget>[
+        new VcardBannerView(),
         new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
+          setState(() {
+            loadingType = LoadingType.Loading;
+          });
           pullToRefresh();
         },)
       ],);
@@ -245,7 +254,11 @@ class _FollowState extends State<Follow> {
 
     if(loadingType == LoadingType.Error){
       return Column(children: <Widget>[
+        new VcardBannerView(),
         new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
+          setState(() {
+            loadingType = LoadingType.Loading;
+          });
           pullToRefresh();
         },)
       ],);

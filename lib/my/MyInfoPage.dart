@@ -223,7 +223,14 @@ class MyInfoPageState extends State<MyInfoPage> {
            showOkCancelDialog(context, (){
              ApiManager.logout().then((logout){
                print("clear logout info... ");
-               checkLoginStatus();
+              // checkLoginStatus();
+               try {
+                 Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
+                     builder: (BuildContext context) => new LoginPage(fromSplashPage: true,)), (//跳转到主页
+                     Route route) => route == null);
+               } catch (e) {
+                 print(e);
+               }
              });
            }, '登出', '确认登出吗？');
          }

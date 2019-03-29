@@ -50,11 +50,13 @@ class _ApplyVcardListPageState extends State{
       });
     },onError: (errorData){
       //重试
-      if(_applyList.length>0){
-        loadingType = LoadingType.End;
-      }else{
-        loadingType = LoadingType.Error;
-      }
+      setState(() {
+        if(_applyList.length>0){
+          loadingType = LoadingType.End;
+        }else{
+          loadingType = LoadingType.Error;
+        }
+      });
       print('*********getApplyVcardList callback error print*********');
       var error =  ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
@@ -177,6 +179,9 @@ class _ApplyVcardListPageState extends State{
     if(loadingType == LoadingType.Empty){
     return Column(children: <Widget>[
       new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
+        setState(() {
+          loadingType = LoadingType.Loading;
+        });
         _loadApplyVcardLists();
       },)
     ],);
@@ -186,6 +191,9 @@ class _ApplyVcardListPageState extends State{
     if(loadingType == LoadingType.Error){
     return Column(children: <Widget>[
     new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
+      setState(() {
+        loadingType = LoadingType.Loading;
+      });
     _loadApplyVcardLists();
     },)
     ],);

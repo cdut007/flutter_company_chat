@@ -1,5 +1,8 @@
 import 'dart:async';
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/login/LoginPage.dart';
 import 'package:flutter_app/IndexPage.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -97,11 +100,20 @@ class SplashState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    ApiManager.init();
       login();
-    timer = new Timer(const Duration(milliseconds: 5000), () {
+    timer = new Timer(const Duration(milliseconds: 10), () {
       String stream =
           "<open to='39.108.165.171'  xmlns='urn:ietf:params:xml:ns:xmpp-framing'  version='1.0'/>";
 //      socket.add(stream);
+      _go2Page();
+    });
+
+    print("初始化");
+  }
+  _go2Page() async{
+    bool isLogin = await ApiManager.isLoggedIn();
+    if(isLogin){
       try {
         Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
             builder: (BuildContext context) => new IndexPage()), (//跳转到主页
@@ -109,9 +121,16 @@ class SplashState extends State<SplashPage> {
       } catch (e) {
 
       }
-    });
+    }else{
+      try {
+        Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
+            builder: (BuildContext context) => new LoginPage(fromSplashPage: true,)), (//跳转到登录页面
+            Route route) => route == null);
+      } catch (e) {
 
-    print("初始化");
+      }
+    }
+
   }
 
   @override

@@ -17,6 +17,15 @@ class GlobalConfig{
   static var PUT='put';
   static var file_domain;
 
+  static int _tabIndex = 0;
+
+  static setCurrentHomeTabIndex(int index){
+    _tabIndex = index;
+  }
+
+  static int getCurrentHomeTabIndex(){
+    return _tabIndex;
+  }
    static  Color themeColor(){
     return new Color.fromARGB(255, 1, 110, 197);//(255, 0, 215, 198
   }

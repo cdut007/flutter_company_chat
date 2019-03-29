@@ -44,6 +44,8 @@ class _ContactViewState extends State {
     });
   }
 
+
+
   @override
   void dispose(){
     super.dispose();
@@ -66,28 +68,41 @@ class _ContactViewState extends State {
           : null;
       var applyList = vcardList;
       setState(() {
+        _friends = applyList;
         if(_friends.length>0){
           loadingType = LoadingType.End;
         }else{
           loadingType = LoadingType.Empty;
         }
-        _friends = applyList;
+
       });
     },onError: (errorData){
-      if(_friends.length>0){
-        loadingType = LoadingType.End;
-      }else{
-        loadingType = LoadingType.Error;
-      }
+
+     setState(() {
+       if(_friends.length>0){
+         loadingType = LoadingType.End;
+       }else{
+         loadingType = LoadingType.Error;
+       }
+     });
       print('*********getVcardList callback error print*********');
       var error =  ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
       print('*********getVcardList callback error print end*********');
-      setState(() {
 
-      });
     });
 
+  }
+
+  @override
+  void activate(){
+    print('%%%%%%%%%%%activate%%%%%%%%%%');
+  }
+  @override
+  void deactivate(){
+    super.deactivate();
+
+    print('%%%%%%%%%%%deactivate%%%%%%%%%%');
   }
 
   Card getBannerConainerWidget(Size deviceSize, var data) {
@@ -253,6 +268,9 @@ class _ContactViewState extends State {
         renderHead(),
         new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
           print('click empty ui');
+         setState(() {
+           loadingType = LoadingType.Loading;
+         });
           pullToRefresh();
         },)
       ],),);
@@ -263,6 +281,9 @@ class _ContactViewState extends State {
       return Center(child: Column(children: <Widget>[
         renderHead(),
         new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
+          setState(() {
+            loadingType = LoadingType.Loading;
+          });
           pullToRefresh();
         },)
       ],),);
@@ -324,6 +345,8 @@ class _ContactViewState extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
+
     Size deviceSize = MediaQuery.of(context).size;
     return new Scaffold(
         body: getFriendList());
