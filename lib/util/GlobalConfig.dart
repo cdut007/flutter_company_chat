@@ -36,6 +36,16 @@ class GlobalConfig{
     return fileName;
   }
 
+  static String getThumbImgUrl(var avatarUrl, {int size}){
+    int _size = 200;
+    if(size!=null ){
+      _size = size;
+    }
+    var url = avatarUrl+'?x-oss-process=image/resize,w_${_size}';
+    return url;
+  }
+
+
   static String getHttpFilePath(String filePath){
      if(filePath.startsWith('http')){
        return filePath;

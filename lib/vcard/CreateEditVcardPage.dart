@@ -44,7 +44,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     ApiManager.uploadFile(fileName, image.path).then((data){
       closeLoadingDialog();
       setState(() {
-        avatarUrl = data['url'];
+        avatarUrl = data['publicUrl'];
       });
     },onError: (errorData){
       print('*********uploadFile userPhoto callback error print*********');
