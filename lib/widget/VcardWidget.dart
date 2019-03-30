@@ -225,7 +225,7 @@ class _VcardWidgetState extends State<VcardWidget> {
                                 child: new Padding(
                                   padding: new EdgeInsets.all(0.0),
                                   child: new Text(
-                                    '发送名片',
+                                    '名片交互',
                                     style: new TextStyle(
                                       color: Colors.white,
                                       fontSize: 14.0,

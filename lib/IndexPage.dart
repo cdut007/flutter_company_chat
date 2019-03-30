@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/schedule/ScheduleView.dart';
 import 'package:flutter_app/home/Follow.dart';
+import 'package:flutter_app/home/HomePage.dart';
 import 'package:flutter_app/ContactView.dart';
 import 'package:flutter_app/chat/ConversationsPage.dart';
 import 'package:flutter_app/QRCodeScanPage.dart';
