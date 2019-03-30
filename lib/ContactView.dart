@@ -96,13 +96,11 @@ class _ContactViewState extends State {
 
   @override
   void activate(){
-    print('%%%%%%%%%%%activate%%%%%%%%%%');
   }
   @override
   void deactivate(){
     super.deactivate();
 
-    print('%%%%%%%%%%%deactivate%%%%%%%%%%');
   }
 
   Card getBannerConainerWidget(Size deviceSize, var data) {

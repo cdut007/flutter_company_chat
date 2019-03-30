@@ -4,6 +4,8 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:flutter_app/home/Article.dart';
+import 'package:event_bus/event_bus.dart';
 
 
 List<File> photoFileList = [];
@@ -48,9 +50,12 @@ class _PostMomentsState extends State<PostMoments>{
                 }
                 //photoList
                 print('发表文字:'+text);
-                var data = {'text':textController.text,};
+                var data = {'cotent':textController.text,};
                 ApiManager.postMoments(data).then((result){
-
+                  showToast(context, '发表成功');
+                  EventBus eventBus = GlobalConfig.getEventBus();
+                  eventBus.fire(Article(null, null, null, null, null, null, null, null ));
+                  Navigator.pop(context,ApiManager.refresh_tag);
                 },onError: (errorData){
                   print('*********postMoments callback error print*********');
                   var error =  ApiManager.parseErrorInfo(errorData);

@@ -10,6 +10,7 @@ class Article {
   int agreeNum;
   int commentNum;
 
+
   Article(this.headUrl, this.user, this.action, this.time, this.title, this.mark, this.agreeNum, this.commentNum, {this.imgUrl});
 }
 

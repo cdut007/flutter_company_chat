@@ -7,6 +7,8 @@ import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:flutter_app/Util/Constants.dart';
 import 'package:flutter_app/util/CommonUI.dart';
+import 'package:event_bus/event_bus.dart';
+import 'dart:async';
 import 'package:flutter_app/widget/HeaderListView.dart';
 
 class Follow extends StatefulWidget {
@@ -94,15 +96,15 @@ class _FollowState extends State<Follow> {
                     ),
                     padding: const EdgeInsets.only(top: 10.0),
                   ),
-                  new Container(
-                      child: new Text(article.title,
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                              height: 1.3,
-                              color: Colors.black)),
-                      margin: new EdgeInsets.only(top: 6.0, bottom: 2.0),
-                      alignment: Alignment.topLeft),
+//                  new Container(
+//                      child: new Text(article.title,
+//                          style: new TextStyle(
+//                              fontWeight: FontWeight.bold,
+//                              fontSize: 16.0,
+//                              height: 1.3,
+//                              color: Colors.black)),
+//                      margin: new EdgeInsets.only(top: 6.0, bottom: 2.0),
+//                      alignment: Alignment.topLeft),
                   new Container(
                       child: markWidget,
                       margin: new EdgeInsets.only(top: 6.0),
@@ -143,10 +145,26 @@ class _FollowState extends State<Follow> {
             )));
   }
 
+  EventBus eventBus = GlobalConfig.getEventBus();
+  StreamSubscription loginSubscription;
   @override
   void initState() {
     super.initState();
     getDatas(START_REQUEST);
+    print('*********【初始化动态列表订阅事件】*********');
+    loginSubscription = eventBus.on<Article>().listen((event) {
+      print('*********收到动态列表订阅事件*********');
+      print(event);
+      pullToRefresh();
+    });
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    loginSubscription.cancel();
+    print('*********【取消动态列表订阅事件】*********');
+
   }
 
   Future<Null> pullToRefresh() async {
@@ -166,9 +184,9 @@ class _FollowState extends State<Follow> {
     var data = {};
     if (request_type != LOADMORE_REQIEST) {
       currentPage = 0;
-      data = {'pageNum': '0', 'pageSize:': '10'};
+      data = {'page': '0', 'pageSize:': '10'};
     } else {
-      data = {'pageNum': '$currentPage', 'pageSize:': '10'};
+      data = {'page': '$currentPage', 'pageSize:': '10'};
     }
 
     ApiManager.getPostMomentsList(data).then((datas) {
@@ -219,6 +237,7 @@ class _FollowState extends State<Follow> {
       }
 
     }, onError: (errorData) {
+
       setState(() {
         if(listData.length>0){
           loadingType = LoadingType.End;

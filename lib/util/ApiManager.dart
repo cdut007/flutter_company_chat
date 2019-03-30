@@ -12,6 +12,8 @@ var BASE_URL = "http://39.96.161.237:9090/api";
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
+
+  static var refresh_post = 'refresh_post';
   static var refresh_tag = 'refreshUserInfo';
   static var vcard_list_refresh_tag = 'vcard_list_refresh_tag';
 
@@ -298,7 +300,7 @@ class ApiManager {
   ///
   static Future postMoments(var data) async {
 
-    String url = BASE_URL + "/post/moment";
+    String url = BASE_URL + "/wall/add";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
@@ -313,10 +315,8 @@ class ApiManager {
   /// 获取动态 url
   ///
   static Future getPostMomentsList(var data) async {
-    if(true){
-      return new Future.value([]);
-    }
-    String url = BASE_URL + "/post/moment";
+
+    String url = BASE_URL + "/wall/all";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(url, GlobalConfig.GET, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
