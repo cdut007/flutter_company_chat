@@ -9,15 +9,15 @@ import 'package:flutter_app/entity/VcardEntity.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:event_bus/event_bus.dart';
 
-class VcardBannerView extends StatefulWidget {
+class VcardScanBannerView extends StatefulWidget {
 
-  VcardBannerView({Key key }) : super(key: key);
+  VcardScanBannerView({Key key }) : super(key: key);
 
   @override
-  _VcardBannerState createState() => new _VcardBannerState();
+  _VcardScanBannerState createState() => new _VcardScanBannerState();
 }
 
-class _VcardBannerState extends State {
+class _VcardScanBannerState extends State {
   List<VcardEntity> vcardList = [];
   var currentIndex=-1;
   EventBus eventBus = GlobalConfig.getEventBus();
@@ -32,15 +32,7 @@ class _VcardBannerState extends State {
       _loadVcardLists();
     });
 
-    ApiManager.getVcardListInfo().then((vcard_list_result_Str) {
-      var   decodedJson = json.decode(vcard_list_result_Str);
-      vcardList = _parseVcardList(decodedJson);
-      _renderInfo();
-      _loadVcardLists();
-    }, onError: (empty) {
-      _renderInfo();
-      _loadVcardLists();
-    });
+    _loadVcardLists();
   }
 
   @override

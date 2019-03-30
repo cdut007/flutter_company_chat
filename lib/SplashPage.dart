@@ -111,15 +111,22 @@ class SplashState extends State<SplashPage> {
 
     print("初始化");
   }
-  _go2Page() async{
+  Future _go2Page() async{
     bool isLogin = await ApiManager.isLoggedIn();
     if(isLogin){
+      String token = await ApiManager.getToken();
+      //刷新token
+       ApiManager.refreshToken({'token': token, 'expireDay': GlobalConfig.Token_expireDay}).then((data){
+
+      },onError: (errorData){
+         print(errorData);
+       });
       try {
         Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
             builder: (BuildContext context) => new IndexPage()), (//跳转到主页
             Route route) => route == null);
       } catch (e) {
-
+          print(e);
       }
     }else{
       try {

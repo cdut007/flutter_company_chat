@@ -15,6 +15,7 @@ class GlobalConfig{
   static var PATCH='patch';
   static var GET='get';
   static var PUT='put';
+  static var Token_expireDay='15';
   static var file_domain;
 
   static int _tabIndex = 0;

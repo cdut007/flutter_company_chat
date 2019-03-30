@@ -32,6 +32,7 @@ class _ContactViewState extends State {
   LoadingType loadingType = LoadingType.Loading;
   EventBus eventBus = GlobalConfig.getEventBus();
   StreamSubscription loginSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -44,14 +45,11 @@ class _ContactViewState extends State {
     });
   }
 
-
-
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     loginSubscription.cancel();
     print('*********【取消名片列表订阅事件】*********');
-
   }
 
   Future<Null> pullToRefresh() async {
@@ -59,48 +57,41 @@ class _ContactViewState extends State {
     return null;
   }
 
-
   Future<void> _loadFriends() async {
-
-    ApiManager.getVcardList({}).then((datas){
+    ApiManager.getVcardList({}).then((datas) {
       List<VcardEntity> vcardList = (datas as List) != null
           ? (datas as List).map((i) => VcardEntity.fromJson(i)).toList()
           : null;
       var applyList = vcardList;
       setState(() {
         _friends = applyList;
-        if(_friends.length>0){
+        if (_friends.length > 0) {
           loadingType = LoadingType.End;
-        }else{
+        } else {
           loadingType = LoadingType.Empty;
         }
-
       });
-    },onError: (errorData){
-
-     setState(() {
-       if(_friends.length>0){
-         loadingType = LoadingType.End;
-       }else{
-         loadingType = LoadingType.Error;
-       }
-     });
+    }, onError: (errorData) {
+      setState(() {
+        if (_friends.length > 0) {
+          loadingType = LoadingType.End;
+        } else {
+          loadingType = LoadingType.Error;
+        }
+      });
       print('*********getVcardList callback error print*********');
-      var error =  ApiManager.parseErrorInfo(errorData);
-      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+      var error = ApiManager.parseErrorInfo(errorData);
+      showErrorInfo(context, '错误码：${error.code}' + ' 错误原因：' + error.msg);
       print('*********getVcardList callback error print end*********');
-
     });
-
   }
 
   @override
-  void activate(){
-  }
+  void activate() {}
+
   @override
-  void deactivate(){
+  void deactivate() {
     super.deactivate();
-
   }
 
   Card getBannerConainerWidget(Size deviceSize, var data) {
@@ -201,7 +192,7 @@ class _ContactViewState extends State {
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,
-                          child:   new QrImage(
+                          child: new QrImage(
                             data: "holdingFuture",
                             size: 56.0,
                           ),
@@ -213,102 +204,131 @@ class _ContactViewState extends State {
     ));
   }
 
-  Widget renderHead(){
-    return new Padding(padding: EdgeInsets.all(6.0), child:
-    Column(
+  Widget renderHead() {
+    return new Column(
       children: <Widget>[
-        InkWell(child:new Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
-            child: new Row(
-              children: <Widget>[
-                Container(
-                  child: Icon(Icons.contacts,color: Colors.blueGrey,),
-                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                ),
-                new Expanded(
-                  child: new Text(
-                    '新的名片申请',
-                    style: new TextStyle(fontSize: 16.0),
-                  ),flex: 1,),
+       // new VcardBannerView(),
+        new Padding(
+          padding: EdgeInsets.all(6.0),
+          child: Column(
+            children: <Widget>[
+              InkWell(
+                child: new Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+                    child: new Row(
+                      children: <Widget>[
+                        Container(
+                          child: Icon(
+                            Icons.contacts,
+                            color: Colors.blueGrey,
+                          ),
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                        ),
+                        new Expanded(
+                          child: new Text(
+                            '新的名片申请',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                          flex: 1,
+                        ),
 //                      Icon(
 //                        Icons.keyboard_arrow_right,
 //                        size: 36,
 //                        color: Colors.grey,
 //                      )
-              ],
-            )),
-          onTap: () {
-
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (context) => new ApplyVcardListPage()));
-          },
-        ),
-        Divider(
-          height: 1.0,
+                      ],
+                    )),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new ApplyVcardListPage()));
+                },
+              ),
+              Divider(
+                height: 1.0,
+              )
+            ],
+          ),
         )
       ],
-    ),);
+    );
   }
 
   Widget getFriendList() {
     Widget content;
-    if(loadingType == LoadingType.Loading){
-      return Center(child: Column(children: <Widget>[
-        renderHead(),
-        new LoadingWidget(loadingType: LoadingType.Loading,)
-      ],),);
-    }
-
-    if(loadingType == LoadingType.Empty){
-      return Center(child: Column(children: <Widget>[
-        renderHead(),
-        new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
-          print('click empty ui');
-         setState(() {
-           loadingType = LoadingType.Loading;
-         });
-          pullToRefresh();
-        },)
-      ],),);
-    }
-
-    if(loadingType == LoadingType.Error){
-
-      return Center(child: Column(children: <Widget>[
-        renderHead(),
-        new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
-          setState(() {
-            loadingType = LoadingType.Loading;
-          });
-          pullToRefresh();
-        },)
-      ],),);
-    }
-
-
-      Size deviceSize = MediaQuery.of(context).size;
-      content = new HeaderListView(
-        _friends,
-        headerList: [1,2],
-        itemWidgetCreator: _buildFriendListTile,
-        headerCreator: (BuildContext context, int position) {
-          if(position == 0) {
-            return new Container();
-            //return   new VcardBannerView();
-          }else {
-            return renderHead();
-          }
-        },
-        usePullToRefresh: true,
-          onHeaderRefresh: pullToRefresh,
+    if (loadingType == LoadingType.Loading) {
+      return Center(
+        child: Column(
+          children: <Widget>[
+            renderHead(),
+            new LoadingWidget(
+              loadingType: LoadingType.Loading,
+            )
+          ],
+        ),
       );
+    }
+
+    if (loadingType == LoadingType.Empty) {
+      return Center(
+        child: Column(
+          children: <Widget>[
+            renderHead(),
+            new LoadingWidget(
+              loadingType: LoadingType.Empty,
+              clickCallback: () {
+                print('click empty ui');
+                setState(() {
+                  loadingType = LoadingType.Loading;
+                });
+                pullToRefresh();
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+    if (loadingType == LoadingType.Error) {
+      return Center(
+        child: Column(
+          children: <Widget>[
+            renderHead(),
+            new LoadingWidget(
+              loadingType: LoadingType.Error,
+              clickCallback: () {
+                setState(() {
+                  loadingType = LoadingType.Loading;
+                });
+                pullToRefresh();
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+    Size deviceSize = MediaQuery.of(context).size;
+    content = new HeaderListView(
+      _friends,
+      headerList: [1, 2],
+      itemWidgetCreator: _buildFriendListTile,
+      headerCreator: (BuildContext context, int position) {
+        if (position == 0) {
+           return new Container();
+          // return   new VcardBannerView();
+        } else {
+          return renderHead();
+        }
+      },
+      usePullToRefresh: true,
+      onHeaderRefresh: pullToRefresh,
+    );
 //      content = new ListView.builder(
 //        itemCount: _friends.length,
 //        itemBuilder: _buildFriendListTile,
 //      );
-
 
     return content;
   }
@@ -316,25 +336,35 @@ class _ContactViewState extends State {
   Widget _buildFriendListTile(BuildContext context, int index) {
     var friend = _friends[index];
 
-    return new Column(children: <Widget>[
-      new ListTile(
-        onTap: () => _navigateToFriendDetails(friend, index),
-        leading: new Hero(
-          tag: 'contact_$index',
-          child:  CommonUI.getAvatarWidget(friend.avatar),
+    return new Column(
+      children: <Widget>[
+        new ListTile(
+          onTap: () => _navigateToFriendDetails(friend, index),
+          leading: new Hero(
+            tag: 'contact_$index',
+            child: CommonUI.getAvatarWidget(friend.avatar),
+          ),
+          title: new Text(getUserVcardName(friend)),
+          subtitle: new Text(getUserVcardCompany(friend)),
         ),
-        title: new Text(getUserVcardName(friend)),
-        subtitle: new Text(getUserVcardCompany(friend)),
-      ),
-      new Divider(height: 1,)
-    ],);
+        new Divider(
+          height: 1,
+        )
+      ],
+    );
   }
 
   void _navigateToFriendDetails(VcardEntity friend, Object avatarTag) {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-          return new ContactDetailsPage(Friend(avatar: 'http://res', name: 'test', email: 'ww@ww', location: 'china'), avatarTag: avatarTag);
+          return new ContactDetailsPage(
+              Friend(
+                  avatar: 'http://res',
+                  name: 'test',
+                  email: 'ww@ww',
+                  location: 'china'),
+              avatarTag: avatarTag);
         },
       ),
     );
@@ -344,9 +374,7 @@ class _ContactViewState extends State {
   Widget build(BuildContext context) {
     // TODO: implement build
 
-
     Size deviceSize = MediaQuery.of(context).size;
-    return new Scaffold(
-        body: getFriendList());
+    return new Scaffold(body: getFriendList());
   }
 }

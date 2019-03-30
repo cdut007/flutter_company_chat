@@ -32,6 +32,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
   var _phoneController = new TextEditingController();
   var _jobPostionController = new TextEditingController();
   var _companyController = new TextEditingController();
+  var avatarUrl;
 
   File _image;
 
@@ -39,7 +40,18 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     var fileName = GlobalConfig.getFileName(image);
-    ApiManager.uploadFile(fileName, image.path);
+    showLoadingDialog(context,'正在上传头像...');
+    ApiManager.uploadFile(fileName, image.path).then((data){
+      closeLoadingDialog();
+      setState(() {
+        avatarUrl = data['url'];
+      });
+    },onError: (errorData){
+      print('*********uploadFile userPhoto callback error print*********');
+      var error =  ApiManager.parseErrorInfo(errorData);
+      closeLoadingDialog();
+      showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+    });
     setState(() {
       _image = image;
 
@@ -54,6 +66,8 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
     if(_vcardEntity == null){
       _vcardEntity = new VcardEntity();
     }
+    avatarUrl = _vcardEntity.avatar;
+
     if(_vcardEntity.hfCardDetails!=null && _vcardEntity.hfCardDetails.length>0){
       _nameController.text = getUserVcardName(_vcardEntity);
       _phoneController.text = getUserVcardPhone(_vcardEntity);
@@ -95,7 +109,7 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                 new Container(
                                     width: 140.0,
                                     height: 140.0,
-                                    child:  CommonUI.getAvatarWidget(_vcardEntity.avatar),),
+                                    child:  CommonUI.getAvatarWidget(avatarUrl),),
                               ],
                             ),
                             Padding(
@@ -369,6 +383,11 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
       "name": _nameController.text,
       "phoneNumber": _phoneController.text});
     Map<String, dynamic> data ={'hfCardDetails':hfCardDetails};
+
+    if(avatarUrl!=null){
+      data['avatar']= avatarUrl;
+    }
+
     if(_vcardEntity.id!=null){
       data['id']=_vcardEntity.id;
 

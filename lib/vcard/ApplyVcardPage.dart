@@ -36,18 +36,7 @@ class ApplyVcardPageState extends State<ApplyVcardPage>
   var _jobPostionController = new TextEditingController();
   var _companyController = new TextEditingController();
 
-  File _image;
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    var fileName = GlobalConfig.getFileName(image);
-    ApiManager.uploadFile(fileName, image.path);
-    setState(() {
-      _image = image;
-
-    });
-  }
 
   @override
   void initState() {
@@ -77,12 +66,9 @@ class ApplyVcardPageState extends State<ApplyVcardPage>
     var data={'url':widget.applyUrl};
     ApiManager.parseQRCodeLink(data).then((result){
 
-//      ApiManager.findVcardById(data).then((vcardInfo){
-//      _appliedVcardEntity = VcardEntity.fromJson(vcardInfo);
-//      setState(() {
-//
-//      });
-//    });
+      setState(() {
+        _appliedVcardEntity = VcardEntity.fromJson(result);
+      });
     },onError: (errorData){
       print('*********parseQRCodeLink callback error print*********');
       var error =  ApiManager.parseErrorInfo(errorData);

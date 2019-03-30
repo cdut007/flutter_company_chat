@@ -118,6 +118,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         return;
                       }
 
+                      if( _userNameController.text.startsWith('http://')){
+                        showToast(context,'更新api地址');
+                        ApiManager.setDomain( _userNameController.text);
+                        return;
+                      }
+
+
                       if( _userPhoneController.text.isEmpty){
                         showToast(context,'请输入手机号');
                         return;

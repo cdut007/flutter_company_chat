@@ -8,7 +8,7 @@ import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
-var BASE_URL = "http://39.96.161.237:9090/api";
+var BASE_URL = "http://39.96.161.237:9090/api";//"http://192.168.99.132:9091/api";//
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
@@ -87,6 +87,7 @@ class ApiManager {
     var signature = qiNiuDataJson['signature'];
     var host = qiNiuDataJson['host'];
     var dir = qiNiuDataJson['dir'];
+    var callback = qiNiuDataJson['callback'];
     Dio dio = new Dio();
     print('host=' + host);
     print('upload file info=' + fileName + ';filePath=' + filePath);
@@ -94,18 +95,20 @@ class ApiManager {
       "OSSAccessKeyId": accessid,
       "policy": policy,
       "key": dir+fileName,
+      "callback":callback,
       "Signature": signature,
       "file": new UploadFileInfo(new File(filePath), fileName)
     });
     Response response = await dio.post(host, data: formData);
-    print('sssss==${response.statusCode}');
+
 
     ResponseEntity responseErrorEntity = await responseQiuniuError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData));
+    print('file responseData==${responseData.toString()}');
+    return new Future.value(responseData['data']);
   }
 
   static Future responseQiuniuError(Response response) async {
@@ -420,7 +423,7 @@ class ApiManager {
     var responseData = getResponseData(response);
     var token = responseData['data'];
     var refreshTokeInfo =
-        await refreshToken({'token': token, 'expireDay': '15'});
+        await refreshToken({'token': token, 'expireDay': GlobalConfig.Token_expireDay});
 
     if (refreshTokeInfo is ResponseEntity) {
       return new Future.error(refreshTokeInfo);
