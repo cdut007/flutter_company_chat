@@ -241,6 +241,7 @@ class MyInfoPageState extends State<MyInfoPage> {
          }
         break;
       case 2:
+
         String h5_url = "https://github.com/zhibuyu";
 //        Navigator.push(
 //            context,

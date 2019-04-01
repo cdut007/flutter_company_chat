@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 String readTimestamp(int timestamp) {
   var now = new DateTime.now();
   var format = new DateFormat('HH:mm a');
-  var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  var date = new DateTime.fromMillisecondsSinceEpoch(timestamp);
   var diff = now.difference(date);
   var time = '';
 
