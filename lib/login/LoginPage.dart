@@ -7,6 +7,7 @@ import 'package:flutter_app/IndexPage.dart';
 import 'package:flutter_app/login/ForgetPasswordPage.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 import 'dart:convert';
+import 'package:hf_sdk/hf_sdk.dart';
 /**
  * @Description  登录页面
  * @Author  james
