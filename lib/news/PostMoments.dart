@@ -4,7 +4,7 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:flutter_app/home/Article.dart';
+import 'package:flutter_app/entity/Moment.dart';
 import 'package:event_bus/event_bus.dart';
 
 
@@ -27,6 +27,26 @@ class _PostMomentsState extends State<PostMoments>{
     photoFileList = [];
   }
 
+  postMomentsToServer() async{
+    var files = [];
+    for(var i=0;i<photoFileList.length;i++){
+      var filePath = photoFileList[i].path;
+      print('上传文件路径：'+filePath);
+      var fileName = GlobalConfig.getFileName(photoFileList[i]);
+      var fileResult =  await  ApiManager.uploadFile(fileName, filePath);
+      var data = fileResult['file'];
+      data['publicUrl'] =  fileResult['publicUrl'];
+      files.add(data);
+      // GlobalConfig.getFileName(widget.photoFileList[i]);
+    }
+    //fileContent
+
+    //photoList
+    print('发表文字:'+textController.text);
+    var data = {'content':textController.text,'publishType':'PERSONAL','fileContent':files};
+    ApiManager.postMoments(data);
+  }
+
   @override
   Widget build(BuildContext context){
     return new Scaffold(
@@ -44,19 +64,15 @@ class _PostMomentsState extends State<PostMoments>{
                   showToast(context, '请输入内容');
                   return;
                 }
-                for(var i=0;i<photoFileList.length;i++){
-                  print('上传文件路径：'+photoFileList[i].path);
-                 // GlobalConfig.getFileName(widget.photoFileList[i]);
-                }
-                //photoList
-                print('发表文字:'+text);
-                var data = {'cotent':textController.text,};
-                ApiManager.postMoments(data).then((result){
+                showLoadingDialog(context);
+                postMomentsToServer().then((result){
+                  closeLoadingDialog();
                   showToast(context, '发表成功');
                   EventBus eventBus = GlobalConfig.getEventBus();
-                  eventBus.fire(Article(null, null, null, null, null, null, null, null ));
+                  eventBus.fire(Moment());
                   Navigator.pop(context,ApiManager.refresh_tag);
                 },onError: (errorData){
+                  closeLoadingDialog();
                   print('*********postMoments callback error print*********');
                   var error =  ApiManager.parseErrorInfo(errorData);
                   showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);

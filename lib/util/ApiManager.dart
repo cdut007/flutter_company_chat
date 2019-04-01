@@ -321,7 +321,7 @@ class ApiManager {
 
     String url = BASE_URL + "/wall/all";
     var requestData = await putPublicParams(data);
-    Response response = await reuqest(url, GlobalConfig.GET, requestData);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);

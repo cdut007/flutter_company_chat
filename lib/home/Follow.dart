@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/home/ReplyPage.dart';
-import 'package:flutter_app/home/Article.dart';
+import 'package:flutter_app/entity/Moment.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:flutter_app/Util/Constants.dart';
 import 'package:flutter_app/util/CommonUI.dart';
+import 'package:flutter_app/Util/TimeUtils.dart';
 import 'package:event_bus/event_bus.dart';
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_app/widget/HeaderListView.dart';
 
 class Follow extends StatefulWidget {
@@ -17,22 +19,37 @@ class Follow extends StatefulWidget {
 }
 
 class _FollowState extends State<Follow> {
-  var currentPage = 0;
-  List<Article> listData = [];
+  var currentPage = 1;
+  List<Moment> listData = [];
   LoadingType loadingType = LoadingType.Loading;
 
-  Widget wordsCard(Article article) {
+  Widget wordsCard(Moment article) {
     Widget markWidget;
-    if (article.imgUrl == null) {
-      markWidget = new Text(article.mark,
+    if (article.fileContent == null) {
+      markWidget = new Text(article.content,
           style: new TextStyle(height: 1.3, color: GlobalConfig.fontColor));
     } else {
+      //默认取第一个。
+      List   decodedJson = json.decode(article.fileContent);
+      var url='';
+      if(decodedJson != null && decodedJson.length>0){
+       try{
+         var fileUrl = decodedJson[0]['publicUrl'];
+         if(fileUrl!=null){
+           url = fileUrl+"?x-oss-process=image/resize,w_100";
+         }
+       }catch(e){
+         print(e);
+       }
+
+      }
+
       markWidget = new Row(
         children: <Widget>[
           new Expanded(
             flex: 2,
             child: new Container(
-              child: new Text(article.mark,
+              child: new Text(article.content == null?'':article.content,
                   style: new TextStyle(
                       height: 1.3, color: GlobalConfig.fontColor)),
             ),
@@ -44,7 +61,7 @@ class _FollowState extends State<Follow> {
                   child: new Container(
                     foregroundDecoration: new BoxDecoration(
                         image: new DecorationImage(
-                          image: new NetworkImage(article.imgUrl),
+                          image: new NetworkImage(url),
                           centerSlice:
                               new Rect.fromLTRB(270.0, 180.0, 1360.0, 730.0),
                         ),
@@ -70,7 +87,7 @@ class _FollowState extends State<Follow> {
                     child: new Row(
                       children: <Widget>[
                         new Container(
-                          child: CommonUI.getAvatarWidget(article.headUrl),
+                          child: CommonUI.getAvatarWidget(article.latitude),
                         ),
                         new Padding(
                           padding: const EdgeInsets.only(left: 8),
@@ -78,15 +95,15 @@ class _FollowState extends State<Follow> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               new Container(
-                                  child: new Text(article.user,
+                                  child: new Text(article.userId,
                                       style:
                                           new TextStyle(color: Colors.black87),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis)),
-                              new Text(article.action,
+                              new Text('666位关注者',
                                   style: new TextStyle(
                                       color: GlobalConfig.fontColor)),
-                              new Text(article.time,
+                              new Text(readTimestamp(article.createTime) ,
                                   style: new TextStyle(
                                       color: GlobalConfig.fontColor))
                             ],
@@ -112,14 +129,14 @@ class _FollowState extends State<Follow> {
                   new Container(
                     child: new Row(
                       children: <Widget>[
-                        new Expanded(
-                            child: new Text(
-                                article.agreeNum.toString() +
-                                    " 赞同 · " +
-                                    article.commentNum.toString() +
-                                    "评论",
-                                style: new TextStyle(
-                                    color: GlobalConfig.fontColor))),
+//                        new Expanded(
+//                            child: new Text(
+//                                article.agreeNum.toString() +
+//                                    " 赞同 · " +
+//                                    article.commentNum.toString() +
+//                                    "评论",
+//                                style: new TextStyle(
+//                                    color: GlobalConfig.fontColor))),
                         new PopupMenuButton(
                             icon: new Icon(
                               Icons.linear_scale,
@@ -152,7 +169,7 @@ class _FollowState extends State<Follow> {
     super.initState();
     getDatas(START_REQUEST);
     print('*********【初始化动态列表订阅事件】*********');
-    loginSubscription = eventBus.on<Article>().listen((event) {
+    loginSubscription = eventBus.on<Moment>().listen((event) {
       print('*********收到动态列表订阅事件*********');
       print(event);
       pullToRefresh();
@@ -182,39 +199,45 @@ class _FollowState extends State<Follow> {
   ///
   void getDatas(int request_type) async {
     var data = {};
-    if (request_type != LOADMORE_REQIEST) {
-      currentPage = 0;
-      data = {'page': '0', 'pageSize:': '10'};
+    if (request_type == REFRESH_REQIEST) {
+      currentPage = 1;
+      data = {'page': '$currentPage', 'pageSize': '10'};
     } else {
-      data = {'page': '$currentPage', 'pageSize:': '10'};
+      currentPage+=1;
+      data = {'page': '$currentPage', 'pageSize': '10'};
     }
 
     ApiManager.getPostMomentsList(data).then((datas) {
-      datas = articleList;
+      currentPage++;
       if (datas != null) {
+        List<Moment>  momentsData= (datas as List) != null
+            ? (datas as List).map((i) => Moment.fromJson(i)).toList()
+            : null;
         setState(() {
           if (request_type != LOADMORE_REQIEST) {
             // 不是加载更多，则直接为变量赋值
-            if (request_type == START_REQUEST) {
-              listData = new List<Article>();
+            if (request_type == START_REQUEST || request_type == REFRESH_REQIEST) {
+              listData = new List<Moment>();
             }
-            for (Article data in datas) {
+            for (Moment data in momentsData) {
               listData.add(data);
             }
           } else {
             // 是加载更多，则需要将取到的news数据追加到原来的数据后面
-            List<Article> list1 = new List<Article>();
+            List<Moment> list1 = new List<Moment>();
             list1.addAll(listData);
-            for (Article data in datas) {
+            for (Moment data in momentsData) {
               list1.add(data);
             }
             listData = list1;
           }
+
           // 判断是否获取了所有的数据，如果是，则需要显示底部的"我也是有底线的"布局
 //              if (has_next_page == false&&"endline"!= listData[listData.length].type) {
 //                ListEnity listEnity = new ListEnity("endline", null);
 //                listData.add(listEnity);
 //              }
+
           if (request_type == REFRESH_REQIEST) {
             showToast(context, '刷新成功');
           }
@@ -237,7 +260,7 @@ class _FollowState extends State<Follow> {
       }
 
     }, onError: (errorData) {
-
+      currentPage-=1;
       setState(() {
         if(listData.length>0){
           loadingType = LoadingType.End;
