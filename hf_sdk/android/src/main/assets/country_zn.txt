@@ -1,0 +1,16 @@
+[
+    {
+        "countryCode": "+65",
+        "fullName": "新加坡",
+        "shortName": "sg",
+        "sortLetter": "XJP",
+        "id": 0
+    },
+    {
+        "countryCode": "+86",
+        "fullName": "中国",
+        "shortName": "cn",
+        "sortLetter": "ZG",
+        "id": 0
+    }
+]

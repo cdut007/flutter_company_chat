@@ -1,0 +1,1400 @@
+[
+    {
+        "countryCode": "+93",
+        "fullName": "Afghanistan",
+        "shortName": "af",
+        "id": 0
+    },
+    {
+        "countryCode": "+355",
+        "fullName": "Albania",
+        "shortName": "al",
+        "id": 0
+    },
+    {
+        "countryCode": "+213",
+        "fullName": "Algeria",
+        "shortName": "dz",
+        "id": 0
+    },
+    {
+        "countryCode": "+684",
+        "fullName": "American Samoa",
+        "shortName": "as",
+        "id": 0
+    },
+    {
+        "countryCode": "+376",
+        "fullName": "Andorra",
+        "shortName": "ad",
+        "id": 0
+    },
+    {
+        "countryCode": "+244",
+        "fullName": "Angola",
+        "shortName": "ao",
+        "id": 0
+    },
+    {
+        "countryCode": "+1264",
+        "fullName": "Anguilla",
+        "shortName": "ai",
+        "id": 0
+    },
+    {
+        "countryCode": "+1268",
+        "fullName": "Antigua & Barbuda",
+        "shortName": "ag",
+        "id": 0
+    },
+    {
+        "countryCode": "+54",
+        "fullName": "Argentina",
+        "shortName": "ar",
+        "id": 0
+    },
+    {
+        "countryCode": "+374",
+        "fullName": "Armenia",
+        "shortName": "am",
+        "id": 0
+    },
+    {
+        "countryCode": "+297",
+        "fullName": "Aruba",
+        "shortName": "aw",
+        "id": 0
+    },
+    {
+        "countryCode": "+247",
+        "fullName": "Ascension Island",
+        "shortName": "ax",
+        "id": 0
+    },
+    {
+        "countryCode": "+61",
+        "fullName": "Australia",
+        "shortName": "au",
+        "id": 0
+    },
+    {
+        "countryCode": "+672",
+        "fullName": "Australian Territories",
+        "shortName": "yi",
+        "id": 0
+    },
+    {
+        "countryCode": "+43",
+        "fullName": "Austria",
+        "shortName": "at",
+        "id": 0
+    },
+    {
+        "countryCode": "+994",
+        "fullName": "Azerbaijan",
+        "shortName": "az",
+        "id": 0
+    },
+    {
+        "countryCode": "+1242",
+        "fullName": "Bahamas",
+        "shortName": "bs",
+        "id": 0
+    },
+    {
+        "countryCode": "+973",
+        "fullName": "Bahrain",
+        "shortName": "bh",
+        "id": 0
+    },
+    {
+        "countryCode": "+880",
+        "fullName": "Bangladesh",
+        "shortName": "bd",
+        "id": 0
+    },
+    {
+        "countryCode": "+1246",
+        "fullName": "Barbados",
+        "shortName": "bb",
+        "id": 0
+    },
+    {
+        "countryCode": "+375",
+        "fullName": "Belarus",
+        "shortName": "by",
+        "id": 0
+    },
+    {
+        "countryCode": "+32",
+        "fullName": "Belgium",
+        "shortName": "be",
+        "id": 0
+    },
+    {
+        "countryCode": "+501",
+        "fullName": "Belize",
+        "shortName": "bz",
+        "id": 0
+    },
+    {
+        "countryCode": "+229",
+        "fullName": "Benin",
+        "shortName": "bj",
+        "id": 0
+    },
+    {
+        "countryCode": "+1441",
+        "fullName": "Bermuda",
+        "shortName": "bm",
+        "id": 0
+    },
+    {
+        "countryCode": "+975",
+        "fullName": "Bhutan",
+        "shortName": "bt",
+        "id": 0
+    },
+    {
+        "countryCode": "+591",
+        "fullName": "Bolivia",
+        "shortName": "bo",
+        "id": 0
+    },
+    {
+        "countryCode": "+387",
+        "fullName": "Bosnia-Herzegovina",
+        "shortName": "ba",
+        "id": 0
+    },
+    {
+        "countryCode": "+267",
+        "fullName": "Botswana",
+        "shortName": "bw",
+        "id": 0
+    },
+    {
+        "countryCode": "+55",
+        "fullName": "Brazil",
+        "shortName": "br",
+        "id": 0
+    },
+    {
+        "countryCode": "+246",
+        "fullName": "British Indian Ocean Terr.",
+        "shortName": "io",
+        "id": 0
+    },
+    {
+        "countryCode": "+1284",
+        "fullName": "British Virgin Islands",
+        "shortName": "vg",
+        "id": 0
+    },
+    {
+        "countryCode": "+673",
+        "fullName": "Brunei",
+        "shortName": "bn",
+        "id": 0
+    },
+    {
+        "countryCode": "+359",
+        "fullName": "Bulgaria",
+        "shortName": "bg",
+        "id": 0
+    },
+    {
+        "countryCode": "+226",
+        "fullName": "Burkina Faso",
+        "shortName": "bf",
+        "id": 0
+    },
+    {
+        "countryCode": "+257",
+        "fullName": "Burundi",
+        "shortName": "bi",
+        "id": 0
+    },
+    {
+        "countryCode": "+855",
+        "fullName": "Cambodia",
+        "shortName": "kh",
+        "id": 0
+    },
+    {
+        "countryCode": "+237",
+        "fullName": "Cameroon",
+        "shortName": "cm",
+        "id": 0
+    },
+    {
+        "countryCode": "+1",
+        "fullName": "Canada",
+        "shortName": "ca",
+        "id": 0
+    },
+    {
+        "countryCode": "+238",
+        "fullName": "Cape Verde",
+        "shortName": "cv",
+        "id": 0
+    },
+    {
+        "countryCode": "+1345",
+        "fullName": "Cayman Islands",
+        "shortName": "ky",
+        "id": 0
+    },
+    {
+        "countryCode": "+236",
+        "fullName": "Central African Republic",
+        "shortName": "cf",
+        "id": 0
+    },
+    {
+        "countryCode": "+235",
+        "fullName": "Chad",
+        "shortName": "td",
+        "id": 0
+    },
+    {
+        "countryCode": "+56",
+        "fullName": "Chile",
+        "shortName": "cl",
+        "id": 0
+    },
+    {
+        "countryCode": "+86",
+        "fullName": "China",
+        "shortName": "cn",
+        "id": 0
+    },
+    {
+        "countryCode": "+57",
+        "fullName": "Colombia",
+        "shortName": "co",
+        "id": 0
+    },
+    {
+        "countryCode": "+269",
+        "fullName": "Comoros / Mayotte",
+        "shortName": "km",
+        "id": 0
+    },
+    {
+        "countryCode": "+243",
+        "fullName": "Congo, Dem. Rep. of",
+        "shortName": "cd",
+        "id": 0
+    },
+    {
+        "countryCode": "+242",
+        "fullName": "Congo, Republic of",
+        "shortName": "cg",
+        "id": 0
+    },
+    {
+        "countryCode": "+682",
+        "fullName": "Cook Islands",
+        "shortName": "ck",
+        "id": 0
+    },
+    {
+        "countryCode": "+506",
+        "fullName": "Costa Rica",
+        "shortName": "cr",
+        "id": 0
+    },
+    {
+        "countryCode": "+225",
+        "fullName": "Cote d'Ivoire",
+        "shortName": "ci",
+        "id": 0
+    },
+    {
+        "countryCode": "+385",
+        "fullName": "Croatia",
+        "shortName": "hr",
+        "id": 0
+    },
+    {
+        "countryCode": "+53",
+        "fullName": "Cuba",
+        "shortName": "cu",
+        "id": 0
+    },
+    {
+        "countryCode": "+357",
+        "fullName": "Cyprus",
+        "shortName": "cy",
+        "id": 0
+    },
+    {
+        "countryCode": "+420",
+        "fullName": "Czech Republic",
+        "shortName": "cz",
+        "id": 0
+    },
+    {
+        "countryCode": "+45",
+        "fullName": "Denmark",
+        "shortName": "dk",
+        "id": 0
+    },
+    {
+        "countryCode": "+253",
+        "fullName": "Djibouti",
+        "shortName": "dj",
+        "id": 0
+    },
+    {
+        "countryCode": "+1767",
+        "fullName": "Dominica",
+        "shortName": "dm",
+        "id": 0
+    },
+    {
+        "countryCode": "+1809",
+        "fullName": "Dominican Republic",
+        "shortName": "do",
+        "id": 0
+    },
+    {
+        "countryCode": "+670",
+        "fullName": "East Timor",
+        "shortName": "tp",
+        "id": 0
+    },
+    {
+        "countryCode": "+593",
+        "fullName": "Ecuador",
+        "shortName": "ec",
+        "id": 0
+    },
+    {
+        "countryCode": "+20",
+        "fullName": "Egypt",
+        "shortName": "eg",
+        "id": 0
+    },
+    {
+        "countryCode": "+503",
+        "fullName": "El Salvador",
+        "shortName": "sv",
+        "id": 0
+    },
+    {
+        "countryCode": "+240",
+        "fullName": "Equatorial Guinea",
+        "shortName": "gq",
+        "id": 0
+    },
+    {
+        "countryCode": "+291",
+        "fullName": "Eritrea",
+        "shortName": "er",
+        "id": 0
+    },
+    {
+        "countryCode": "+372",
+        "fullName": "Estonia",
+        "shortName": "ee",
+        "id": 0
+    },
+    {
+        "countryCode": "+251",
+        "fullName": "Ethiopia",
+        "shortName": "et",
+        "id": 0
+    },
+    {
+        "countryCode": "+500",
+        "fullName": "Falkland Islands",
+        "shortName": "fk",
+        "id": 0
+    },
+    {
+        "countryCode": "+298",
+        "fullName": "Faroe Islands",
+        "shortName": "fo",
+        "id": 0
+    },
+    {
+        "countryCode": "+679",
+        "fullName": "Fiji",
+        "shortName": "fj",
+        "id": 0
+    },
+    {
+        "countryCode": "+358",
+        "fullName": "Finland",
+        "shortName": "fi",
+        "id": 0
+    },
+    {
+        "countryCode": "+33",
+        "fullName": "France",
+        "shortName": "fr",
+        "id": 0
+    },
+    {
+        "countryCode": "+596",
+        "fullName": "French Antilles / Martinique",
+        "shortName": "mq",
+        "id": 0
+    },
+    {
+        "countryCode": "+594",
+        "fullName": "French Guiana",
+        "shortName": "gf",
+        "id": 0
+    },
+    {
+        "countryCode": "+689",
+        "fullName": "French Polynesia / Tahiti",
+        "shortName": "pf",
+        "id": 0
+    },
+    {
+        "countryCode": "+241",
+        "fullName": "Gabon",
+        "shortName": "ga",
+        "id": 0
+    },
+    {
+        "countryCode": "+220",
+        "fullName": "Gambia",
+        "shortName": "gm",
+        "id": 0
+    },
+    {
+        "countryCode": "+995",
+        "fullName": "Georgia",
+        "shortName": "ge",
+        "id": 0
+    },
+    {
+        "countryCode": "+49",
+        "fullName": "Germany",
+        "shortName": "de",
+        "id": 0
+    },
+    {
+        "countryCode": "+233",
+        "fullName": "Ghana",
+        "shortName": "gh",
+        "id": 0
+    },
+    {
+        "countryCode": "+350",
+        "fullName": "Gibraltar",
+        "shortName": "gi",
+        "id": 0
+    },
+    {
+        "countryCode": "+30",
+        "fullName": "Greece",
+        "shortName": "gr",
+        "id": 0
+    },
+    {
+        "countryCode": "+299",
+        "fullName": "Greenland",
+        "shortName": "gl",
+        "id": 0
+    },
+    {
+        "countryCode": "+1473",
+        "fullName": "Grenada",
+        "shortName": "gd",
+        "id": 0
+    },
+    {
+        "countryCode": "+1784",
+        "fullName": "Grenadines",
+        "shortName": "vc",
+        "id": 0
+    },
+    {
+        "countryCode": "+590",
+        "fullName": "Guadeloupe",
+        "shortName": "gp",
+        "id": 0
+    },
+    {
+        "countryCode": "+1671",
+        "fullName": "Guam",
+        "shortName": "gu",
+        "id": 0
+    },
+    {
+        "countryCode": "+502",
+        "fullName": "Guatemala",
+        "shortName": "gt",
+        "id": 0
+    },
+    {
+        "countryCode": "+224",
+        "fullName": "Guinea",
+        "shortName": "gn",
+        "id": 0
+    },
+    {
+        "countryCode": "+245",
+        "fullName": "Guinea-Bissau",
+        "shortName": "gw",
+        "id": 0
+    },
+    {
+        "countryCode": "+592",
+        "fullName": "Guyana",
+        "shortName": "gy",
+        "id": 0
+    },
+    {
+        "countryCode": "+509",
+        "fullName": "Haiti",
+        "shortName": "ht",
+        "id": 0
+    },
+    {
+        "countryCode": "+504",
+        "fullName": "Honduras",
+        "shortName": "hn",
+        "id": 0
+    },
+    {
+        "countryCode": "+852",
+        "fullName": "Hong Kong",
+        "shortName": "hk",
+        "id": 0
+    },
+    {
+        "countryCode": "+36",
+        "fullName": "Hungary",
+        "shortName": "hu",
+        "id": 0
+    },
+    {
+        "countryCode": "+354",
+        "fullName": "Iceland",
+        "shortName": "is",
+        "id": 0
+    },
+    {
+        "countryCode": "+91",
+        "fullName": "India",
+        "shortName": "in",
+        "id": 0
+    },
+    {
+        "countryCode": "+62",
+        "fullName": "Indonesia",
+        "shortName": "id",
+        "id": 0
+    },
+    {
+        "countryCode": "+871",
+        "fullName": "Inmarsat - East Atlantic",
+        "shortName": "ine",
+        "id": 0
+    },
+    {
+        "countryCode": "+873",
+        "fullName": "Inmarsat - Indian",
+        "shortName": "ini",
+        "id": 0
+    },
+    {
+        "countryCode": "+872",
+        "fullName": "Inmarsat - Pacific",
+        "shortName": "inp",
+        "id": 0
+    },
+    {
+        "countryCode": "+870",
+        "fullName": "Inmarsat - Special",
+        "shortName": "ins",
+        "id": 0
+    },
+    {
+        "countryCode": "+874",
+        "fullName": "Inmarsat - West Atlantic",
+        "shortName": "inw",
+        "id": 0
+    },
+    {
+        "countryCode": "+800",
+        "fullName": "International Freephone",
+        "shortName": "inf",
+        "id": 0
+    },
+    {
+        "countryCode": "+98",
+        "fullName": "Iran",
+        "shortName": "ir",
+        "id": 0
+    },
+    {
+        "countryCode": "+964",
+        "fullName": "Iraq",
+        "shortName": "iq",
+        "id": 0
+    },
+    {
+        "countryCode": "+353",
+        "fullName": "Ireland",
+        "shortName": "ie",
+        "id": 0
+    },
+    {
+        "countryCode": "+972",
+        "fullName": "Israel",
+        "shortName": "il",
+        "id": 0
+    },
+    {
+        "countryCode": "+39",
+        "fullName": "Italy",
+        "shortName": "it",
+        "id": 0
+    },
+    {
+        "countryCode": "+1876",
+        "fullName": "Jamaica",
+        "shortName": "jm",
+        "id": 0
+    },
+    {
+        "countryCode": "+81",
+        "fullName": "Japan",
+        "shortName": "jp",
+        "id": 0
+    },
+    {
+        "countryCode": "+962",
+        "fullName": "Jordan",
+        "shortName": "jo",
+        "id": 0
+    },
+    {
+        "countryCode": "+254",
+        "fullName": "Kenya",
+        "shortName": "ke",
+        "id": 0
+    },
+    {
+        "countryCode": "+686",
+        "fullName": "Kiribati",
+        "shortName": "ki",
+        "id": 0
+    },
+    {
+        "countryCode": "+850",
+        "fullName": "Korea, Dem. Rep. of",
+        "shortName": "kp",
+        "id": 0
+    },
+    {
+        "countryCode": "+82",
+        "fullName": "Korea, Republic of",
+        "shortName": "kr",
+        "id": 0
+    },
+    {
+        "countryCode": "+965",
+        "fullName": "Kyrgyzstan",
+        "shortName": "kg",
+        "id": 0
+    },
+    {
+        "countryCode": "+856",
+        "fullName": "Laos",
+        "shortName": "la",
+        "id": 0
+    },
+    {
+        "countryCode": "+371",
+        "fullName": "Latvia",
+        "shortName": "lv",
+        "id": 0
+    },
+    {
+        "countryCode": "+961",
+        "fullName": "Lebanon",
+        "shortName": "lb",
+        "id": 0
+    },
+    {
+        "countryCode": "+266",
+        "fullName": "Lesotho",
+        "shortName": "ls",
+        "id": 0
+    },
+    {
+        "countryCode": "+231",
+        "fullName": "Liberia",
+        "shortName": "lr",
+        "id": 0
+    },
+    {
+        "countryCode": "+218",
+        "fullName": "Libya",
+        "shortName": "ly",
+        "id": 0
+    },
+    {
+        "countryCode": "+423",
+        "fullName": "Liechtenstein",
+        "shortName": "li",
+        "id": 0
+    },
+    {
+        "countryCode": "+370",
+        "fullName": "Lithuania",
+        "shortName": "lt",
+        "id": 0
+    },
+    {
+        "countryCode": "+352",
+        "fullName": "Luxembourg",
+        "shortName": "lu",
+        "id": 0
+    },
+    {
+        "countryCode": "+853",
+        "fullName": "Macau",
+        "shortName": "mo",
+        "id": 0
+    },
+    {
+        "countryCode": "+389",
+        "fullName": "Macedonia",
+        "shortName": "mk",
+        "id": 0
+    },
+    {
+        "countryCode": "+261",
+        "fullName": "Madagascar",
+        "shortName": "mg",
+        "id": 0
+    },
+    {
+        "countryCode": "+265",
+        "fullName": "Malawi",
+        "shortName": "mw",
+        "id": 0
+    },
+    {
+        "countryCode": "+60",
+        "fullName": "Malaysia",
+        "shortName": "my",
+        "id": 0
+    },
+    {
+        "countryCode": "+960",
+        "fullName": "Maldives",
+        "shortName": "mv",
+        "id": 0
+    },
+    {
+        "countryCode": "+223",
+        "fullName": "Mali",
+        "shortName": "ml",
+        "id": 0
+    },
+    {
+        "countryCode": "+356",
+        "fullName": "Malta",
+        "shortName": "mt",
+        "id": 0
+    },
+    {
+        "countryCode": "+692",
+        "fullName": "Marshall Islands",
+        "shortName": "mh",
+        "id": 0
+    },
+    {
+        "countryCode": "+222",
+        "fullName": "Mauritania",
+        "shortName": "mr",
+        "id": 0
+    },
+    {
+        "countryCode": "+230",
+        "fullName": "Mauritius",
+        "shortName": "mu",
+        "id": 0
+    },
+    {
+        "countryCode": "+52",
+        "fullName": "Mexico",
+        "shortName": "mx",
+        "id": 0
+    },
+    {
+        "countryCode": "+691",
+        "fullName": "Micronesia",
+        "shortName": "fm",
+        "id": 0
+    },
+    {
+        "countryCode": "+373",
+        "fullName": "Moldova",
+        "shortName": "md",
+        "id": 0
+    },
+    {
+        "countryCode": "+377",
+        "fullName": "Monaco",
+        "shortName": "mc",
+        "id": 0
+    },
+    {
+        "countryCode": "+976",
+        "fullName": "Mongolia",
+        "shortName": "mn",
+        "id": 0
+    },
+    {
+        "countryCode": "+382",
+        "fullName": "Montenegro",
+        "shortName": "me",
+        "id": 0
+    },
+    {
+        "countryCode": "+1664",
+        "fullName": "Montserrat",
+        "shortName": "ms",
+        "id": 0
+    },
+    {
+        "countryCode": "+212",
+        "fullName": "Morocco",
+        "shortName": "ma",
+        "id": 0
+    },
+    {
+        "countryCode": "+258",
+        "fullName": "Mozambique",
+        "shortName": "mz",
+        "id": 0
+    },
+    {
+        "countryCode": "+95",
+        "fullName": "Myanmar",
+        "shortName": "mm",
+        "id": 0
+    },
+    {
+        "countryCode": "+264",
+        "fullName": "Namibia",
+        "shortName": "na",
+        "id": 0
+    },
+    {
+        "countryCode": "+674",
+        "fullName": "Nauru",
+        "shortName": "nr",
+        "id": 0
+    },
+    {
+        "countryCode": "+977",
+        "fullName": "Nepal",
+        "shortName": "np",
+        "id": 0
+    },
+    {
+        "countryCode": "+31",
+        "fullName": "Netherlands",
+        "shortName": "nl",
+        "id": 0
+    },
+    {
+        "countryCode": "+599",
+        "fullName": "Netherlands Antilles",
+        "shortName": "an",
+        "id": 0
+    },
+    {
+        "countryCode": "+687",
+        "fullName": "New Caledonia",
+        "shortName": "nc",
+        "id": 0
+    },
+    {
+        "countryCode": "+64",
+        "fullName": "New Zealand",
+        "shortName": "nz",
+        "id": 0
+    },
+    {
+        "countryCode": "+505",
+        "fullName": "Nicaragua",
+        "shortName": "ni",
+        "id": 0
+    },
+    {
+        "countryCode": "+227",
+        "fullName": "Niger",
+        "shortName": "ne",
+        "id": 0
+    },
+    {
+        "countryCode": "+234",
+        "fullName": "Nigeria",
+        "shortName": "ng",
+        "id": 0
+    },
+    {
+        "countryCode": "+683",
+        "fullName": "Niue",
+        "shortName": "nu",
+        "id": 0
+    },
+    {
+        "countryCode": "+1670",
+        "fullName": "Northern Marianas",
+        "shortName": "mp",
+        "id": 0
+    },
+    {
+        "countryCode": "+47",
+        "fullName": "Norway",
+        "shortName": "no",
+        "id": 0
+    },
+    {
+        "countryCode": "+968",
+        "fullName": "Oman",
+        "shortName": "om",
+        "id": 0
+    },
+    {
+        "countryCode": "+92",
+        "fullName": "Pakistan",
+        "shortName": "pk",
+        "id": 0
+    },
+    {
+        "countryCode": "+680",
+        "fullName": "Palau",
+        "shortName": "pw",
+        "id": 0
+    },
+    {
+        "countryCode": "+970",
+        "fullName": "Palestine",
+        "shortName": "ps",
+        "id": 0
+    },
+    {
+        "countryCode": "+507",
+        "fullName": "Panama",
+        "shortName": "pa",
+        "id": 0
+    },
+    {
+        "countryCode": "+675",
+        "fullName": "Papua New Guinea",
+        "shortName": "pg",
+        "id": 0
+    },
+    {
+        "countryCode": "+595",
+        "fullName": "Paraguay",
+        "shortName": "py",
+        "id": 0
+    },
+    {
+        "countryCode": "+51",
+        "fullName": "Peru",
+        "shortName": "pe",
+        "id": 0
+    },
+    {
+        "countryCode": "+63",
+        "fullName": "Philippines",
+        "shortName": "ph",
+        "id": 0
+    },
+    {
+        "countryCode": "+48",
+        "fullName": "Poland",
+        "shortName": "pl",
+        "id": 0
+    },
+    {
+        "countryCode": "+351",
+        "fullName": "Portugal",
+        "shortName": "pt",
+        "id": 0
+    },
+    {
+        "countryCode": "+1787",
+        "fullName": "Puerto Rico",
+        "shortName": "pr",
+        "id": 0
+    },
+    {
+        "countryCode": "+974",
+        "fullName": "Qatar",
+        "shortName": "qa",
+        "id": 0
+    },
+    {
+        "countryCode": "+262",
+        "fullName": "Reunion Island",
+        "shortName": "re",
+        "id": 0
+    },
+    {
+        "countryCode": "+40",
+        "fullName": "Romania",
+        "shortName": "ro",
+        "id": 0
+    },
+    {
+        "countryCode": "+7",
+        "fullName": "Russia",
+        "shortName": "ru",
+        "id": 0
+    },
+    {
+        "countryCode": "+250",
+        "fullName": "Rwanda",
+        "shortName": "rw",
+        "id": 0
+    },
+    {
+        "countryCode": "+378",
+        "fullName": "San Marino",
+        "shortName": "sm",
+        "id": 0
+    },
+    {
+        "countryCode": "+239",
+        "fullName": "Sao Tome and Principe",
+        "shortName": "st",
+        "id": 0
+    },
+    {
+        "countryCode": "+966",
+        "fullName": "Saudi Arabia",
+        "shortName": "sa",
+        "id": 0
+    },
+    {
+        "countryCode": "+221",
+        "fullName": "Senegal",
+        "shortName": "sn",
+        "id": 0
+    },
+    {
+        "countryCode": "+381",
+        "fullName": "Serbia",
+        "shortName": "rs",
+        "id": 0
+    },
+    {
+        "countryCode": "+248",
+        "fullName": "Seychelles",
+        "shortName": "sc",
+        "id": 0
+    },
+    {
+        "countryCode": "+232",
+        "fullName": "Sierra Leone",
+        "shortName": "sl",
+        "id": 0
+    },
+    {
+        "countryCode": "+65",
+        "fullName": "Singapore",
+        "shortName": "sg",
+        "id": 0
+    },
+    {
+        "countryCode": "+421",
+        "fullName": "Slovak Republic",
+        "shortName": "sk",
+        "id": 0
+    },
+    {
+        "countryCode": "+386",
+        "fullName": "Slovenia",
+        "shortName": "si",
+        "id": 0
+    },
+    {
+        "countryCode": "+677",
+        "fullName": "Solomon Islands",
+        "shortName": "sb",
+        "id": 0
+    },
+    {
+        "countryCode": "+252",
+        "fullName": "Somalia",
+        "shortName": "so",
+        "id": 0
+    },
+    {
+        "countryCode": "+27",
+        "fullName": "South Africa",
+        "shortName": "za",
+        "id": 0
+    },
+    {
+        "countryCode": "+34",
+        "fullName": "Spain",
+        "shortName": "es",
+        "id": 0
+    },
+    {
+        "countryCode": "+94",
+        "fullName": "Sri Lanka",
+        "shortName": "lk",
+        "id": 0
+    },
+    {
+        "countryCode": "+290",
+        "fullName": "St. Helena",
+        "shortName": "sh",
+        "id": 0
+    },
+    {
+        "countryCode": "+1869",
+        "fullName": "St. Kitts & Nevis",
+        "shortName": "kn",
+        "id": 0
+    },
+    {
+        "countryCode": "+1758",
+        "fullName": "St. Lucia",
+        "shortName": "lc",
+        "id": 0
+    },
+    {
+        "countryCode": "+508",
+        "fullName": "St. Pierre & Miquelon",
+        "shortName": "pm",
+        "id": 0
+    },
+    {
+        "countryCode": "+249",
+        "fullName": "Sudan",
+        "shortName": "sd",
+        "id": 0
+    },
+    {
+        "countryCode": "+597",
+        "fullName": "Suriname",
+        "shortName": "sr",
+        "id": 0
+    },
+    {
+        "countryCode": "+268",
+        "fullName": "Swaziland",
+        "shortName": "sz",
+        "id": 0
+    },
+    {
+        "countryCode": "+46",
+        "fullName": "Sweden",
+        "shortName": "se",
+        "id": 0
+    },
+    {
+        "countryCode": "+41",
+        "fullName": "Switzerland",
+        "shortName": "ch",
+        "id": 0
+    },
+    {
+        "countryCode": "+963",
+        "fullName": "Syria",
+        "shortName": "sy",
+        "id": 0
+    },
+    {
+        "countryCode": "+886",
+        "fullName": "Taiwan",
+        "shortName": "tw",
+        "id": 0
+    },
+    {
+        "countryCode": "+992",
+        "fullName": "Tajikistan",
+        "shortName": "tj",
+        "id": 0
+    },
+    {
+        "countryCode": "+255",
+        "fullName": "Tanzania / Zanzibar (Tanzania)",
+        "shortName": "tz",
+        "id": 0
+    },
+    {
+        "countryCode": "+66",
+        "fullName": "Thailand",
+        "shortName": "th",
+        "id": 0
+    },
+    {
+        "countryCode": "+228",
+        "fullName": "Togo",
+        "shortName": "tg",
+        "id": 0
+    },
+    {
+        "countryCode": "+690",
+        "fullName": "Tokelau",
+        "shortName": "tk",
+        "id": 0
+    },
+    {
+        "countryCode": "+676",
+        "fullName": "Tonga",
+        "shortName": "to",
+        "id": 0
+    },
+    {
+        "countryCode": "+1868",
+        "fullName": "Trinidad & Tobago",
+        "shortName": "tt",
+        "id": 0
+    },
+    {
+        "countryCode": "+216",
+        "fullName": "Tunisia",
+        "shortName": "tn",
+        "id": 0
+    },
+    {
+        "countryCode": "+90",
+        "fullName": "Turkey",
+        "shortName": "tr",
+        "id": 0
+    },
+    {
+        "countryCode": "+993",
+        "fullName": "Turkmenistan",
+        "shortName": "tm",
+        "id": 0
+    },
+    {
+        "countryCode": "+1649",
+        "fullName": "Turks & Caicos",
+        "shortName": "tv",
+        "id": 0
+    },
+    {
+        "countryCode": "+688",
+        "fullName": "Tuvalu",
+        "shortName": "tv",
+        "id": 0
+    },
+     {
+        "countryCode": "+1",
+        "fullName": "United States",
+        "shortName": "us",
+        "id": 0
+    },
+    {
+        "countryCode": "+1340",
+        "fullName": "U.S. Virgin Islands",
+        "shortName": "vi",
+        "id": 0
+    },
+    {
+        "countryCode": "+256",
+        "fullName": "Uganda",
+        "shortName": "ug",
+        "id": 0
+    },
+    {
+        "countryCode": "+380",
+        "fullName": "Ukraine",
+        "shortName": "ua",
+        "id": 0
+    },
+    {
+        "countryCode": "+971",
+        "fullName": "United Arab Emirates",
+        "shortName": "ae",
+        "id": 0
+    },
+    {
+        "countryCode": "+44",
+        "fullName": "United Kingdom",
+        "shortName": "gb",
+        "id": 0
+    },
+    {
+        "countryCode": "+598",
+        "fullName": "Uruguay",
+        "shortName": "uy",
+        "id": 0
+    },
+    {
+        "countryCode": "+998",
+        "fullName": "Uzbekistan",
+        "shortName": "uz",
+        "id": 0
+    },
+    {
+        "countryCode": "+678",
+        "fullName": "Vanuatu",
+        "shortName": "vu",
+        "id": 0
+    },
+    {
+        "countryCode": "+379",
+        "fullName": "Vatican City",
+        "shortName": "va",
+        "id": 0
+    },
+    {
+        "countryCode": "+58",
+        "fullName": "Venezuela",
+        "shortName": "ve",
+        "id": 0
+    },
+    {
+        "countryCode": "+84",
+        "fullName": "Vietnam",
+        "shortName": "vn",
+        "id": 0
+    },
+    {
+        "countryCode": "+681",
+        "fullName": "Wallis & Futuna",
+        "shortName": "wf",
+        "id": 0
+    },
+    {
+        "countryCode": "+685",
+        "fullName": "Western Samoa",
+        "shortName": "ws",
+        "id": 0
+    },
+    {
+        "countryCode": "+967",
+        "fullName": "Yemen",
+        "shortName": "ye",
+        "id": 0
+    },
+    {
+        "countryCode": "+260",
+        "fullName": "Zambia",
+        "shortName": "zm",
+        "id": 0
+    },
+    {
+        "countryCode": "+263",
+        "fullName": "Zimbabwe",
+        "shortName": "zw",
+        "id": 0
+    }
+]

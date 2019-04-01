@@ -2,6 +2,8 @@ package com.holdingfuture.flutterapp.hfsdk;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.tencent.bugly.Bugly;
@@ -21,6 +23,7 @@ public class HfSdkPlugin implements MethodCallHandler {
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
+
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "hf_sdk");
         HfSdkPlugin instance = new HfSdkPlugin(registrar.activity());
         channel.setMethodCallHandler(instance);
@@ -51,5 +54,10 @@ public class HfSdkPlugin implements MethodCallHandler {
         } else {
             result.notImplemented();
         }
+    }
+
+    public static void attachBaseContext(Context base) {
+
+        MultiDex.install(base);
     }
 }

@@ -1,0 +1,1584 @@
+[
+    {
+        "countryCode": "+376",
+        "fullName": "安道尔",
+        "shortName": "ad",
+        "id": 0,
+        "sortLetter": "ADE"
+    },
+    {
+        "countryCode": "+43",
+        "fullName": "奥地利",
+        "shortName": "at",
+        "id": 0,
+        "sortLetter": "ADL"
+    },
+    {
+        "countryCode": "+61",
+        "fullName": "澳大利亚",
+        "shortName": "au",
+        "id": 0,
+        "sortLetter": "ADLY"
+    },
+    {
+        "countryCode": "+355",
+        "fullName": "阿尔巴尼亚",
+        "shortName": "al",
+        "id": 0,
+        "sortLetter": "AEBNY"
+    },
+    {
+        "countryCode": "+213",
+        "fullName": "阿尔及利亚",
+        "shortName": "dz",
+        "id": 0,
+        "sortLetter": "AEJLY"
+    },
+    {
+        "countryCode": "+353",
+        "fullName": "爱尔兰",
+        "shortName": "ie",
+        "id": 0,
+        "sortLetter": "AEL"
+    },
+    {
+        "countryCode": "+93",
+        "fullName": "阿富汗",
+        "shortName": "af",
+        "id": 0,
+        "sortLetter": "AFH"
+    },
+    {
+        "countryCode": "+244",
+        "fullName": "安哥拉",
+        "shortName": "ao",
+        "id": 0,
+        "sortLetter": "AGL"
+    },
+    {
+        "countryCode": "+1264",
+        "fullName": "安圭拉岛",
+        "shortName": "ai",
+        "id": 0,
+        "sortLetter": "AGLD"
+    },
+    {
+        "countryCode": "+54",
+        "fullName": "阿根廷",
+        "shortName": "ar",
+        "id": 0,
+        "sortLetter": "AGT"
+    },
+    {
+        "countryCode": "+20",
+        "fullName": "埃及",
+        "shortName": "eg",
+        "id": 0,
+        "sortLetter": "AJ"
+    },
+    {
+        "countryCode": "+297",
+        "fullName": "阿鲁巴",
+        "shortName": "aw",
+        "id": 0,
+        "sortLetter": "ALB"
+    },
+    {
+        "countryCode": "+971",
+        "fullName": "阿拉伯联合酋长国",
+        "shortName": "ae",
+        "id": 0,
+        "sortLetter": "ALBLHQZG"
+    },
+    {
+        "countryCode": "+968",
+        "fullName": "阿曼",
+        "shortName": "om",
+        "id": 0,
+        "sortLetter": "AM"
+    },
+    {
+        "countryCode": "+994",
+        "fullName": "阿塞拜疆",
+        "shortName": "az",
+        "id": 0,
+        "sortLetter": "ASBJ"
+    },
+    {
+        "countryCode": "+251",
+        "fullName": "埃塞俄比亚",
+        "shortName": "et",
+        "id": 0,
+        "sortLetter": "ASEBY"
+    },
+    {
+        "countryCode": "+372",
+        "fullName": "爱沙尼亚",
+        "shortName": "ee",
+        "id": 0,
+        "sortLetter": "ASNY"
+    },
+    {
+        "countryCode": "+247",
+        "fullName": "阿森松岛",
+        "shortName": "ax",
+        "id": 0,
+        "sortLetter": "ASSD"
+    },
+    {
+        "countryCode": "+1268",
+        "fullName": "安提瓜和巴布达",
+        "shortName": "ag",
+        "id": 0,
+        "sortLetter": "ATGHBBD"
+    },
+    {
+        "countryCode": "+1246",
+        "fullName": "巴巴多斯",
+        "shortName": "bb",
+        "id": 0,
+        "sortLetter": "BBDS"
+    },
+    {
+        "countryCode": "+675",
+        "fullName": "巴布亚新几内亚",
+        "shortName": "pg",
+        "id": 0,
+        "sortLetter": "BBYXJNY"
+    },
+    {
+        "countryCode": "+267",
+        "fullName": "博茨瓦纳",
+        "shortName": "bw",
+        "id": 0,
+        "sortLetter": "BCWN"
+    },
+    {
+        "countryCode": "+975",
+        "fullName": "不丹",
+        "shortName": "bt",
+        "id": 0,
+        "sortLetter": "BD"
+    },
+    {
+        "countryCode": "+354",
+        "fullName": "冰岛",
+        "shortName": "is",
+        "id": 0,
+        "sortLetter": "BD"
+    },
+    {
+        "countryCode": "+1787",
+        "fullName": "波多黎各",
+        "shortName": "pr",
+        "id": 0,
+        "sortLetter": "BDLG"
+    },
+    {
+        "countryCode": "+375",
+        "fullName": "白俄罗斯",
+        "shortName": "by",
+        "id": 0,
+        "sortLetter": "BELS"
+    },
+    {
+        "countryCode": "+1242",
+        "fullName": "巴哈马",
+        "shortName": "bs",
+        "id": 0,
+        "sortLetter": "BHM"
+    },
+    {
+        "countryCode": "+359",
+        "fullName": "保加利亚",
+        "shortName": "bg",
+        "id": 0,
+        "sortLetter": "BJLY"
+    },
+    {
+        "countryCode": "+226",
+        "fullName": "布基纳法索",
+        "shortName": "bf",
+        "id": 0,
+        "sortLetter": "BJNFS"
+    },
+    {
+        "countryCode": "+92",
+        "fullName": "巴基斯坦",
+        "shortName": "pk",
+        "id": 0,
+        "sortLetter": "BJST"
+    },
+    {
+        "countryCode": "+973",
+        "fullName": "巴林",
+        "shortName": "bh",
+        "id": 0,
+        "sortLetter": "BL"
+    },
+    {
+        "countryCode": "+48",
+        "fullName": "波兰",
+        "shortName": "pl",
+        "id": 0,
+        "sortLetter": "BL"
+    },
+    {
+        "countryCode": "+257",
+        "fullName": "布隆迪",
+        "shortName": "bi",
+        "id": 0,
+        "sortLetter": "BLD"
+    },
+    {
+        "countryCode": "+595",
+        "fullName": "巴拉圭",
+        "shortName": "py",
+        "id": 0,
+        "sortLetter": "BLG"
+    },
+    {
+        "countryCode": "+32",
+        "fullName": "比利时",
+        "shortName": "be",
+        "id": 0,
+        "sortLetter": "BLS"
+    },
+    {
+        "countryCode": "+970",
+        "fullName": "巴勒斯坦当局",
+        "shortName": "ps",
+        "id": 0,
+        "sortLetter": "BLST"
+    },
+    {
+        "countryCode": "+591",
+        "fullName": "玻利维亚",
+        "shortName": "bo",
+        "id": 0,
+        "sortLetter": "BLWY"
+    },
+    {
+        "countryCode": "+501",
+        "fullName": "伯利兹",
+        "shortName": "bz",
+        "id": 0,
+        "sortLetter": "BLZ"
+    },
+    {
+        "countryCode": "+1441",
+        "fullName": "百慕大群岛",
+        "shortName": "bm",
+        "id": 0,
+        "sortLetter": "BMDQD"
+    },
+    {
+        "countryCode": "+1670",
+        "fullName": "北马里亚纳群岛",
+        "shortName": "mp",
+        "id": 0,
+        "sortLetter": "BMLYNQD"
+    },
+    {
+        "countryCode": "+229",
+        "fullName": "贝宁",
+        "shortName": "bj",
+        "id": 0,
+        "sortLetter": "BN"
+    },
+    {
+        "countryCode": "+507",
+        "fullName": "巴拿马",
+        "shortName": "pa",
+        "id": 0,
+        "sortLetter": "BNM"
+    },
+    {
+        "countryCode": "+387",
+        "fullName": "波斯尼亚和黑塞哥维那",
+        "shortName": "ba",
+        "id": 0,
+        "sortLetter": "BSNYHHSGWN"
+    },
+    {
+        "countryCode": "+55",
+        "fullName": "巴西",
+        "shortName": "br",
+        "id": 0,
+        "sortLetter": "BX"
+    },
+    {
+        "countryCode": "+240",
+        "fullName": "赤道几内亚",
+        "shortName": "gq",
+        "id": 0,
+        "sortLetter": "CDJNY"
+    },
+    {
+        "countryCode": "+41",
+        "fullName": "瑞士",
+        "shortName": "ch",
+        "id": 0,
+        "sortLetter": "CH"
+    },
+    {
+        "countryCode": "+682",
+        "fullName": "库克群岛",
+        "shortName": "ck",
+        "id": 0,
+        "sortLetter": "CKQD"
+    },
+    {
+        "countryCode": "+237",
+        "fullName": "喀麦隆",
+        "shortName": "cm",
+        "id": 0,
+        "sortLetter": "CML"
+    },
+    {
+        "countryCode": "+850",
+        "fullName": "朝鲜",
+        "shortName": "kp",
+        "id": 0,
+        "sortLetter": "CX"
+    },
+    {
+        "countryCode": "+670",
+        "fullName": "东帝汶",
+        "shortName": "tp",
+        "id": 0,
+        "sortLetter": "DDW"
+    },
+    {
+        "countryCode": "+49",
+        "fullName": "德国",
+        "shortName": "de",
+        "id": 0,
+        "sortLetter": "DG"
+    },
+    {
+        "countryCode": "+228",
+        "fullName": "多哥",
+        "shortName": "tg",
+        "id": 0,
+        "sortLetter": "DG"
+    },
+    {
+        "countryCode": "+45",
+        "fullName": "丹麦",
+        "shortName": "dk",
+        "id": 0,
+        "sortLetter": "DM"
+    },
+    {
+        "countryCode": "+1767",
+        "fullName": "多米尼加",
+        "shortName": "dm",
+        "id": 0,
+        "sortLetter": "DMNJ"
+    },
+    {
+        "countryCode": "+1809",
+        "fullName": "多米尼加共和国",
+        "shortName": "do",
+        "id": 0,
+        "sortLetter": "DMNJGHG"
+    },
+    {
+        "countryCode": "+593",
+        "fullName": "厄瓜多尔",
+        "shortName": "ec",
+        "id": 0,
+        "sortLetter": "EGDE"
+    },
+    {
+        "countryCode": "+7",
+        "fullName": "俄罗斯",
+        "shortName": "ru",
+        "id": 0,
+        "sortLetter": "ELS"
+    },
+    {
+        "countryCode": "+291",
+        "fullName": "厄立特里亚",
+        "shortName": "er",
+        "id": 0,
+        "sortLetter": "ELTLY"
+    },
+    {
+        "countryCode": "+379",
+        "fullName": "梵蒂冈城",
+        "shortName": "va",
+        "id": 0,
+        "sortLetter": "FDGC"
+    },
+    {
+        "countryCode": "+238",
+        "fullName": "佛得角",
+        "shortName": "cv",
+        "id": 0,
+        "sortLetter": "FDJ"
+    },
+    {
+        "countryCode": "+33",
+        "fullName": "法国",
+        "shortName": "fr",
+        "id": 0,
+        "sortLetter": "FG"
+    },
+    {
+        "countryCode": "+679",
+        "fullName": "斐济群岛",
+        "shortName": "fj",
+        "id": 0,
+        "sortLetter": "FJQD"
+    },
+    {
+        "countryCode": "+500",
+        "fullName": "福克兰群岛(马尔维纳斯群岛)",
+        "shortName": "fk",
+        "id": 0,
+        "sortLetter": "FKLQD"
+    },
+    {
+        "countryCode": "+358",
+        "fullName": "芬兰",
+        "shortName": "fi",
+        "id": 0,
+        "sortLetter": "FL"
+    },
+    {
+        "countryCode": "+63",
+        "fullName": "菲律宾",
+        "shortName": "ph",
+        "id": 0,
+        "sortLetter": "FLB"
+    },
+    {
+        "countryCode": "+298",
+        "fullName": "法罗群岛",
+        "shortName": "fo",
+        "id": 0,
+        "sortLetter": "FLQD"
+    },
+    {
+        "countryCode": "+689",
+        "fullName": "法属波利尼西亚",
+        "shortName": "pf",
+        "id": 0,
+        "sortLetter": "FSBLNXY"
+    },
+    {
+        "countryCode": "+594",
+        "fullName": "法属圭亚那",
+        "shortName": "gf",
+        "id": 0,
+        "sortLetter": "FSGYN"
+    },
+    {
+        "countryCode": "+53",
+        "fullName": "古巴",
+        "shortName": "cu",
+        "id": 0,
+        "sortLetter": "GB"
+    },
+    {
+        "countryCode": "+220",
+        "fullName": "冈比亚",
+        "shortName": "gm",
+        "id": 0,
+        "sortLetter": "GBY"
+    },
+    {
+        "countryCode": "+1671",
+        "fullName": "关岛",
+        "shortName": "gu",
+        "id": 0,
+        "sortLetter": "GD"
+    },
+    {
+        "countryCode": "+590",
+        "fullName": "瓜德罗普岛",
+        "shortName": "gp",
+        "id": 0,
+        "sortLetter": "GDLPD"
+    },
+    {
+        "countryCode": "+242",
+        "fullName": "刚果",
+        "shortName": "cg",
+        "id": 0,
+        "sortLetter": "GG"
+    },
+    {
+        "countryCode": "+243",
+        "fullName": "刚果民主共和国",
+        "shortName": "cd",
+        "id": 0,
+        "sortLetter": "GGMZGHG"
+    },
+    {
+        "countryCode": "+57",
+        "fullName": "哥伦比亚",
+        "shortName": "co",
+        "id": 0,
+        "sortLetter": "GLBY"
+    },
+    {
+        "countryCode": "+299",
+        "fullName": "格陵兰",
+        "shortName": "gl",
+        "id": 0,
+        "sortLetter": "GLL"
+    },
+    {
+        "countryCode": "+1473",
+        "fullName": "格林纳达",
+        "shortName": "gd",
+        "id": 0,
+        "sortLetter": "GLND"
+    },
+    {
+        "countryCode": "+506",
+        "fullName": "哥斯达黎加",
+        "shortName": "cr",
+        "id": 0,
+        "sortLetter": "GSDLJ"
+    },
+    {
+        "countryCode": "+592",
+        "fullName": "圭亚那",
+        "shortName": "gy",
+        "id": 0,
+        "sortLetter": "GYN"
+    },
+    {
+        "countryCode": "+509",
+        "fullName": "海地",
+        "shortName": "ht",
+        "id": 0,
+        "sortLetter": "HD"
+    },
+    {
+        "countryCode": "+504",
+        "fullName": "洪都拉斯",
+        "shortName": "hn",
+        "id": 0,
+        "sortLetter": "HDLS"
+    },
+    {
+        "countryCode": "+599",
+        "fullName": "荷属安的列斯群岛",
+        "shortName": "an",
+        "id": 0,
+        "sortLetter": "HEADLSQD"
+    },
+    {
+        "countryCode": "+82",
+        "fullName": "韩国",
+        "shortName": "kr",
+        "id": 0,
+        "sortLetter": "HG"
+    },
+    {
+        "countryCode": "+31",
+        "fullName": "荷兰",
+        "shortName": "nl",
+        "id": 0,
+        "sortLetter": "HL"
+    },
+    {
+        "countryCode": "+91",
+        "fullName": "印度",
+        "shortName": "in",
+        "id": 0,
+        "sortLetter": "ID"
+    },
+    {
+        "countryCode": "+62",
+        "fullName": "印度尼西亚",
+        "shortName": "id",
+        "id": 0,
+        "sortLetter": "IDNXY"
+    },
+    {
+        "countryCode": "+39",
+        "fullName": "意大利",
+        "shortName": "it",
+        "id": 0,
+        "sortLetter": "IDL"
+    },
+    {
+        "countryCode": "+98",
+        "fullName": "伊朗",
+        "shortName": "ir",
+        "id": 0,
+        "sortLetter": "IL"
+    },
+    {
+        "countryCode": "+964",
+        "fullName": "伊拉克",
+        "shortName": "iq",
+        "id": 0,
+        "sortLetter": "ILK"
+    },
+    {
+        "countryCode": "+263",
+        "fullName": "津巴布韦",
+        "shortName": "zw",
+        "id": 0,
+        "sortLetter": "JBBW"
+    },
+    {
+        "countryCode": "+253",
+        "fullName": "吉布提",
+        "shortName": "dj",
+        "id": 0,
+        "sortLetter": "JBT"
+    },
+    {
+        "countryCode": "+965",
+        "fullName": "吉尔吉斯斯坦",
+        "shortName": "kg",
+        "id": 0,
+        "sortLetter": "JEJSST"
+    },
+    {
+        "countryCode": "+420",
+        "fullName": "捷克共和国",
+        "shortName": "cz",
+        "id": 0,
+        "sortLetter": "JKGHG"
+    },
+    {
+        "countryCode": "+686",
+        "fullName": "基里巴斯",
+        "shortName": "ki",
+        "id": 0,
+        "sortLetter": "JLBS"
+    },
+    {
+        "countryCode": "+233",
+        "fullName": "加纳",
+        "shortName": "gh",
+        "id": 0,
+        "sortLetter": "JN"
+    },
+    {
+        "countryCode": "+1",
+        "fullName": "加拿大",
+        "shortName": "ca",
+        "id": 0,
+        "sortLetter": "JND"
+    },
+    {
+        "countryCode": "+224",
+        "fullName": "几内亚",
+        "shortName": "gn",
+        "id": 0,
+        "sortLetter": "JNY"
+    },
+    {
+        "countryCode": "+245",
+        "fullName": "几内亚比绍",
+        "shortName": "gw",
+        "id": 0,
+        "sortLetter": "JNYBS"
+    },
+    {
+        "countryCode": "+241",
+        "fullName": "加蓬",
+        "shortName": "ga",
+        "id": 0,
+        "sortLetter": "JP"
+    },
+    {
+        "countryCode": "+855",
+        "fullName": "柬埔寨",
+        "shortName": "kh",
+        "id": 0,
+        "sortLetter": "JPZ"
+    },
+    {
+        "countryCode": "+385",
+        "fullName": "克罗地亚",
+        "shortName": "hr",
+        "id": 0,
+        "sortLetter": "KLDY"
+    },
+    {
+        "countryCode": "+269",
+        "fullName": "科摩罗伊斯兰",
+        "shortName": "km",
+        "id": 0,
+        "sortLetter": "KMOLYSL"
+    },
+    {
+        "countryCode": "+1345",
+        "fullName": "开曼群岛",
+        "shortName": "ky",
+        "id": 0,
+        "sortLetter": "KMQD"
+    },
+    {
+        "countryCode": "+254",
+        "fullName": "肯尼亚",
+        "shortName": "ke",
+        "id": 0,
+        "sortLetter": "KNY"
+    },
+    {
+        "countryCode": "+225",
+        "fullName": "科特迪瓦",
+        "shortName": "ci",
+        "id": 0,
+        "sortLetter": "KTDW"
+    },
+    {
+        "countryCode": "+974",
+        "fullName": "卡塔尔",
+        "shortName": "qa",
+        "id": 0,
+        "sortLetter": "KTE"
+    },
+    {
+        "countryCode": "+231",
+        "fullName": "利比里亚",
+        "shortName": "lr",
+        "id": 0,
+        "sortLetter": "LBLY"
+    },
+    {
+        "countryCode": "+961",
+        "fullName": "黎巴嫩",
+        "shortName": "lb",
+        "id": 0,
+        "sortLetter": "LBN"
+    },
+    {
+        "countryCode": "+218",
+        "fullName": "利比亚",
+        "shortName": "ly",
+        "id": 0,
+        "sortLetter": "LBY"
+    },
+    {
+        "countryCode": "+40",
+        "fullName": "罗马尼亚",
+        "shortName": "ro",
+        "id": 0,
+        "sortLetter": "LMNY"
+    },
+    {
+        "countryCode": "+262",
+        "fullName": "留尼汪岛",
+        "shortName": "re",
+        "id": 0,
+        "sortLetter": "LNWD"
+    },
+    {
+        "countryCode": "+352",
+        "fullName": "卢森堡",
+        "shortName": "lu",
+        "id": 0,
+        "sortLetter": "LSB"
+    },
+    {
+        "countryCode": "+266",
+        "fullName": "莱索托",
+        "shortName": "ls",
+        "id": 0,
+        "sortLetter": "LST"
+    },
+    {
+        "countryCode": "+370",
+        "fullName": "立陶宛",
+        "shortName": "lt",
+        "id": 0,
+        "sortLetter": "LTW"
+    },
+    {
+        "countryCode": "+371",
+        "fullName": "拉脱维亚",
+        "shortName": "lv",
+        "id": 0,
+        "sortLetter": "LTWY"
+    },
+    {
+        "countryCode": "+856",
+        "fullName": "老挝",
+        "shortName": "la",
+        "id": 0,
+        "sortLetter": "LW"
+    },
+    {
+        "countryCode": "+250",
+        "fullName": "卢旺达",
+        "shortName": "rw",
+        "id": 0,
+        "sortLetter": "LWD"
+    },
+    {
+        "countryCode": "+423",
+        "fullName": "列支敦士登",
+        "shortName": "li",
+        "id": 0,
+        "sortLetter": "LZDSD"
+    },
+    {
+        "countryCode": "+95",
+        "fullName": "缅甸",
+        "shortName": "mm",
+        "id": 0,
+        "sortLetter": "MD"
+    },
+    {
+        "countryCode": "+261",
+        "fullName": "马达加斯加",
+        "shortName": "mg",
+        "id": 0,
+        "sortLetter": "MDJSJ"
+    },
+    {
+        "countryCode": "+382",
+        "fullName": "门的内哥罗(黑山)",
+        "shortName": "me",
+        "id": 0,
+        "sortLetter": "MDNGL"
+    },
+    {
+        "countryCode": "+960",
+        "fullName": "马尔代夫",
+        "shortName": "mv",
+        "id": 0,
+        "sortLetter": "MEDF"
+    },
+    {
+        "countryCode": "+373",
+        "fullName": "摩尔多瓦",
+        "shortName": "md",
+        "id": 0,
+        "sortLetter": "MEDW"
+    },
+    {
+        "countryCode": "+356",
+        "fullName": "马耳他",
+        "shortName": "mt",
+        "id": 0,
+        "sortLetter": "MET"
+    },
+    {
+        "countryCode": "+976",
+        "fullName": "蒙古",
+        "shortName": "mn",
+        "id": 0,
+        "sortLetter": "MG"
+    },
+    {
+        "countryCode": "+1",
+        "fullName": "美国",
+        "shortName": "us",
+        "id": 0,
+        "sortLetter": "MG"
+    },
+    {
+        "countryCode": "+880",
+        "fullName": "孟加拉国",
+        "shortName": "bd",
+        "id": 0,
+        "sortLetter": "MJLG"
+    },
+    {
+        "countryCode": "+691",
+        "fullName": "密克罗尼西亚",
+        "shortName": "fm",
+        "id": 0,
+        "sortLetter": "MKLNXY"
+    },
+    {
+        "countryCode": "+223",
+        "fullName": "马里",
+        "shortName": "ml",
+        "id": 0,
+        "sortLetter": "ML"
+    },
+    {
+        "countryCode": "+51",
+        "fullName": "秘鲁",
+        "shortName": "pe",
+        "id": 0,
+        "sortLetter": "ML"
+    },
+    {
+        "countryCode": "+212",
+        "fullName": "摩洛哥",
+        "shortName": "ma",
+        "id": 0,
+        "sortLetter": "MLG"
+    },
+    {
+        "countryCode": "+230",
+        "fullName": "毛里求斯",
+        "shortName": "mu",
+        "id": 0,
+        "sortLetter": "MLQS"
+    },
+    {
+        "countryCode": "+222",
+        "fullName": "毛里塔尼亚",
+        "shortName": "mr",
+        "id": 0,
+        "sortLetter": "MLTNY"
+    },
+    {
+        "countryCode": "+265",
+        "fullName": "马拉维",
+        "shortName": "mw",
+        "id": 0,
+        "sortLetter": "MLW"
+    },
+    {
+        "countryCode": "+60",
+        "fullName": "马来西亚",
+        "shortName": "my",
+        "id": 0,
+        "sortLetter": "MLXY"
+    },
+    {
+        "countryCode": "+377",
+        "fullName": "摩纳哥",
+        "shortName": "mc",
+        "id": 0,
+        "sortLetter": "MNG"
+    },
+    {
+        "countryCode": "+389",
+        "fullName": "马其顿",
+        "shortName": "mk",
+        "id": 0,
+        "sortLetter": "MQD"
+    },
+    {
+        "countryCode": "+258",
+        "fullName": "莫桑比克",
+        "shortName": "mz",
+        "id": 0,
+        "sortLetter": "MSBK"
+    },
+    {
+        "countryCode": "+692",
+        "fullName": "马绍尔群岛",
+        "shortName": "mh",
+        "id": 0,
+        "sortLetter": "MSEQD"
+    },
+    {
+        "countryCode": "+684",
+        "fullName": "美属萨摩亚",
+        "shortName": "as",
+        "id": 0,
+        "sortLetter": "MSSMY"
+    },
+    {
+        "countryCode": "+1340",
+        "fullName": "美属维尔京群岛",
+        "shortName": "vi",
+        "id": 0,
+        "sortLetter": "MSWEJQD"
+    },
+    {
+        "countryCode": "+596",
+        "fullName": "马提尼克岛",
+        "shortName": "mq",
+        "id": 0,
+        "sortLetter": "MTNKD"
+    },
+    {
+        "countryCode": "+1664",
+        "fullName": "蒙特塞拉特",
+        "shortName": "ms",
+        "id": 0,
+        "sortLetter": "MTSLT"
+    },
+    {
+        "countryCode": "+52",
+        "fullName": "墨西哥",
+        "shortName": "mx",
+        "id": 0,
+        "sortLetter": "MXG"
+    },
+    {
+        "countryCode": "+683",
+        "fullName": "纽埃",
+        "shortName": "nu",
+        "id": 0,
+        "sortLetter": "NA"
+    },
+    {
+        "countryCode": "+977",
+        "fullName": "尼泊尔",
+        "shortName": "np",
+        "id": 0,
+        "sortLetter": "NBE"
+    },
+    {
+        "countryCode": "+27",
+        "fullName": "南非",
+        "shortName": "za",
+        "id": 0,
+        "sortLetter": "NF"
+    },
+    {
+        "countryCode": "+505",
+        "fullName": "尼加拉瓜",
+        "shortName": "ni",
+        "id": 0,
+        "sortLetter": "NJLG"
+    },
+    {
+        "countryCode": "+674",
+        "fullName": "瑙鲁",
+        "shortName": "nr",
+        "id": 0,
+        "sortLetter": "NL"
+    },
+    {
+        "countryCode": "+264",
+        "fullName": "纳米比亚",
+        "shortName": "na",
+        "id": 0,
+        "sortLetter": "NMBY"
+    },
+    {
+        "countryCode": "+227",
+        "fullName": "尼日尔",
+        "shortName": "ne",
+        "id": 0,
+        "sortLetter": "NRE"
+    },
+    {
+        "countryCode": "+234",
+        "fullName": "尼日利亚",
+        "shortName": "ng",
+        "id": 0,
+        "sortLetter": "NRLY"
+    },
+    {
+        "countryCode": "+47",
+        "fullName": "挪威",
+        "shortName": "no",
+        "id": 0,
+        "sortLetter": "NW"
+    },
+    {
+        "countryCode": "+680",
+        "fullName": "帕劳群岛",
+        "shortName": "pw",
+        "id": 0,
+        "sortLetter": "PLQD"
+    },
+    {
+        "countryCode": "+351",
+        "fullName": "葡萄牙",
+        "shortName": "pt",
+        "id": 0,
+        "sortLetter": "PTY"
+    },
+    {
+        "countryCode": "+995",
+        "fullName": "乔治亚",
+        "shortName": "ge",
+        "id": 0,
+        "sortLetter": "QZY"
+    },
+    {
+        "countryCode": "+81",
+        "fullName": "日本",
+        "shortName": "jp",
+        "id": 0,
+        "sortLetter": "RB"
+    },
+    {
+        "countryCode": "+46",
+        "fullName": "瑞典",
+        "shortName": "se",
+        "id": 0,
+        "sortLetter": "RD"
+    },
+    {
+        "countryCode": "+1869",
+        "fullName": "圣基茨和尼维斯",
+        "shortName": "kn",
+        "id": 0,
+        "sortLetter": "SCJHNWS"
+    },
+    {
+        "countryCode": "+249",
+        "fullName": "苏丹",
+        "shortName": "sd",
+        "id": 0,
+        "sortLetter": "SD"
+    },
+    {
+        "countryCode": "+239",
+        "fullName": "圣多美和普林西比",
+        "shortName": "st",
+        "id": 0,
+        "sortLetter": "SDMHPLXB"
+    },
+    {
+        "countryCode": "+503",
+        "fullName": "萨尔瓦多",
+        "shortName": "sv",
+        "id": 0,
+        "sortLetter": "SEWD"
+    },
+    {
+        "countryCode": "+381",
+        "fullName": "塞尔维亚",
+        "shortName": "rs",
+        "id": 0,
+        "sortLetter": "SEWY"
+    },
+    {
+        "countryCode": "+290",
+        "fullName": "圣赫勒拿岛",
+        "shortName": "sh",
+        "id": 0,
+        "sortLetter": "SHLND"
+    },
+    {
+        "countryCode": "+421",
+        "fullName": "斯洛伐克",
+        "shortName": "sk",
+        "id": 0,
+        "sortLetter": "SLFK"
+    },
+    {
+        "countryCode": "+232",
+        "fullName": "塞拉利昂",
+        "shortName": "sl",
+        "id": 0,
+        "sortLetter": "SLLA"
+    },
+    {
+        "countryCode": "+94",
+        "fullName": "斯里兰卡",
+        "shortName": "lk",
+        "id": 0,
+        "sortLetter": "SLLK"
+    },
+    {
+        "countryCode": "+677",
+        "fullName": "所罗门群岛",
+        "shortName": "sb",
+        "id": 0,
+        "sortLetter": "SLMQD"
+    },
+    {
+        "countryCode": "+597",
+        "fullName": "苏里南",
+        "shortName": "sr",
+        "id": 0,
+        "sortLetter": "SLN"
+    },
+    {
+        "countryCode": "+386",
+        "fullName": "斯洛文尼亚",
+        "shortName": "si",
+        "id": 0,
+        "sortLetter": "SLWNY"
+    },
+    {
+        "countryCode": "+1758",
+        "fullName": "圣卢西亚",
+        "shortName": "lc",
+        "id": 0,
+        "sortLetter": "SLXY"
+    },
+    {
+        "countryCode": "+252",
+        "fullName": "索马里",
+        "shortName": "so",
+        "id": 0,
+        "sortLetter": "SML"
+    },
+    {
+        "countryCode": "+378",
+        "fullName": "圣马力诺",
+        "shortName": "sm",
+        "id": 0,
+        "sortLetter": "SMLN"
+    },
+    {
+        "countryCode": "+685",
+        "fullName": "萨摩亚",
+        "shortName": "ws",
+        "id": 0,
+        "sortLetter": "SMY"
+    },
+    {
+        "countryCode": "+221",
+        "fullName": "塞内加尔",
+        "shortName": "sn",
+        "id": 0,
+        "sortLetter": "SNJE"
+    },
+    {
+        "countryCode": "+508",
+        "fullName": "圣皮埃尔岛和密克隆岛",
+        "shortName": "pm",
+        "id": 0,
+        "sortLetter": "SPAEDHMKLD"
+    },
+    {
+        "countryCode": "+357",
+        "fullName": "塞浦路斯",
+        "shortName": "cy",
+        "id": 0,
+        "sortLetter": "SPLS"
+    },
+    {
+        "countryCode": "+248",
+        "fullName": "塞舌尔",
+        "shortName": "sc",
+        "id": 0,
+        "sortLetter": "SSE"
+    },
+    {
+        "countryCode": "+966",
+        "fullName": "沙特阿拉伯",
+        "shortName": "sa",
+        "id": 0,
+        "sortLetter": "STALB"
+    },
+    {
+        "countryCode": "+268",
+        "fullName": "斯威士兰",
+        "shortName": "sz",
+        "id": 0,
+        "sortLetter": "SWSL"
+    },
+    {
+        "countryCode": "+1784",
+        "fullName": "圣文森特和格林纳丁斯",
+        "shortName": "vc",
+        "id": 0,
+        "sortLetter": "SWSTHGLNDS"
+    },
+    {
+        "countryCode": "+90",
+        "fullName": "土耳其",
+        "shortName": "tr",
+        "id": 0,
+        "sortLetter": "TEQ"
+    },
+    {
+        "countryCode": "+66",
+        "fullName": "泰国",
+        "shortName": "th",
+        "id": 0,
+        "sortLetter": "TG"
+    },
+    {
+        "countryCode": "+676",
+        "fullName": "汤加",
+        "shortName": "to",
+        "id": 0,
+        "sortLetter": "TJ"
+    },
+    {
+        "countryCode": "+992",
+        "fullName": "塔吉克斯坦",
+        "shortName": "tj",
+        "id": 0,
+        "sortLetter": "TJKST"
+    },
+    {
+        "countryCode": "+690",
+        "fullName": "托克劳",
+        "shortName": "tk",
+        "id": 0,
+        "sortLetter": "TKL"
+    },
+    {
+        "countryCode": "+993",
+        "fullName": "土库曼斯坦",
+        "shortName": "tm",
+        "id": 0,
+        "sortLetter": "TKMST"
+    },
+    {
+        "countryCode": "+1649",
+        "fullName": "特克斯群岛和凯科斯群岛",
+        "shortName": "tv",
+        "id": 0,
+        "sortLetter": "TKSQDHKKSQD"
+    },
+    {
+        "countryCode": "+1868",
+        "fullName": "特立尼达和多巴哥",
+        "shortName": "tt",
+        "id": 0,
+        "sortLetter": "TLNDHDBG"
+    },
+    {
+        "countryCode": "+216",
+        "fullName": "突尼斯",
+        "shortName": "tn",
+        "id": 0,
+        "sortLetter": "TNS"
+    },
+    {
+        "countryCode": "+255",
+        "fullName": "坦桑尼亚",
+        "shortName": "tz",
+        "id": 0,
+        "sortLetter": "TSNY"
+    },
+    {
+        "countryCode": "+688",
+        "fullName": "图瓦卢",
+        "shortName": "tv",
+        "id": 0,
+        "sortLetter": "TWL"
+    },
+    {
+        "countryCode": "+502",
+        "fullName": "危地马拉",
+        "shortName": "gt",
+        "id": 0,
+        "sortLetter": "WDML"
+    },
+    {
+        "countryCode": "+1284",
+        "fullName": "维尔京群岛（英属）",
+        "shortName": "vg",
+        "id": 0,
+        "sortLetter": "WEJQD"
+    },
+    {
+        "countryCode": "+256",
+        "fullName": "乌干达",
+        "shortName": "ug",
+        "id": 0,
+        "sortLetter": "WGD"
+    },
+    {
+        "countryCode": "+380",
+        "fullName": "乌克兰",
+        "shortName": "ua",
+        "id": 0,
+        "sortLetter": "WKL"
+    },
+    {
+        "countryCode": "+673",
+        "fullName": "文莱",
+        "shortName": "bn",
+        "id": 0,
+        "sortLetter": "WL"
+    },
+    {
+        "countryCode": "+598",
+        "fullName": "乌拉圭",
+        "shortName": "uy",
+        "id": 0,
+        "sortLetter": "WLG"
+    },
+    {
+        "countryCode": "+681",
+        "fullName": "瓦利斯群岛和富图纳群岛",
+        "shortName": "wf",
+        "id": 0,
+        "sortLetter": "WLSQDHFTNQD"
+    },
+    {
+        "countryCode": "+678",
+        "fullName": "瓦努阿图",
+        "shortName": "vu",
+        "id": 0,
+        "sortLetter": "WNAT"
+    },
+    {
+        "countryCode": "+58",
+        "fullName": "委内瑞拉",
+        "shortName": "ve",
+        "id": 0,
+        "sortLetter": "WNRL"
+    },
+    {
+        "countryCode": "+998",
+        "fullName": "乌兹别克斯坦",
+        "shortName": "uz",
+        "id": 0,
+        "sortLetter": "WZBKST"
+    },
+    {
+        "countryCode": "+34",
+        "fullName": "西班牙",
+        "shortName": "es",
+        "id": 0,
+        "sortLetter": "XBY"
+    },
+    {
+        "countryCode": "+65",
+        "fullName": "新加坡",
+        "shortName": "sg",
+        "id": 0,
+        "sortLetter": "XJP"
+    },
+    {
+        "countryCode": "+687",
+        "fullName": "新喀里多尼亚",
+        "shortName": "nc",
+        "id": 0,
+        "sortLetter": "XKLDNY"
+    },
+    {
+        "countryCode": "+30",
+        "fullName": "希腊",
+        "shortName": "gr",
+        "id": 0,
+        "sortLetter": "XL"
+    },
+    {
+        "countryCode": "+963",
+        "fullName": "叙利亚",
+        "shortName": "sy",
+        "id": 0,
+        "sortLetter": "XLY"
+    },
+    {
+        "countryCode": "+64",
+        "fullName": "新西兰",
+        "shortName": "nz",
+        "id": 0,
+        "sortLetter": "XXL"
+    },
+    {
+        "countryCode": "+36",
+        "fullName": "匈牙利",
+        "shortName": "hu",
+        "id": 0,
+        "sortLetter": "XYL"
+    },
+    {
+        "countryCode": "+962",
+        "fullName": "约旦",
+        "shortName": "jo",
+        "id": 0,
+        "sortLetter": "YD"
+    },
+    {
+        "countryCode": "+44",
+        "fullName": "英国",
+        "shortName": "gb",
+        "id": 0,
+        "sortLetter": "YG"
+    },
+    {
+        "countryCode": "+967",
+        "fullName": "也门",
+        "shortName": "ye",
+        "id": 0,
+        "sortLetter": "YM"
+    },
+    {
+        "countryCode": "+1876",
+        "fullName": "牙买加",
+        "shortName": "jm",
+        "id": 0,
+        "sortLetter": "YMJ"
+    },
+    {
+        "countryCode": "+374",
+        "fullName": "亚美尼亚",
+        "shortName": "am",
+        "id": 0,
+        "sortLetter": "YMNY"
+    },
+    {
+        "countryCode": "+84",
+        "fullName": "越南",
+        "shortName": "vn",
+        "id": 0,
+        "sortLetter": "YN"
+    },
+    {
+        "countryCode": "+972",
+        "fullName": "以色列",
+        "shortName": "il",
+        "id": 0,
+        "sortLetter": "YSL"
+    },
+    {
+        "countryCode": "+246",
+        "fullName": "英属印度洋领地",
+        "shortName": "io",
+        "id": 0,
+        "sortLetter": "YSYDYLD"
+    },
+    {
+        "countryCode": "+350",
+        "fullName": "直布罗陀",
+        "shortName": "gi",
+        "id": 0,
+        "sortLetter": "ZBLT"
+    },
+    {
+        "countryCode": "+260",
+        "fullName": "赞比亚",
+        "shortName": "zm",
+        "id": 0,
+        "sortLetter": "ZBY"
+    },
+    {
+        "countryCode": "+235",
+        "fullName": "乍得",
+        "shortName": "td",
+        "id": 0,
+        "sortLetter": "ZD"
+    },
+    {
+        "countryCode": "+236",
+        "fullName": "中非共和国",
+        "shortName": "cf",
+        "id": 0,
+        "sortLetter": "ZFGHG"
+    },
+    {
+        "countryCode": "+86",
+        "fullName": "中国",
+        "shortName": "cn",
+        "id": 0,
+        "sortLetter": "ZG"
+    },
+    {
+        "countryCode": "+853",
+        "fullName": "中国澳门",
+        "shortName": "mo",
+        "id": 0,
+        "sortLetter": "ZGAM"
+    },
+    {
+        "countryCode": "+886",
+        "fullName": "中国台湾",
+        "shortName": "tw",
+        "id": 0,
+        "sortLetter": "ZGTW"
+    },
+    {
+        "countryCode": "+852",
+        "fullName": "中国香港",
+        "shortName": "hk",
+        "id": 0,
+        "sortLetter": "ZGXG"
+    },
+    {
+        "countryCode": "+56",
+        "fullName": "智利",
+        "shortName": "cl",
+        "id": 0,
+        "sortLetter": "ZL"
+    }
+]

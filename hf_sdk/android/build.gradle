@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 }
 
@@ -26,6 +26,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -33,10 +34,97 @@ android {
     }
 
     dependencies {
+        api fileTree(include: ['*.jar'], dir: 'libs')
+        implementation files('libs/baidumapapi_map_v4_0_0.jar')
+        implementation files('libs/baidumapapi_base_v4_0_0.jar')
+        implementation files('libs/baidumapapi_util_v4_0_0.jar')
+        implementation files('libs/locSDK_6.13.jar')
+        implementation files('libs/baidumapapi_search_v4_0_0.jar')
+
+        implementation files('libs/jsoup-1.9.2.jar')
+        implementation files('libs/libphonenumber-7.7.2.jar')
+        implementation files('libs/libammsdk.jar')
+        implementation files('libs/Msc.jar')
+        implementation files('libs/Sunflower.jar')
+        implementation files('libs/TalkingData_AppAnalytics_Android_SDK_V2.3.50.jar')
+
+
+
+        implementation 'com.google.code.gson:gson:2.6.2'
+        implementation 'com.github.bumptech.glide:glide:3.5.2'
+        implementation 'io.reactivex:rxandroid:1.0.1'
+        implementation 'io.reactivex:rxjava:1.0.14'
+        implementation 'com.trello:rxlifecycle-components:0.6.1'
+        implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+        implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+        implementation 'com.android.support:multidex:1.0.1'
+        implementation 'cn.finalteam:galleryfinal:1.4.8.4'
+        implementation 'org.xutils:xutils:3.5.0'
+        implementation 'com.github.promeg:tinypinyin:1.0.0'
+
+        implementation 'com.nineoldandroids:library:2.4.0'
+
+        implementation 'tyrantgit:explosionfield:1.0.1'
+        implementation 'com.jude:swipebackhelper:3.1.2'
+
+        implementation 'com.bigkoo:convenientbanner:2.0.5'
+        implementation 'com.android.support:cardview-v7:27.1.+'
+
+
+        implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+
+        implementation 'pub.devrel:easypermissions:0.2.0'
+        // -------------------- 以下zxing三个库是必须依赖的 ----------------------------
+        implementation 'com.google.zxing:core:3.2.1'
+        implementation 'cn.bingoogolapple:bga-qrcodecore:1.1.3@aar'
+        implementation 'cn.bingoogolapple:bga-zxing:1.1.3@aar'
+        // -------------------- 以上三个库是必须依赖的 ----------------------------
+
+        // -------------------- for comments----------------------------
+        implementation 'com.malinskiy:superrecyclerview:1.1.4'
+        implementation 'com.mikhaellopez:circularprogressbar:1.1.1'
+        // -------------------- for showcaseview----------------------------
+        implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
+
+        // -------------------- for global search----------------------------
+        implementation 'xyz.sahildave:searchviewlayout:0.6'
+
+        // -------------------- for gesture password.----------------------------
+        implementation 'com.leo.gesturelibray:GestureLibray:1.0.9'
+
+        // -------------------- for paypal.----------------------------
+        implementation('com.paypal.sdk:paypal-android-sdk:2.15.1') {
+            exclude group: 'io.card'
+        }
+
+        // -------------------- for swipe lib.----------------------------
+
+        implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
+
+
+        // -------------------- for badgetview lib.----------------------------
+        implementation 'cn.bingoogolapple:bga-badgeview:1.1.3@aar'
+
+
+        // -------------------- for badgetview  shortcut lunch label lib.----------------------------
+        implementation "me.leolin:ShortcutBadger:1.1.10@aar"
+
+
+        implementation 'info.hoang8f:android-segmented:1.0.6'
+
+        // -------------------- for side number choose lib.----------------------------
+        implementation 'com.github.channguyen:rsv:1.0.1'
+
+
+
+        implementation 'com.android.support:design:27.1.1'
         implementation 'com.android.support:appcompat-v7:27.1.1'
+
+
         compile 'com.tencent.bugly:crashreport_upgrade:1.3.8'
 //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-        compile 'com.tencent.bugly:nativecrashreport:3.6.0'
+        compile 'com.tencent.bugly:nativecrashreport:3.6.0.1'
     }
 
 }

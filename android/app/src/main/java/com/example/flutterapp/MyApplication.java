@@ -21,4 +21,12 @@ public class MyApplication extends FlutterApplication {
 //        HfSdkPlugin.init(this);
         context = this;
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        HfSdkPlugin.attachBaseContext(base);
+    }
+
+
 }
