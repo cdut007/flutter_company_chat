@@ -87,7 +87,7 @@ class _FollowState extends State<Follow> {
                     child: new Row(
                       children: <Widget>[
                         new Container(
-                          child: CommonUI.getAvatarWidget(article.latitude),
+                          child: CommonUI.getAvatarWidget(article.userAvatar),
                         ),
                         new Padding(
                           padding: const EdgeInsets.only(left: 8),
@@ -95,7 +95,7 @@ class _FollowState extends State<Follow> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               new Container(
-                                  child: new Text(article.userId,
+                                  child: new Text(article.userName,
                                       style:
                                           new TextStyle(color: Colors.black87),
                                       maxLines: 1,
@@ -149,7 +149,7 @@ class _FollowState extends State<Follow> {
                                       child: new Text('屏蔽这个问题')),
                                   new PopupMenuItem<String>(
                                       value: '选项二的值',
-                                      child: new Text('取消关注 learner')),
+                                      child: new Text('取消关注 ')),
                                   new PopupMenuItem<String>(
                                       value: '选项二的值', child: new Text("举报"))
                                 ])
@@ -217,7 +217,7 @@ class _FollowState extends State<Follow> {
           if (request_type != LOADMORE_REQIEST) {
             // 不是加载更多，则直接为变量赋值
             if (request_type == START_REQUEST || request_type == REFRESH_REQIEST) {
-              listData = new List<Moment>();
+              listData = new List();
             }
             for (Moment data in momentsData) {
               listData.add(data);

@@ -30,7 +30,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   static const double IMAGE_ICON_WIDTH = 30.0;
   static const double ARROW_ICON_WIDTH = 16.0;
 
-  var titles = ["", "退出登录", "vip会员", "公司认证", "联系我们", "分享"];
+  var titles = ["", "退出登录", "检查新版本", "公司认证", "联系我们", "分享"];
   List icons = [
     Icons.all_out,
     Icons.payment,
@@ -63,7 +63,7 @@ class MyInfoPageState extends State<MyInfoPage> {
 
   reloadMenuInfo(){
     if(_loggedIn){
-      titles = ["", "退出登录", "vip会员", "公司认证", "联系我们", "分享"];
+      titles = ["", "退出登录", "检查新版本", "公司认证", "联系我们", "分享"];
       icons = [
         Icons.all_out,
         Icons.payment,
@@ -72,7 +72,7 @@ class MyInfoPageState extends State<MyInfoPage> {
         Icons.share
       ];
     }else{
-      titles = ["",  "vip会员", "公司认证", "联系我们", "分享"];
+      titles = ["",  "检查新版本", "公司认证", "联系我们", "分享"];
       icons = [
         Icons.payment,
         Icons.verified_user,
