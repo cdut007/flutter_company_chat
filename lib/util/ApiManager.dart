@@ -72,7 +72,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -108,7 +108,7 @@ class ApiManager {
     }
     var responseData = getResponseData(response);
     print('file responseData==${responseData.toString()}');
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   static Future responseQiuniuError(Response response) async {
@@ -183,7 +183,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
 
@@ -200,7 +200,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -216,7 +216,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -232,7 +232,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -248,7 +248,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -264,7 +264,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -280,7 +280,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(UserInfo.fromJson(responseData['data']));
+    return new Future.value(UserInfo.fromJson(parseResponseData(responseData)));
   }
 
   ///
@@ -311,7 +311,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -327,7 +327,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
 
@@ -342,7 +342,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   static getResponseData(Response response) {
@@ -362,7 +362,19 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
+  }
+  static parseResponseData(responseData) {
+    var data = responseData['data'];
+    if (data is String) {
+      return data;
+    }
+    var dataList = data['list'];
+    if (dataList != null && dataList is List) {
+      return dataList;
+    }
+
+    return data;
   }
 
   ///
@@ -377,7 +389,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -392,7 +404,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -407,7 +419,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    return new Future.value(responseData['data']);
+    return new Future.value(parseResponseData(responseData));
   }
 
   ///
@@ -421,7 +433,7 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    var token = responseData['data'];
+    var token = parseResponseData(responseData);
     var refreshTokeInfo =
         await refreshToken({'token': token, 'expireDay': GlobalConfig.Token_expireDay});
 
