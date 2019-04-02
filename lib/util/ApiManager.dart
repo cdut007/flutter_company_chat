@@ -478,12 +478,12 @@ class ApiManager {
     var token = parseResponseData(responseData);
     var refreshTokeInfo =
     await refreshToken(
-        {'token': token, 'expireDay': GlobalConfig.Token_expireDay});
+        {'token': token['token'], 'expireDay': GlobalConfig.Token_expireDay});
 
     if (refreshTokeInfo is ResponseEntity) {
       return new Future.error(refreshTokeInfo);
     } else {
-      token = refreshTokeInfo;
+      token = refreshTokeInfo['token'];
       print('refresh token:' + token);
     }
 

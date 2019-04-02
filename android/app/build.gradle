@@ -29,7 +29,9 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        checkReleaseBuilds false
     }
+
 
 
     defaultConfig {
@@ -38,10 +40,16 @@ android {
         applicationId "com.holdingfuture.flutterapp"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 6 //flutterVersionCode.toInteger()
+        versionCode 10 //flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'armeabi-v7a'
+            }
+        }
 
     }
 
