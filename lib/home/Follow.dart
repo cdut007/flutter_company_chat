@@ -30,18 +30,17 @@ class _FollowState extends State<Follow> {
           style: new TextStyle(height: 1.3, color: GlobalConfig.fontColor));
     } else {
       //默认取第一个。
-      List   decodedJson = json.decode(article.fileContent);
-      var url='';
-      if(decodedJson != null && decodedJson.length>0){
-       try{
-         var fileUrl = decodedJson[0]['publicUrl'];
-         if(fileUrl!=null){
-           url = fileUrl+"?x-oss-process=image/resize,w_100";
-         }
-       }catch(e){
-         print(e);
-       }
-
+      List decodedJson = json.decode(article.fileContent);
+      var url = '';
+      if (decodedJson != null && decodedJson.length > 0) {
+        try {
+          var fileUrl = decodedJson[0]['publicUrl'];
+          if (fileUrl != null) {
+            url = fileUrl + "?x-oss-process=image/resize,w_100";
+          }
+        } catch (e) {
+          print(e);
+        }
       }
 
       markWidget = new Row(
@@ -49,7 +48,7 @@ class _FollowState extends State<Follow> {
           new Expanded(
             flex: 2,
             child: new Container(
-              child: new Text(article.content == null?'':article.content,
+              child: new Text(article.content == null ? '' : article.content,
                   style: new TextStyle(
                       height: 1.3, color: GlobalConfig.fontColor)),
             ),
@@ -63,10 +62,10 @@ class _FollowState extends State<Follow> {
                         image: new DecorationImage(
                           image: new NetworkImage(url),
                           centerSlice:
-                              new Rect.fromLTRB(270.0, 180.0, 1360.0, 730.0),
+                          new Rect.fromLTRB(270.0, 180.0, 1360.0, 730.0),
                         ),
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(6.0))),
+                        const BorderRadius.all(const Radius.circular(6.0))),
                   ))),
         ],
       );
@@ -97,13 +96,13 @@ class _FollowState extends State<Follow> {
                               new Container(
                                   child: new Text(article.userName,
                                       style:
-                                          new TextStyle(color: Colors.black87),
+                                      new TextStyle(color: Colors.black87),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis)),
                               new Text('666位关注者',
                                   style: new TextStyle(
                                       color: GlobalConfig.fontColor)),
-                              new Text(readTimestamp(article.createTime) ,
+                              new Text(readTimestamp(article.createTime),
                                   style: new TextStyle(
                                       color: GlobalConfig.fontColor))
                             ],
@@ -143,16 +142,16 @@ class _FollowState extends State<Follow> {
                               color: GlobalConfig.fontColor,
                             ),
                             itemBuilder: (BuildContext context) =>
-                                <PopupMenuItem<String>>[
-                                  new PopupMenuItem<String>(
-                                      value: '选项一的值',
-                                      child: new Text('屏蔽这个问题')),
-                                  new PopupMenuItem<String>(
-                                      value: '选项二的值',
-                                      child: new Text('取消关注 ')),
-                                  new PopupMenuItem<String>(
-                                      value: '选项二的值', child: new Text("举报"))
-                                ])
+                            <PopupMenuItem<String>>[
+                              new PopupMenuItem<String>(
+                                  value: '选项一的值',
+                                  child: new Text('屏蔽这个问题')),
+                              new PopupMenuItem<String>(
+                                  value: '选项二的值',
+                                  child: new Text('取消关注 ')),
+                              new PopupMenuItem<String>(
+                                  value: '选项二的值', child: new Text("举报"))
+                            ])
                       ],
                     ),
                     padding: const EdgeInsets.only(),
@@ -164,6 +163,7 @@ class _FollowState extends State<Follow> {
 
   EventBus eventBus = GlobalConfig.getEventBus();
   StreamSubscription loginSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -177,11 +177,10 @@ class _FollowState extends State<Follow> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     loginSubscription.cancel();
     print('*********【取消动态列表订阅事件】*********');
-
   }
 
   Future<Null> pullToRefresh() async {
@@ -203,20 +202,29 @@ class _FollowState extends State<Follow> {
       currentPage = 1;
       data = {'page': '$currentPage', 'pageSize': '10'};
     } else {
-      currentPage+=1;
-      data = {'page': '$currentPage', 'pageSize': '10'};
+      if (listData.length > 0) {
+        data = {
+          'pageSize': '10',
+          "cursor": listData[listData.length - 1].createTime
+        };
+      } else {
+        data = {
+          'pageSize': '10',
+        };
+      }
     }
 
     ApiManager.getPostMomentsList(data).then((datas) {
       currentPage++;
       if (datas != null) {
-        List<Moment>  momentsData= (datas as List) != null
+        List<Moment> momentsData = (datas as List) != null
             ? (datas as List).map((i) => Moment.fromJson(i)).toList()
             : null;
         setState(() {
           if (request_type != LOADMORE_REQIEST) {
             // 不是加载更多，则直接为变量赋值
-            if (request_type == START_REQUEST || request_type == REFRESH_REQIEST) {
+            if (request_type == START_REQUEST ||
+                request_type == REFRESH_REQIEST) {
               listData = new List();
             }
             for (Moment data in momentsData) {
@@ -242,29 +250,28 @@ class _FollowState extends State<Follow> {
             showToast(context, '刷新成功');
           }
 
-          if(listData.length>0){
+          if (listData.length > 0) {
             loadingType = LoadingType.End;
-          }else{
+          } else {
             loadingType = LoadingType.Empty;
           }
         });
       } else {
-       setState(() {
-         if(listData.length>0){
-           loadingType = LoadingType.End;
-         }else{
-           loadingType = LoadingType.Empty;
-         }
-       });
+        setState(() {
+          if (listData.length > 0) {
+            loadingType = LoadingType.End;
+          } else {
+            loadingType = LoadingType.Empty;
+          }
+        });
         showToast(context, '已经没有更多了');
       }
-
     }, onError: (errorData) {
-      currentPage-=1;
+      currentPage -= 1;
       setState(() {
-        if(listData.length>0){
+        if (listData.length > 0) {
           loadingType = LoadingType.End;
-        }else{
+        } else {
           loadingType = LoadingType.Error;
         }
       });
@@ -274,73 +281,70 @@ class _FollowState extends State<Follow> {
   }
 
   getBody() {
-    if(loadingType == LoadingType.Loading){
+    if (loadingType == LoadingType.Loading) {
       return Column(children: <Widget>[
         new VcardBannerView(),
         new LoadingWidget(loadingType: LoadingType.Loading,)
       ],);
     }
 
-    if(loadingType == LoadingType.Empty){
+    if (loadingType == LoadingType.Empty) {
       return Column(children: <Widget>[
         new VcardBannerView(),
-        new LoadingWidget(loadingType: LoadingType.Empty,clickCallback: (){
+        new LoadingWidget(loadingType: LoadingType.Empty, clickCallback: () {
           setState(() {
             loadingType = LoadingType.Loading;
           });
           pullToRefresh();
         },)
       ],);
-
     }
 
-    if(loadingType == LoadingType.Error){
+    if (loadingType == LoadingType.Error) {
       return Column(children: <Widget>[
         new VcardBannerView(),
-        new LoadingWidget(loadingType: LoadingType.Error,clickCallback: (){
+        new LoadingWidget(loadingType: LoadingType.Error, clickCallback: () {
           setState(() {
             loadingType = LoadingType.Loading;
           });
           pullToRefresh();
         },)
       ],);
-
     }
 
-      Widget content = new HeaderListView(
-        listData,
-        headerList: [1],
-        headerCreator: (BuildContext context, int position) {
-          if (position == 0) {
-              return   new VcardBannerView();
-          }
-        },
-        itemWidgetCreator: (BuildContext context, int position) {
-          return wordsCard(listData[position]);
-        },
-        usePullToRefresh:true,
-        onFooterRefresh: onFooterRefresh,
-        onHeaderRefresh: pullToRefresh,
-      );
+    Widget content = new HeaderListView(
+      listData,
+      headerList: [1],
+      headerCreator: (BuildContext context, int position) {
+        if (position == 0) {
+          return new VcardBannerView();
+        }
+      },
+      itemWidgetCreator: (BuildContext context, int position) {
+        return wordsCard(listData[position]);
+      },
+      usePullToRefresh: true,
+      onFooterRefresh: onFooterRefresh,
+      onHeaderRefresh: pullToRefresh,
+    );
 
 
     return new Container(
-          child: content );
-
+        child: content);
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Column(
-      children: <Widget>[
-        new Expanded(
-          child: new Container(
-            child: getBody(),
-          ),
-          flex: 1,
-        )
-      ],
-    ));
+          children: <Widget>[
+            new Expanded(
+              child: new Container(
+                child: getBody(),
+              ),
+              flex: 1,
+            )
+          ],
+        ));
   }
 }

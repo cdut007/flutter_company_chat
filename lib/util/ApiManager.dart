@@ -8,7 +8,8 @@ import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
-var BASE_URL = "http://39.96.161.237:9090/api";//"http://192.168.99.132:9091/api";//
+
+var BASE_URL = "http://39.96.161.237:9090/api"; //"http://192.168.99.132:9091/api";//
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
@@ -17,23 +18,21 @@ class ApiManager {
   static var refresh_tag = 'refreshUserInfo';
   static var vcard_list_refresh_tag = 'vcard_list_refresh_tag';
 
-  static init()async{
+  static init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String  domain = prefs.getString('api_domain');
-    if(domain!=null && domain.isNotEmpty){
+    String domain = prefs.getString('api_domain');
+    if (domain != null && domain.isNotEmpty) {
       BASE_URL = domain;
     }
   }
 
   static setDomain(var url) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      print('保存本地domain信息：' + url);
-      var save_result = await prefs.setString('api_domain', url);
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('保存本地domain信息：' + url);
+    var save_result = await prefs.setString('api_domain', url);
   }
 
-  static getDomain(){
-
+  static getDomain() {
     return BASE_URL;
   }
 
@@ -66,7 +65,7 @@ class ApiManager {
     String resetPassword_url = BASE_URL + "/pwd/reset";
     var requestData = await putPublicParams(data);
     Response response =
-        await reuqest(resetPassword_url, GlobalConfig.PATCH, requestData);
+    await reuqest(resetPassword_url, GlobalConfig.PATCH, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -94,8 +93,8 @@ class ApiManager {
     FormData formData = new FormData.from({
       "OSSAccessKeyId": accessid,
       "policy": policy,
-      "key": dir+fileName,
-      "callback":callback,
+      "key": dir + fileName,
+      "callback": callback,
       "Signature": signature,
       "file": new UploadFileInfo(new File(filePath), fileName)
     });
@@ -145,7 +144,7 @@ class ApiManager {
     String qiniu_token_url = BASE_URL + "/aliy/oss/policy";
     var requestData = await putPublicParams(data);
     Response response =
-        await reuqest(qiniu_token_url, GlobalConfig.GET, requestData);
+    await reuqest(qiniu_token_url, GlobalConfig.GET, requestData);
 //    ResponseEntity responseErrorEntity = await responseError(response);
 //    if (responseErrorEntity != null) {
 //      return new Future.error(responseErrorEntity);
@@ -161,7 +160,7 @@ class ApiManager {
     String user_profile_url = BASE_URL + "/user/profile";
     var requestData = await putPublicParams(data);
     Response response =
-        await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
+    await reuqest(user_profile_url, GlobalConfig.PUT, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -174,7 +173,7 @@ class ApiManager {
   /// 获取名片信息
   ///
   static Future getVcardQRCodeLink(var data) async {
-    String user_profile_url = BASE_URL + "/card/share/"+data['id'];
+    String user_profile_url = BASE_URL + "/card/share/" + data['id'];
     var requestData = await putPublicParams(data);
     Response response =
     await reuqest(user_profile_url, GlobalConfig.GET, requestData);
@@ -207,7 +206,7 @@ class ApiManager {
   /// 获取名片信息
   ///
   static Future findVcardById(var data) async {
-    String user_profile_url = BASE_URL + "/card/"+data['id'];
+    String user_profile_url = BASE_URL + "/card/" + data['id'];
     var requestData = await putPublicParams(data);
     Response response =
     await reuqest(user_profile_url, GlobalConfig.GET, requestData);
@@ -274,7 +273,7 @@ class ApiManager {
     String user_profile_url = BASE_URL + "/user/profile";
     var requestData = await putPublicParams(data);
     Response response =
-        await reuqest(user_profile_url, GlobalConfig.GET, requestData);
+    await reuqest(user_profile_url, GlobalConfig.GET, requestData);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
@@ -302,7 +301,6 @@ class ApiManager {
   /// 发布动态 url
   ///
   static Future postMoments(var data) async {
-
     String url = BASE_URL + "/wall/add";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(url, GlobalConfig.POST, requestData);
@@ -315,10 +313,39 @@ class ApiManager {
   }
 
   ///
+  /// 查询名片夹关系
+  ///
+  static Future getPackageOwned(var data) async {
+    String url = BASE_URL + "/package/owned";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
+  /// 删除某一条动态(通过id删除)
+  ///
+  static Future deleteWallById(String wallId, var data) async {
+    String url = BASE_URL + "/wall/" + wallId;
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.DELETE, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
   /// 获取动态 url
   ///
   static Future getPostMomentsList(var data) async {
-
     String url = BASE_URL + "/wall/all";
     var requestData = await putPublicParams(data);
     Response response = await reuqest(url, GlobalConfig.POST, requestData);
@@ -408,6 +435,21 @@ class ApiManager {
   }
 
   ///
+  /// 设置默认名片
+  ///
+  static Future setDefaultCard(var data,String card_id) async {
+    String url = BASE_URL + "/card/default/"+card_id;
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.PATCH, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(responseData['data']);
+  }
+
+  ///
   /// 更新名片请求url
   ///
   static Future createCard(var data) async {
@@ -435,7 +477,8 @@ class ApiManager {
     var responseData = getResponseData(response);
     var token = parseResponseData(responseData);
     var refreshTokeInfo =
-        await refreshToken({'token': token, 'expireDay': GlobalConfig.Token_expireDay});
+    await refreshToken(
+        {'token': token, 'expireDay': GlobalConfig.Token_expireDay});
 
     if (refreshTokeInfo is ResponseEntity) {
       return new Future.error(refreshTokeInfo);
@@ -501,7 +544,7 @@ class ApiManager {
     if (rm_access_token) {
       rm_access_token = await prefs.remove('user_info');
     }
-    if(rm_access_token){
+    if (rm_access_token) {
       rm_access_token = await prefs.remove('vcard_list_info');
     }
     return rm_access_token;
@@ -524,7 +567,7 @@ class ApiManager {
     return access_token;
   }
 
-  static parseErrorInfo( errorData) {
+  static parseErrorInfo(errorData) {
     if (errorData is DioError) {
       DioError dioError = errorData;
       ResponseEntity responseEntity = ResponseEntity();
@@ -551,19 +594,19 @@ class ApiManager {
       } else if (dioError.type == DioErrorType.RESPONSE) {
         responseEntity.msg = dioError.response.toString();
         var data = dioError.response.data;
-        if(data!=null){
-          if(dioError.response.statusCode == 500){
-            try{
-              responseEntity.code ='500';
+        if (data != null) {
+          if (dioError.response.statusCode == 500) {
+            try {
+              responseEntity.code = '500';
               responseEntity.msg = '服务不可用，请稍后再试';
-            }catch (e){
+            } catch (e) {
               print(e);
             }
-          }else{
-            try{
+          } else {
+            try {
               responseEntity.code = data['code'];
               responseEntity.msg = data['message'];
-            }catch (e){
+            } catch (e) {
               print(e);
             }
           }
@@ -573,7 +616,6 @@ class ApiManager {
 //            responseEntity.msg = "用户信息已过期，请重新登录";
 //          }
         }
-
       } else {
         if (dioError.response.data != null) {
           var msg = dioError.response.data['message'];
@@ -620,7 +662,7 @@ class ApiManager {
       print('****** parse http request response error ******');
       print(responseData.msg);
       var data = response.data;
-      if(data!=null){
+      if (data != null) {
         responseData.code = data['code'];
         responseData.msg = data['message'];
       }
@@ -629,8 +671,8 @@ class ApiManager {
     }
   }
 
-  static Future<Response> reuqest(
-      var url, var httpRequsetType, var data) async {
+  static Future<Response> reuqest(var url, var httpRequsetType,
+      var data) async {
     Dio dio = new Dio();
     Options options = new Options(
 //        baseUrl:"https://www.xx.com/api",

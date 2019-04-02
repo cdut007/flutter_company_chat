@@ -350,6 +350,42 @@ class CreateEditVcardPageState extends State<CreateEditVcardPage>
                                   ),
                                 ],
                               )),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      new Text(
+                                        '地址',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  new Flexible(
+                                    child: new TextField(
+                                      decoration: const InputDecoration(
+                                          hintText: "输入公司地址"),
+                                      enabled: !_status,
+                                      controller: _companyController,
+                                    ),
+                                  ),
+                                ],
+                              )),
                           !_status ? _getActionButtons() : new Container(),
                         ],
                       ),
