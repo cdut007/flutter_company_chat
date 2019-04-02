@@ -40,7 +40,7 @@ class _UserProfileQRCodePageState extends State<UserProfileQRCodePage> {
 
     ApiManager.getVcardQRCodeLink({'id':_vcardEntity.id}).then((result){
       setState(() {
-        qrUrl = result;
+        qrUrl = result['url'];
       });
     },onError: (errorData){
       print('*********getVcardQRCodeLink callback error print*********');
