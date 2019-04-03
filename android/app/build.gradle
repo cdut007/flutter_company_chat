@@ -40,16 +40,11 @@ android {
         applicationId "com.holdingfuture.flutterapp"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 10 //flutterVersionCode.toInteger()
+        versionCode 9 //flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        splits {
-            abi {
-                enable true
-                reset()
-                include 'armeabi-v7a'
-            }
-        }
+
+
 
     }
 
@@ -65,6 +60,13 @@ android {
             keyPassword "20190222"
         }
 
+        debug {
+            storeFile file("../android.jks")
+            storePassword "20190222"
+            keyAlias "android_key"
+            keyPassword "20190222"
+        }
+
     }
 
     buildTypes {
@@ -73,11 +75,21 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
+
+            ndk {
+                //设置支持的SO库架构
+                abiFilters 'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64'
+            }
+
         }
         debug {
             minifyEnabled false
             //  shrinkResources true
             signingConfig signingConfigs.release
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'arm64-v8a'//, 'arm64-v8a', 'x86', 'x86_64'
+        }
         }
     }
 }

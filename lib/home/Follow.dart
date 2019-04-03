@@ -202,15 +202,15 @@ class _FollowState extends State<Follow> {
       currentPage = 1;
       data = {'page': '$currentPage', 'pageSize': '10'};
     } else {
+//      print("currentPage:" + currentPage);
       if (listData.length > 0) {
         data = {
+          'page': '$currentPage',
           'pageSize': '10',
           "cursor": listData[listData.length - 1].createTime
         };
       } else {
-        data = {
-          'pageSize': '10',
-        };
+        return;
       }
     }
 
