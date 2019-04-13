@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/entity/Message.dart';
+import 'package:flutter_app/util/ChatManager.dart';
 
 //import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -153,11 +154,14 @@ class ChatScreenState extends State<ChatScreen> {
       message.timestamp =  DateTime.now().millisecondsSinceEpoch;
       message.content =  content;
      if(listMessage.length%2==0){
-       message.senderId =  id;
+       message.senderId =  peerId;
      }else{
-       message.senderId =  id+'reveiver';
+       message.senderId =  peerId;
      }
+
       message.type =  type;
+
+      ChatManager.sendMessage(message);
 
        setState(() {
          listMessage.insert(0,message);

@@ -355,15 +355,17 @@ class _ContactViewState extends State {
   }
 
   void _navigateToFriendDetails(VcardEntity friend, Object avatarTag) {
+    Friend people =  Friend(
+        avatar: 'http://res',
+        name: 'test',
+        email: 'ww@ww',
+        location: 'china');
+    people.id = friend.userId;
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
           return new ContactDetailsPage(
-              Friend(
-                  avatar: 'http://res',
-                  name: 'test',
-                  email: 'ww@ww',
-                  location: 'china'),
+              people,
               avatarTag: avatarTag);
         },
       ),

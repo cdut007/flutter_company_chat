@@ -9,6 +9,7 @@ class Friend {
     @required this.location,
   });
 
+   String id;
   final String avatar;
   final String name;
   final String email;
