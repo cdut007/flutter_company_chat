@@ -4,11 +4,13 @@ import 'dart:convert';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/entity/Message.dart';
+import 'package:xml2json/xml2json.dart';
 class ChatManager {
 
   static WebSocket socket;
   static String openId;
   static int loginStatus;
+  static String currentUserId;
 
   static init(){
 
@@ -16,6 +18,51 @@ class ChatManager {
   }
 
   static List<Message> cacheMsg = new List();
+  static List<Message> cacheReadMsg = new List();
+
+  static readMsg(Message message){
+    if(_checkIMStatusIsOk()){
+      _readMessage(message);
+    }else{
+      //insert in native, when ready resend it.
+      print('等待im登录回执');
+      if(!cacheReadMsg.contains(message)){
+        cacheReadMsg.add(message);
+      }
+    }
+  }
+
+  static _getUserJidFromNode(String jidNode){
+     return jidNode.substring(0,jidNode.lastIndexOf('/'));
+  }
+
+  static _getCurrentJid([bool source]){
+    if(source){
+      return currentUserId +_JIdNode()+_getDomain()+"/call";
+    }else{
+      return currentUserId +_JIdNode()+_getDomain();
+    }
+  }
+
+  static _readMessage(Message msg){
+    cacheReadMsg.remove(msg);
+   var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'" type="chat" xmlns="jabber:client"><x xmlns="jabber:x:event"><read/>'
+        +'<msgid>'+msg.id+
+            '</msgid><timestamp/></x></message>';
+    print("*****客户端发送已读消息状态*****" );
+    print(messageData);
+    print(msg);
+    socket.add(messageData);
+  }
+
+  static _deliveryMsg(var jid ,var msgId){
+    var messageData ='<message to="'+jid+'" type="chat" xmlns="jabber:client"><x xmlns="jabber:x:event"><delivered/>'
+        +'<msgid>'+msgId+
+        '</msgid><timestamp/></x></message>';
+    print("*****客户端发送回执消息状态*****" );
+    print(messageData);
+    socket.add(messageData);
+  }
 
   static sendMessage(Message message){
       if(_checkIMStatusIsOk()){
@@ -27,21 +74,13 @@ class ChatManager {
       }
   }
 
+
   static _sendMessage(Message msg){
         cacheMsg.remove(msg);
-//    <message xmlns="jabber:client" to="dummy@dummy.example" id="cxyRA-132" type="chat">
-//    <thread>60AI1F</thread>
-//    <body>ssa</body>
-//    <x xmlns="jabber:x:event">
-//    <offline/>
-//    <composing/>
-//    </x>
-//    <active xmlns="http://jabber.org/protocol/chatstates"/>
-//    </message>
 
     msg.id = msg.senderId+DateTime.now().millisecondsSinceEpoch.toString();
         msg.content = '{"messageType":"TextMessage","messageTypeValue":1,"data":{"content":"'+msg.content+'"},"messageEncrypt":"false","peerInfo":{"userName":"username","mobile":"","nickName":"阿童木"}}';
-        var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'"id="'+msg.id+'" type="chat" xmlns="jabber:client">'
+        var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
             + '\n'+
             '<body>'+msg.content+'</body>'
             +'\n'+
@@ -96,7 +135,22 @@ class ChatManager {
     }
   }
 
+  static _parseXMLToJson(var info){
+    // Create a client transformer
+    final Xml2Json myTransformer = Xml2Json();
 
+    // Parse a simple XML string
+    myTransformer.parse(info);
+    // Transform to JSON using GData
+    String _result = myTransformer.toGData();
+
+    print('');
+    print('解析XML to JSON use GData');
+    print(_result);
+    print('');
+   return  json.decode(_result).cast<String, dynamic>();
+
+  }
 
   static login()  async{
     if(socket!=null){
@@ -109,6 +163,7 @@ class ChatManager {
     }
 
     UserInfo userInfo = await ApiManager.getUserInfo();
+    currentUserId = userInfo.id;
     loginStatus  = WebSocket.connecting;
 //uc.aitelian.cn  ws://39.108.165.171:7070/ws/ headers: {'Sec-WebSocket-Protocol': 'xmpp'}
     WebSocket.connect( 'ws://uc.aitelian.cn:5280/websocket/',headers: {'Sec-WebSocket-Protocol': 'xmpp'}).then((webSocket) {
@@ -123,6 +178,9 @@ class ChatManager {
         //该方法接收服务器信息
         String info = data.toString();
         print("服务器数据："+info);
+       var xmlData= _parseXMLToJson(info);
+
+
 
         if(info.startsWith("<stream:features xmlns:stream='http://etherx.jabber.org/streams'>") && info.contains("<mechanisms")){
           _auth(userInfo.id,userInfo.passwd);
@@ -143,6 +201,45 @@ class ChatManager {
             //
             resendLocalMessages();
           }
+
+        }else if (xmlData['message']!=null){
+
+          var message = xmlData['message'];
+          var received = message['received'];
+          if(received!=null){
+            if(received['xmlns']=='urn:xmpp:receipts'){
+              print('状态回执消息已到达【#聊天服务器#】');
+            }else{
+              print('发送消息已到达【聊天服务器】，消息id='+received['msgid']);
+            }
+
+          }
+          var from = message['from'];
+          var type = message['type'];
+          var xNode = message['x'];
+          var body = message['body'];
+
+          if(xNode!=null&&xNode['delivered']!=null){
+             print('发送消息【已到】对端，消息id='+xNode['msgid']['\$t']);
+          }
+
+          if(xNode!=null&&xNode['read']!=null){
+            print('发送消息对端【已读】，消息id='+xNode['msgid']['\$t']);
+          }
+
+          if(body!=null){
+            if(from != _getCurrentJid(true)){
+              print('收到新消息');
+                _deliveryMsg(_getUserJidFromNode(from), message['id']);
+            }else{
+
+            }
+          }else{
+          }
+
+
+
+
 
         }
 

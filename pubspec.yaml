@@ -41,6 +41,7 @@ dependencies:
   image_picker: 0.4.12+1
   event_bus: ^1.1.0
   qr_code_scanner: ^0.0.2
+  xml2json: ^3.0.3
 #  hf_sdk:
 #   path: hf_sdk
 

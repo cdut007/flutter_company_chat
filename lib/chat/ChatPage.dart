@@ -156,7 +156,7 @@ class ChatScreenState extends State<ChatScreen> {
      if(listMessage.length%2==0){
        message.senderId =  peerId;
      }else{
-       message.senderId =  peerId;
+       message.senderId =  peerId;//userId
      }
 
       message.type =  type;
