@@ -4,10 +4,10 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/login/RegisterPage.dart';
 import 'package:flutter_app/IndexPage.dart';
+import 'package:flutter_app/util/ChatManager.dart';
 import 'package:flutter_app/login/ForgetPasswordPage.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 import 'dart:convert';
-import 'package:hf_sdk/hf_sdk.dart';
 /**
  * @Description  登录页面
  * @Author  james
@@ -150,8 +150,15 @@ class _LoginPageState extends State<LoginPage> {
                            final userInfoFuture = ApiManager.getUserProfile(userProfileData);
                            userInfoFuture.then((data){
                              var userInfo = data as UserInfo;
-                             ApiManager.saveUserInfo(json.encode(userInfo));
-                             _go2HomePage();
+
+                             ApiManager.saveUserInfo(json.encode(userInfo)).then((result){
+
+                               _go2HomePage();
+                             },onError: (errorData){
+                               showToast(context,'本地保存数据失败');
+                             });
+
+
                            },onError: (errorData){
                              print('*********getUserProfile callback error print*********');
                              var error =  ApiManager.parseErrorInfo(errorData);

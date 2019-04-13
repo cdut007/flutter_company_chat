@@ -13,7 +13,7 @@ import 'package:flutter_app/util/ApiManager.dart';
 //import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:share/share.dart';
 import 'package:event_bus/event_bus.dart';
-import 'package:hf_sdk/hf_sdk.dart';
+//import 'package:hf_sdk/hf_sdk.dart';
 /**
  * @Description  文我的界面
  * @Author  james
@@ -58,7 +58,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   }
   _initBuly(){
     print("bugly初始化");
-    HfSdk.initBugly;
+    //HfSdk.initBugly;
   }
 
   reloadMenuInfo(){
@@ -247,7 +247,7 @@ class MyInfoPageState extends State<MyInfoPage> {
 //            context,
 //            new MaterialPageRoute(
 //                builder: (context) => new NewsWebPage(h5_url, '我的开源')));
-        HfSdk.getNewVersion;
+        //HfSdk.getNewVersion;
         break;
       case 3:
 //        Navigator.push(context,

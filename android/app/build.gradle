@@ -32,18 +32,27 @@ android {
         checkReleaseBuilds false
     }
 
+    dexOptions {
+
+        javaMaxHeapSize "4g"
+        jumboMode true
+
+    }
+
 
 
     defaultConfig {
 
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.holdingfuture.flutterapp"
+        applicationId "com.holdingfuture.flutterapp2"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 9 //flutterVersionCode.toInteger()
+        versionCode 14 //flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        multiDexEnabled true
+//        multiDexKeepProguard file('multiDexKeep.pro') // keep specific classes using proguard syntax
+//        multiDexKeepFile file('multiDexKeep.txt') // keep specific classes
 
 
     }
@@ -86,10 +95,10 @@ android {
             minifyEnabled false
             //  shrinkResources true
             signingConfig signingConfigs.release
-        ndk {
-            //设置支持的SO库架构
-            abiFilters 'arm64-v8a'//, 'arm64-v8a', 'x86', 'x86_64'
-        }
+//        ndk {
+//            //设置支持的SO库架构
+//            abiFilters  'armeabi-v7a'// 'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64'
+//        }
         }
     }
 }

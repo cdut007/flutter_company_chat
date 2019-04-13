@@ -2,7 +2,7 @@ package com.example.flutterapp;
 
 import android.content.Context;
 
-import com.holdingfuture.flutterapp.hfsdk.HfSdkPlugin;
+//import com.holdingfuture.flutterapp.hfsdk.HfSdkPlugin;
 
 import io.flutter.app.FlutterApplication;
 import io.flutter.view.FlutterMain;
@@ -13,12 +13,21 @@ import io.flutter.view.FlutterMain;
 
 public class MyApplication extends FlutterApplication {
     public static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
         //bugly初始化
         FlutterMain.startInitialization(this);
-//        HfSdkPlugin.init(this);
+      //  HfSdkPlugin.init(this);
         context = this;
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    //    HfSdkPlugin.attachBaseContext(base);
+
+    }
+
 }

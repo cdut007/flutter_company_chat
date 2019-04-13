@@ -209,9 +209,8 @@ class _FollowState extends State<Follow> {
           'pageSize': '10',
           "cursor": listData[listData.length - 1].createTime
         };
-      } else {
-        return;
       }
+
     }
 
     ApiManager.getPostMomentsList(data).then((datas) {

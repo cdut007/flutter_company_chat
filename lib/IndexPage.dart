@@ -13,6 +13,7 @@ import 'package:flutter_app/searchPage.dart';
 import 'package:flutter_app/widget/CustomIcon.dart';
 import 'package:flutter_app/widget/CustomInactiveIcon.dart';
 import 'package:flutter_app/widget/NavigationIconView.dart';
+import 'package:flutter_app/util/ChatManager.dart';
 
 /**
  * 主页
@@ -34,6 +35,9 @@ class IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    ChatManager.login();
+
     navigationViews = <NavigationIconView>[
       NavigationIconView(
         activeIcon: const Icon(Icons.home),

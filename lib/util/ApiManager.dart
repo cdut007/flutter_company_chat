@@ -8,6 +8,7 @@ import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_app/util/ChatManager.dart';
 
 var BASE_URL = "http://39.96.161.237:9090/api"; //"http://192.168.99.132:9091/api";//
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
@@ -24,6 +25,7 @@ class ApiManager {
     if (domain != null && domain.isNotEmpty) {
       BASE_URL = domain;
     }
+    ChatManager.init();
   }
 
   static setDomain(var url) async {
@@ -369,6 +371,8 @@ class ApiManager {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
+
+
     return new Future.value(parseResponseData(responseData));
   }
 
@@ -570,6 +574,8 @@ class ApiManager {
   static parseErrorInfo(errorData) {
     if (errorData is DioError) {
       DioError dioError = errorData;
+      print('************http request 错误请求头********');
+      print(dioError.request.toString());
       ResponseEntity responseEntity = ResponseEntity();
       if (dioError.response == null) {
         //check network.
