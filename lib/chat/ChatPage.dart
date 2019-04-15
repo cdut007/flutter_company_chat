@@ -107,6 +107,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Future getImage() async {
+    ChatManager.changeImServer();
 //    imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
 //
 //    if (imageFile != null) {

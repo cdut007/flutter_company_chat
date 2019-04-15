@@ -313,6 +313,14 @@ class ChatManager {
 
   static bool openfireServer = true;
 
+  static changeImServer(){
+
+    openfireServer = !openfireServer;
+    loginStatus = WebSocket.closed;
+    print('修改聊天服务器环境：$openfireServer');
+    _relogin();
+  }
+
   static _getDomain(){
     if(openfireServer){
       return '@james';
