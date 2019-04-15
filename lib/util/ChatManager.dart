@@ -77,7 +77,7 @@ class ChatManager {
 
   static _sendMessage(Message msg){
         cacheMsg.remove(msg);
-
+   // msg.senderId='james@james';
     msg.id = msg.senderId+DateTime.now().millisecondsSinceEpoch.toString();
         msg.content = '{"messageType":"TextMessage","messageTypeValue":1,"data":{"content":"'+msg.content+'"},"messageEncrypt":"false","peerInfo":{"userName":"username","mobile":"","nickName":"阿童木"}}';
         var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
@@ -158,6 +158,7 @@ class ChatManager {
         socket.close(-1001,'可能由于网络问题，客户端主动关闭');
         socket =null;
       }catch (e){
+        print('关闭socket 异常');
         print(e);
       }
     }
@@ -165,10 +166,18 @@ class ChatManager {
     UserInfo userInfo = await ApiManager.getUserInfo();
     currentUserId = userInfo.id;
     loginStatus  = WebSocket.connecting;
-//uc.aitelian.cn  ws://39.108.165.171:7070/ws/ headers: {'Sec-WebSocket-Protocol': 'xmpp'}
-    WebSocket.connect( 'ws://uc.aitelian.cn:5280/websocket/',headers: {'Sec-WebSocket-Protocol': 'xmpp'}).then((webSocket) {
+    //ws://uc.aitelian.cn:5280/websocket/
+//ws://39.108.165.171:7070/ws/ headers: {'Sec-WebSocket-Protocol': 'xmpp'}
+    var im_server = 'ws://uc.aitelian.cn:5280/websocket/';
+    if(openfireServer){
+      im_server =  'ws://39.108.165.171:7070/ws/';
+      userInfo.id='testchat';
+      userInfo.passwd='123456';
+    }
+   
+    WebSocket.connect(im_server,headers: {'Sec-WebSocket-Protocol': 'xmpp'}).then((webSocket) {
       socket = webSocket;
-      loginStatus  = WebSocket.open;
+
       String stream =
           "<open to='ul'  xmlns='urn:ietf:params:xml:ns:xmpp-framing'  version='1.0'/>";
       socket.add(stream);
@@ -196,12 +205,18 @@ class ChatManager {
         }else if (info.startsWith('<iq xmlns="jabber:client" type="result"') || info.startsWith("<iq xmlns='jabber:client' type='result'")){
 
           if(info.contains('<bind xmlns="urn:ietf:params:xml:ns:xmpp-bind">')||info.contains("<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>")){
+            loginStatus  = WebSocket.open;
             //出席
             presence();
             //
             resendLocalMessages();
           }
 
+        }else if (xmlData['failure']!=null){
+          var failure = xmlData['failure'];
+          if(failure['not-authorized']!=null){
+            loginStatus = WebSocket.closed;
+          }
         }else if (xmlData['message']!=null){
 
           var message = xmlData['message'];
@@ -219,23 +234,28 @@ class ChatManager {
           var xNode = message['x'];
           var body = message['body'];
 
-          if(xNode!=null&&xNode['delivered']!=null){
-             print('发送消息【已到】对端，消息id='+xNode['msgid']['\$t']);
-          }
-
-          if(xNode!=null&&xNode['read']!=null){
-            print('发送消息对端【已读】，消息id='+xNode['msgid']['\$t']);
-          }
-
-          if(body!=null){
-            if(from != _getCurrentJid(true)){
-              print('收到新消息');
-                _deliveryMsg(_getUserJidFromNode(from), message['id']);
-            }else{
-
+          if(type == 'error'){
+            print(message['error']);
+          }else if(type == 'chat'){
+            if(xNode!=null&&xNode['delivered']!=null){
+              print('发送消息【已到】对端，消息id='+xNode['msgid']['\$t']);
             }
-          }else{
+
+            if(xNode!=null&&xNode['read']!=null){
+              print('发送消息对端【已读】，消息id='+xNode['msgid']['\$t']);
+            }
+
+            if(body!=null){
+              if(from != _getCurrentJid(true)){
+                print('收到新消息');
+                _deliveryMsg(_getUserJidFromNode(from), message['id']);
+              }else{
+
+              }
+            }else{
+            }
           }
+
 
 
 
@@ -244,13 +264,21 @@ class ChatManager {
         }
 
 
-      });
+      },onError: (error){
+        loginStatus  = WebSocket.closed;
+        print('websokect服务器侦听失败');
+        print(error);
+      },cancelOnError: true);
       socket.done.then((e) {
         //当与服务器连接中断调用
         loginStatus  = WebSocket.closed;
         print('当与服务器连接中断');
         print(e);
       });
+    },onError: (errorInfo){
+      loginStatus  = WebSocket.closed;
+      print('websokect服务器连接失败');
+      print(errorInfo);
     });
   }
 
@@ -283,10 +311,18 @@ class ChatManager {
     socket.add(openBindData);
   }
 
+  static bool openfireServer = false;
+
   static _getDomain(){
+    if(openfireServer){
+      return '';
+    }
     return '@ul';
   }
   static _JIdNode(){
+    if(openfireServer){
+      return '';
+    }
     return '_uc';
   }
 

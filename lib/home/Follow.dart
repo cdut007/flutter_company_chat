@@ -167,7 +167,7 @@ class _FollowState extends State<Follow> {
   @override
   void initState() {
     super.initState();
-    getDatas(START_REQUEST);
+    getDatas(REFRESH_REQIEST);
     print('*********【初始化动态列表订阅事件】*********');
     loginSubscription = eventBus.on<Moment>().listen((event) {
       print('*********收到动态列表订阅事件*********');
