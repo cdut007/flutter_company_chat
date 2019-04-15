@@ -174,7 +174,7 @@ class ChatManager {
       userInfo.id='testchat';
       userInfo.passwd='123456';
     }
-   
+
     WebSocket.connect(im_server,headers: {'Sec-WebSocket-Protocol': 'xmpp'}).then((webSocket) {
       socket = webSocket;
 
@@ -311,11 +311,11 @@ class ChatManager {
     socket.add(openBindData);
   }
 
-  static bool openfireServer = false;
+  static bool openfireServer = true;
 
   static _getDomain(){
     if(openfireServer){
-      return '';
+      return '@james';
     }
     return '@ul';
   }

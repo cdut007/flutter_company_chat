@@ -46,7 +46,7 @@ class _ConversationsPageState extends State{
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-          conversation.peerId='11';
+          conversation.peerId='james';
           conversation.peerAvatar='https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg';
           return new ChatPage(key:Key('chat'),peerId:conversation.peerId,peerAvatar:conversation.peerAvatar);
         },
