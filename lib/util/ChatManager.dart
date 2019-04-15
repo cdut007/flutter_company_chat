@@ -5,6 +5,7 @@ import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:xml2json/xml2json.dart';
+import 'package:dio/dio.dart';
 class ChatManager {
 
   static WebSocket socket;
@@ -152,6 +153,63 @@ class ChatManager {
 
   }
 
+  static Future<Response> _createIMUserReq(var username,var password) async {
+    Dio dio = new Dio();
+    Options options = new Options(
+//        baseUrl:"https://www.xx.com/api",
+        connectTimeout: 7000,
+        receiveTimeout: 3000,
+        contentType: ContentType.json);
+    var data = {'username':username,'password':password};
+    options.headers['Authorization'] = '1tDbUzEE7Mja2wt1';
+    String url = "http://39.108.165.171:9090" + "/plugins/restapi/v1/users";
+    Response response = await dio.post(url, options: options, data: data).catchError((onError){
+      print('***************创建用户请求异常url参数地址结果START*************' + url);
+      print(onError);
+      print('***************创建用户请求异常url参数地址结果END*************' + url);
+      return  onError;
+    });
+    print('***************【创建用户】请求url参数地址结果START*************' + url);
+    print(response.data);
+    print(response.headers);
+    print(response.request);
+    print(response.statusCode);
+    print('***************【创建用户】请求url参数地址结果END*************' + url);
+
+    if(response.statusCode == 201){
+      return response;
+    }
+  }
+
+  static  Future<bool> _createIMUser(var username,var password) async{
+
+    Dio dio = new Dio();
+    Options options = new Options(
+//        baseUrl:"https://www.xx.com/api",
+        connectTimeout: 7000,
+        receiveTimeout: 3000,
+        contentType: ContentType.json);
+    var data = {'username':username,'password':password};
+    options.headers['Authorization'] = '1tDbUzEE7Mja2wt1';
+    String querUserUrl = "http://39.108.165.171:9090" + "/plugins/restapi/v1/users/"+username;
+    Response queryResponse = await dio.get(querUserUrl, options: options).catchError((onError){
+      print('***************获取用户请求异常url参数地址结果START*************' + querUserUrl);
+      print(onError);
+      print('***************获取用户请求异常url参数地址结果END*************' + querUserUrl);
+      return  _createIMUserReq(username, password);
+    });
+    print('***************[获取用户]请求url参数地址结果START*************' + querUserUrl);
+    print(queryResponse.data);
+    print(queryResponse.headers);
+    print(queryResponse.request);
+    print(queryResponse.statusCode);
+    print('***************[获取用户]请求url参数地址结果END*************' + querUserUrl);
+
+
+    return false;
+
+  }
+
   static login()  async{
     if(socket!=null){
       try{
@@ -170,9 +228,10 @@ class ChatManager {
 //ws://39.108.165.171:7070/ws/ headers: {'Sec-WebSocket-Protocol': 'xmpp'}
     var im_server = 'ws://uc.aitelian.cn:5280/websocket/';
     if(openfireServer){
-      im_server =  'ws://39.108.165.171:7070/ws/';
-      userInfo.id='testchat';
-      userInfo.passwd='123456';
+       im_server =  'ws://39.108.165.171:7070/ws/';
+//      userInfo.id='testchat';
+//      userInfo.passwd='123456';
+     await  _createIMUser(userInfo.id,userInfo.passwd);
     }
 
     WebSocket.connect(im_server,headers: {'Sec-WebSocket-Protocol': 'xmpp'}).then((webSocket) {
