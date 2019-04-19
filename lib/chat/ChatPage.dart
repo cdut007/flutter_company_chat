@@ -7,6 +7,9 @@ import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/util/ChatManager.dart';
+import 'package:flutter_app/chat/ChatModule.dart';
+import 'package:flutter_app/chat/entity/TextMessage.dart';
+import 'package:flutter_app/chat/ConversationType.dart';
 
 //import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -57,6 +60,7 @@ class ChatScreenState extends State<ChatScreen> {
   String peerAvatar;
   String id;
 
+  ChatModule chatModule;
   List<Message> listMessage = [];
   String groupChatId;
   SharedPreferences prefs;
@@ -77,12 +81,31 @@ class ChatScreenState extends State<ChatScreen> {
     focusNode.addListener(onFocusChange);
 
     groupChatId = '';
-
+    chatModule = new ChatModule();
+    chatModule.bindListener(msgStatusChangeCall, incomingNewMsgCall);
+    chatModule.chatType = 'Single';
     isLoading = false;
     isShowSticker = false;
     imageUrl = '';
 
     readLocal();
+  }
+
+  msgStatusChangeCall(Message message){
+    print('【聊天页面收到消息状态】');
+    print(message);
+  }
+  incomingNewMsgCall(Message message){
+    print('【聊天页面收到新消息】');
+    print(message);
+    ChatManager.readMsg(message);
+  }
+
+
+  @override
+  void dispose() {
+    chatModule.unbindListender();
+    super.dispose();
   }
 
   void onFocusChange() {
@@ -149,18 +172,17 @@ class ChatScreenState extends State<ChatScreen> {
     // type: 0 = text, 1 = image, 2 = sticker
     if (content.trim() != '') {
       textEditingController.clear();
+      //send Text
+       var message = chatModule.createSendTextMessage(content, peerId);
+       //send location
+       var data = {};
+            data['body'] = 'http:\/\/maps.google.com\/?q=30.54145496656533,104.05876168946345&version=1.0';
+            data['title'] = '位置分享';
+            data['longitude'] = '104.05876168946345';
+            data['latitude'] = '30.54145496656533';
+            data['subTitle'] = '中国四川省成都市武侯区吉泰路';
+      message =  chatModule.createSendLocationMessage(data, peerId);
 
-       var message = Message();
-      message.id =  DateTime.now().millisecondsSinceEpoch.toString();
-      message.timestamp =  DateTime.now().millisecondsSinceEpoch;
-      message.content =  content;
-     if(listMessage.length%2==0){
-       message.senderId =  peerId;
-     }else{
-       message.senderId =  peerId;//userId
-     }
-
-      message.type =  type;
 
       ChatManager.sendMessage(message);
 
@@ -180,11 +202,11 @@ class ChatScreenState extends State<ChatScreen> {
       // Right (my message)
       return Row(
         children: <Widget>[
-          message.type == 0
+          message.type == 'TextMessage'
               // Text
               ? Container(
                   child: Text(
-                    message.content,
+          ( message as TextMessage).text ,
                     style: TextStyle(color: GlobalConfig.themeColor()),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -196,7 +218,7 @@ class ChatScreenState extends State<ChatScreen> {
                       bottom: isLastMessageRight(index) ? 20.0 : 10.0,
                       right: 10.0),
                 )
-              : message.type == 1
+              : message.type == 'ImageMessage'
                   // Image
                   ? Container(
                       child: Material(
@@ -286,10 +308,10 @@ class ChatScreenState extends State<ChatScreen> {
                         clipBehavior: Clip.hardEdge,
                       )
                     : Container(width: 35.0),
-                message.type == 0
+                message.type == 'TextMessage'
                     ? Container(
                         child: Text(
-                          message.content,
+                          ( message as TextMessage).text,
                           style: TextStyle(color: Colors.white),
                         ),
                         padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -299,7 +321,7 @@ class ChatScreenState extends State<ChatScreen> {
                             borderRadius: BorderRadius.circular(8.0)),
                         margin: EdgeInsets.only(left: 10.0),
                       )
-                    : message.type == 1
+                    : message.type == 'ImageMessage'
                         ? Container(
                             child: Material(
                               child: CachedNetworkImage(

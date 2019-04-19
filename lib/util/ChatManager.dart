@@ -5,6 +5,7 @@ import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:xml2json/xml2json.dart';
+import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:dio/dio.dart';
 class ChatManager {
 
@@ -36,6 +37,11 @@ class ChatManager {
   static _getUserJidFromNode(String jidNode){
      return jidNode.substring(0,jidNode.lastIndexOf('/'));
   }
+
+  static _getUserId(String jidNode){
+    return jidNode.substring(0,jidNode.lastIndexOf('_'));
+  }
+
 
   static _getCurrentJid([bool source]){
     if(source){
@@ -78,9 +84,6 @@ class ChatManager {
 
   static _sendMessage(Message msg){
         cacheMsg.remove(msg);
-   // msg.senderId='james@james';
-    msg.id = msg.senderId+DateTime.now().millisecondsSinceEpoch.toString();
-        msg.content = '{"messageType":"TextMessage","messageTypeValue":1,"data":{"content":"'+msg.content+'"},"messageEncrypt":"false","peerInfo":{"userName":"username","mobile":"","nickName":"阿童木"}}';
         var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
             + '\n'+
             '<body>'+msg.content+'</body>'
@@ -92,6 +95,7 @@ class ChatManager {
         print(messageData);
         print(msg);
         socket.add(messageData);
+        ChatModule.insertOrUpdateSendMsg(msg);
   }
 
   static insertLocalMessages(Message message){
@@ -275,37 +279,43 @@ class ChatManager {
             loginStatus = WebSocket.closed;
           }
         }else if (xmlData['message']!=null){
-
           var message = xmlData['message'];
-          var received = message['received'];
-          if(received!=null){
-            if(received['xmlns']=='urn:xmpp:receipts'){
-              print('状态回执消息已到达【#聊天服务器#】');
-            }else{
-              print('发送消息已到达【聊天服务器】，消息id='+received['msgid']);
-            }
-
-          }
           var from = message['from'];
           var type = message['type'];
           var xNode = message['x'];
           var body = message['body'];
+          var received = message['received'];
+          if(received!=null){
+            if(received['xmlns']=='urn:xmpp:receipts'){
+              print('状态回执消息已到达【#聊天服务器#】');
+              ChatModule.updateMsgStatus(received['msgid'],type,'sent');
+            }else{
+             //  ChatModule.updateMsgStatus(received['msgid'],type,'sent');
+              print('????????????【聊天服务器】，消息id='+received['msgid']);
+            }
+
+          }
 
           if(type == 'error'){
             print(message['error']);
           }else if(type == 'chat'){
             if(xNode!=null&&xNode['delivered']!=null){
-              print('发送消息【已到】对端，消息id='+xNode['msgid']['\$t']);
+              var msgId = xNode['msgid']['\$t'];
+              ChatModule.updateMsgStatus(msgId,type,'delivered');
+              print('发送消息【已到】对端，消息id='+msgId);
             }
 
             if(xNode!=null&&xNode['read']!=null){
-              print('发送消息对端【已读】，消息id='+xNode['msgid']['\$t']);
+              var msgId = xNode['msgid']['\$t'];
+              ChatModule.updateMsgStatus(msgId,type,'read');
+              print('发送消息对端【已读】，消息id='+msgId);
             }
 
             if(body!=null){
               if(from != _getCurrentJid(true)){
-                print('收到新消息');
+                print('【【收到一条新消息】】');
                 _deliveryMsg(_getUserJidFromNode(from), message['id']);
+                ChatModule.insertOrUpdateIncomingMsg(_getUserId(from),message,type);
               }else{
 
               }

@@ -1,7 +1,10 @@
 class Message{
   String id;
   String senderId;
-  int type;
+  String type; //TextMessage,....
+  String chatType;//single ,group
+  String status;//sent ,delivered,read,fail
+  int messageTypeValue;
   String content;
   int timestamp;
 

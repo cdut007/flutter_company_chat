@@ -1,0 +1,4 @@
+enum ConversationType {
+  Single,
+  Group
+}
