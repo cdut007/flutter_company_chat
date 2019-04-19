@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
-import 'package:flutter_app/vcard/friend.dart';
+import 'package:flutter_app/entity/Friend.dart';
 
 class FriendDetailBody extends StatelessWidget {
   FriendDetailBody(this.friend);
@@ -16,7 +16,7 @@ class FriendDetailBody extends StatelessWidget {
         new Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: new Text(
-            friend.location,
+            friend.organizationWebsite==null?"":friend.organizationName,
             style: textTheme.subhead.copyWith(color: Colors.white),
           ),
         ),
@@ -48,7 +48,7 @@ class FriendDetailBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         new Text(
-          friend.name,
+          friend.username,
           style: textTheme.headline.copyWith(color: Colors.white),
         ),
         new Padding(

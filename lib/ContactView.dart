@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/BannerView.dart';
 import 'package:flutter_app/vcard/ContactDetailsPage.dart';
-import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/vcard/CreateEditVcardPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 import 'package:flutter_app/util/ApiManager.dart';
-import 'package:flutter_app/entity/VcardEntity.dart';
+import 'package:flutter_app/entity/Friend.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
-import 'package:flutter_app/vcard/friend.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'dart:async';
 import 'package:event_bus/event_bus.dart';
@@ -27,7 +25,7 @@ class ContactView extends StatefulWidget {
 }
 
 class _ContactViewState extends State {
-  List<VcardEntity> _friends = [];
+  List<Friend> _friends = [];
 
   LoadingType loadingType = LoadingType.Loading;
   EventBus eventBus = GlobalConfig.getEventBus();
@@ -38,7 +36,7 @@ class _ContactViewState extends State {
     super.initState();
     _loadFriends();
     print('*********【初始化名片列表订阅事件】*********');
-    loginSubscription = eventBus.on<VcardEntity>().listen((event) {
+    loginSubscription = eventBus.on<Friend>().listen((event) {
       print('*********收到名片列表订阅事件*********');
       print(event);
       _loadFriends();
@@ -58,9 +56,9 @@ class _ContactViewState extends State {
   }
 
   Future<void> _loadFriends() async {
-    ApiManager.getVcardList({}).then((datas) {
-      List<VcardEntity> vcardList = (datas as List) != null
-          ? (datas as List).map((i) => VcardEntity.fromJson(i)).toList()
+    ApiManager.getFriendList({}).then((datas) {
+      List<Friend> vcardList = (datas as List) != null
+          ? (datas as List).map((i) => Friend.fromJson(i)).toList()
           : null;
       var applyList = vcardList;
       setState(() {
@@ -79,10 +77,10 @@ class _ContactViewState extends State {
           loadingType = LoadingType.Error;
         }
       });
-      print('*********getVcardList callback error print*********');
+      print('*********getFriendList callback error print*********');
       var error = ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context, '错误码：${error.code}' + ' 错误原因：' + error.msg);
-      print('*********getVcardList callback error print end*********');
+      print('*********getFriendList callback error print end*********');
     });
   }
 
@@ -344,8 +342,8 @@ class _ContactViewState extends State {
             tag: 'contact_$index',
             child: CommonUI.getAvatarWidget(friend.avatar),
           ),
-          title: new Text(getUserVcardName(friend)),
-          subtitle: new Text(getUserVcardCompany(friend)),
+          title: new Text(getUserFriendName(friend)),
+          subtitle: new Text(friend.organizationName == null ?"":friend.organizationName),
         ),
         new Divider(
           height: 1,
@@ -354,18 +352,12 @@ class _ContactViewState extends State {
     );
   }
 
-  void _navigateToFriendDetails(VcardEntity friend, Object avatarTag) {
-    Friend people =  Friend(
-        avatar: 'http://res',
-        name: 'test',
-        email: 'ww@ww',
-        location: 'china');
-    people.id = friend.userId;
+  void _navigateToFriendDetails(Friend friendInfo, Object avatarTag) {
+
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-          return new ContactDetailsPage(
-              people,
+          return new ContactDetailsPage(friendInfo,
               avatarTag: avatarTag);
         },
       ),

@@ -3,7 +3,7 @@ import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/vcard/footer/friend_detail_footer.dart';
 import 'package:flutter_app/vcard/friend_detail_body.dart';
 import 'package:flutter_app/vcard/header/friend_detail_header.dart';
-import 'package:flutter_app/vcard/friend.dart';
+import 'package:flutter_app/entity/Friend.dart';
 import 'package:meta/meta.dart';
 
 class ContactDetailsPage extends StatefulWidget {

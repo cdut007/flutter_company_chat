@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalCo
 import 'package:flutter_app/vcard/footer/articles_showcase.dart';
 import 'package:flutter_app/vcard/footer/portfolio_showcase.dart';
 import 'package:flutter_app/vcard/footer/skills_showcase.dart';
-import 'package:flutter_app/vcard/friend.dart';
+import 'package:flutter_app/entity/Friend.dart';
 
 class FriendShowcase extends StatefulWidget {
   FriendShowcase(this.friend);

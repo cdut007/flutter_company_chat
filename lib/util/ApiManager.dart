@@ -221,6 +221,23 @@ class ApiManager {
   }
 
   ///
+  /// 获取用户好友信息列表
+  ///
+  static Future getFriendList(var data) async {
+    String user_profile_url = BASE_URL + "/package/findAllFriend";
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(user_profile_url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(parseResponseData(responseData));
+  }
+
+
+  ///
   /// 获取用户列表名片信息列表
   ///
   static Future getVcardList(var data) async {

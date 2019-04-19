@@ -229,8 +229,6 @@ class ChatManager {
     var im_server = 'ws://uc.aitelian.cn:5280/websocket/';
     if(openfireServer){
        im_server =  'ws://39.108.165.171:7070/ws/';
-//      userInfo.id='testchat';
-//      userInfo.passwd='123456';
      await  _createIMUser(userInfo.id,userInfo.passwd);
     }
 
@@ -370,7 +368,7 @@ class ChatManager {
     socket.add(openBindData);
   }
 
-  static bool openfireServer = true;
+  static bool openfireServer = false;
 
   static changeImServer(){
 
