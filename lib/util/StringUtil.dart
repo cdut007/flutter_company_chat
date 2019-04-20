@@ -28,7 +28,7 @@ getUserFriendName(Friend friend){
   if(vcardEntiy.hfCardDetails == null){
     return '';
   }
-  return vcardEntiy.hfCardDetails[0].name;
+  return vcardEntiy.hfCardDetails[0].name==null?"":vcardEntiy.hfCardDetails[0].name;
 }
 
 //getUserVcardMail(VcardEntity vcardEntiy){
@@ -42,20 +42,20 @@ getUserFriendName(Friend friend){
    if(vcardEntiy.hfCardDetails == null){
      return '';
    }
-  return vcardEntiy.hfCardDetails[0].phoneNumber;
+  return vcardEntiy.hfCardDetails[0].phoneNumber==null?'':vcardEntiy.hfCardDetails[0].phoneNumber;
 }
  getUserVcardCompany(VcardEntity vcardEntiy){
    if(vcardEntiy.hfCardDetails == null){
      return '';
    }
-  return vcardEntiy.hfCardDetails[0].companyName;
+  return vcardEntiy.hfCardDetails[0].companyName==null?'':vcardEntiy.hfCardDetails[0].companyName;
 }
 
 getUserVcardJobPosition(VcardEntity vcardEntiy){
   if(vcardEntiy.hfCardDetails == null){
     return '';
   }
-  return vcardEntiy.hfCardDetails[0].jobPosition;
+  return vcardEntiy.hfCardDetails[0].jobPosition==null?'':vcardEntiy.hfCardDetails[0].jobPosition;
 }
 
  getUserVcardAvatar(VcardEntity vcardEntiy){

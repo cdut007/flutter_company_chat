@@ -10,6 +10,7 @@ import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_app/util/ChatManager.dart';
+import 'package:flutter_app/util/TimeUtils.dart';
 import 'package:flutter_app/util/ContactManager.dart';
 import 'package:flutter_app/chat/ChatStore.dart';
 import 'package:flutter_app/chat/ConversationType.dart';
@@ -125,11 +126,11 @@ class _ConversationsPageState extends State{
 
 
   void _navigateToConversationDetails(Conversation conversation, Object avatarTag) {
-   
+
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-          return new ChatPage(key:Key('chat'),peerId:conversation.peerId,peerAvatar:conversation.peerAvatar);
+          return new ChatPage(key:Key('chat'),peerId:conversation.peerId,peerName:conversation.title,peerAvatar:conversation.peerAvatar);
         },
       ),
     );
@@ -147,7 +148,7 @@ class _ConversationsPageState extends State{
         ),
         title: new Text(conversation.title),
         subtitle: new Text(conversation.content),
-        trailing: new Text("9:00"),
+        trailing: new Text(readTimestamp(conversation.timestamp)),
       ),
       new Divider(height: 1,)
     ],);

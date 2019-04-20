@@ -15,7 +15,6 @@ import 'dart:async';
 import 'package:flutter_app/util/ContactManager.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
-
 import 'package:http/http.dart' as http;
 
 class ContactView extends StatefulWidget {

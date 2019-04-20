@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/entity/Conversation.dart';
 import 'package:path/path.dart';
+import 'package:flutter_app/chat/ChatModule.dart';
 import 'dart:convert';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:event_bus/event_bus.dart';
@@ -171,7 +172,7 @@ class ChatStore {
   setMessageToConversation(Message message){
     Conversation conversation = Conversation();
     conversation.peerId = message.conversationId;
-    conversation.senderId = message.senderId;
+    conversation.senderId = ChatModule.getPeerId(message.conversationId);
     conversation.content = message.content;
     conversation.message = message;
     //conversation.title
@@ -217,8 +218,9 @@ class ChatStore {
   }
 
   setMapToMessage(var mapData){
-    Message message = Message();
     var data =  mapData;
+    Message message = ChatModule.BuilderMessage(data[columnMessageType]);
+
     message.senderId = data[columnSenderId];
     message.id = data[columnMessageId];
     message.conversationId = data[columnConversationId];
@@ -271,7 +273,7 @@ class ChatStore {
   Future<Message> insertMessage(Message message) async {
     var data = setMessageToMap(message);
     db.insert(tableMessage, data);
-    Conversation conversation = await getConversation(message.senderId);
+    Conversation conversation = await getConversation(message.conversationId);
     if(conversation!=null){
        conversation.timestamp = message.timestamp;
        conversation.message = message;
@@ -290,6 +292,7 @@ class ChatStore {
     await openDbIfNeed('getMessages');
     List<Map> maps = await db.rawQuery('SELECT * FROM $tableMessage where $columnConversationId = "$peerId"');
     List<Message> messages = List();
+    print('查询数据库消息getMessages count：${maps.length}');
     if (maps.length > 0) {
       for(var data in maps){
         Message message =  setMapToMessage(data);

@@ -20,19 +20,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ChatPage extends StatelessWidget {
   final String peerId;
   final String peerAvatar;
+  final String peerName;
 
-  ChatPage({Key key, @required this.peerId, @required this.peerAvatar})
+  ChatPage({Key key, @required this.peerId, @required this.peerName, @required this.peerAvatar})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(
-          '聊天',
-          style: TextStyle(
-              color: GlobalConfig.themeColor(), fontWeight: FontWeight.bold),
-        ),
+        title: new Text(peerName, style: new TextStyle(color: Colors.white)),
+        iconTheme: new IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
       body: new ChatScreen(
@@ -64,8 +62,6 @@ class ChatScreenState extends State<ChatScreen> {
 
   ChatModule chatModule;
   List<Message> listMessage = [];
-  String groupChatId;
-  SharedPreferences prefs;
 
   File imageFile;
   bool isLoading;
@@ -82,13 +78,14 @@ class ChatScreenState extends State<ChatScreen> {
     super.initState();
     focusNode.addListener(onFocusChange);
 
-    groupChatId = '';
     chatModule = new ChatModule();
     chatModule.bindListener(msgStatusChangeCall, incomingNewMsgCall);
     chatModule.chatType = ConversationType.Single.toString();
     isLoading = false;
     isShowSticker = false;
     imageUrl = '';
+
+    id = ChatManager.currentUserId;
 
     readLocal();
   }
@@ -120,15 +117,11 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   readLocal() async {
-    prefs = await SharedPreferences.getInstance();
-    id = prefs.getString('id') ?? '';
-    if (id.hashCode <= peerId.hashCode) {
-      groupChatId = '$id-$peerId';
-    } else {
-      groupChatId = '$peerId-$id';
-    }
 
-    setState(() {});
+    List<Message> messages = await chatModule.getMessages(peerId);
+    setState(() {
+      listMessage.addAll(messages);
+    });
   }
 
   Future getImage() async {
@@ -200,6 +193,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Widget buildItem(int index, Message message) {
+
     if (message.senderId == id) {
       // Right (my message)
       return Row(
@@ -664,12 +658,7 @@ class ChatScreenState extends State<ChatScreen> {
 //    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor()))));
 
     return Flexible(
-      child: groupChatId == ''
-          ? Center(
-              child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor())))
-          : loadLocalMessageList(),
+      child: loadLocalMessageList(),
     );
   }
 }

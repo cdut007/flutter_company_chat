@@ -93,7 +93,7 @@ class ChatManager {
 
   static _sendMessage(Message msg){
         cacheMsg.remove(msg);
-        var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
+        var messageData ='<message to="'+ChatModule.getPeerId(msg.conversationId)+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
             + '\n'+
             '<body>'+json.encode(msg.jsonData)+'</body>'
             +'\n'+

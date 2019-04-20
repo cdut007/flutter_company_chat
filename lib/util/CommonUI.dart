@@ -104,7 +104,7 @@ class CommonUI {
 //        fit: BoxFit.cover,
 //      );
       return new CircleAvatar(
-          backgroundImage:new CachedNetworkImageProvider(GlobalConfig.getHttpFilePath(avatarUrl)),
+          backgroundImage:new CachedNetworkImageProvider(GlobalConfig.getHttpFilePath(avatarUrl+"?x-oss-process=image/resize,w_200")),
           radius: _size);
     }else{
       return new Image.asset(_defaultImgIcon,
