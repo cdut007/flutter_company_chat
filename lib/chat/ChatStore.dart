@@ -3,6 +3,8 @@ import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/entity/Conversation.dart';
 import 'package:path/path.dart';
 import 'dart:convert';
+import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:event_bus/event_bus.dart';
 import 'dart:async';
 class ChatStore {
   Database db;
@@ -26,7 +28,6 @@ class ChatStore {
   final String columnErrorInfo = 'error_info';
   final String columnJsonData = 'json_data';
   final String columnContent = 'content';
-
   var _currentUserId;
    checkDBReady(String currentUserId
       ) async{
@@ -109,6 +110,8 @@ class ChatStore {
             ''');
       print('数据库表创建完毕');
       initedOpenning=false;
+      EventBus eventBus = GlobalConfig.getEventBus();
+      eventBus.fire(ChatStore());
     });
   }
 

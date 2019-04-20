@@ -39,7 +39,7 @@ class ChatModule {
    Future<List<Conversation>> getConversations({String conversationType}) async{
     List<Conversation>  conversations = await ChatManager.getChatStore().getAllConversations(conversationType);
     //从本地用户查询用户信息赋值
-    conversations.sort((left,right)=>left.timestamp - right.timestamp);
+    conversations.sort((left,right)=>right.timestamp - left.timestamp);
     return conversations;
   }
 

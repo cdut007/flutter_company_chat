@@ -8,6 +8,8 @@ import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:flutter_app/widget/HeaderListView.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
+import 'package:event_bus/event_bus.dart';
+import 'package:flutter_app/chat/ChatStore.dart';
 class ConversationsPage extends StatefulWidget{
   @override
   _ConversationsPageState createState() => new _ConversationsPageState();
@@ -29,14 +31,23 @@ class _ConversationsPageState extends State{
 
   Timer timer;
 
+  EventBus eventBus = GlobalConfig.getEventBus();
+  StreamSubscription chatDbSubscription;
+
   @override
   void initState() {
     super.initState();
     chatModule.bindListener(msgStatusChangeCall, incomingNewMsgCall);
-    timer = new Timer(const Duration(milliseconds: 1000), () {
+    //监听数据库初始化完毕加载
+    timer = new Timer(const Duration(milliseconds: 7000), () {
       _loadConversations();
     });
 
+    chatDbSubscription = eventBus.on<ChatStore>().listen((event) {
+      print('*********收到数据库初始化完毕订阅事件*********');
+      print(event);
+      _loadConversations();
+    });
 
   }
 
@@ -50,7 +61,9 @@ class _ConversationsPageState extends State{
   }
   @override
   void dispose() {
-    //chatModule.unbindListender();
+    chatDbSubscription.cancel();
+    print('*********【取消数据库列表订阅事件】*********');
+    chatModule.unbindListender();
     timer.cancel();
     super.dispose();
   }
