@@ -7,6 +7,7 @@ import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/util/ChatManager.dart';
+import 'package:flutter_app/chat/ConversationType.dart';
 import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:flutter_app/chat/entity/TextMessage.dart';
 import 'package:flutter_app/chat/ConversationType.dart';
@@ -83,7 +84,7 @@ class ChatScreenState extends State<ChatScreen> {
     groupChatId = '';
     chatModule = new ChatModule();
     chatModule.bindListener(msgStatusChangeCall, incomingNewMsgCall);
-    chatModule.chatType = 'Single';
+    chatModule.chatType = ConversationType.Single.toString();
     isLoading = false;
     isShowSticker = false;
     imageUrl = '';

@@ -7,17 +7,26 @@ import 'package:flutter_app/entity/Message.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_app/chat/ChatStore.dart';
 class ChatManager {
 
   static WebSocket socket;
   static String openId;
   static int loginStatus;
   static String currentUserId;
+  static ChatStore _chatStore;
+
+
 
   static init(){
-
+    _chatStore = ChatStore();
 
   }
+
+  static ChatStore getChatStore(){
+
+    return _chatStore;
+}
 
   static List<Message> cacheMsg = new List();
   static List<Message> cacheReadMsg = new List();
@@ -86,7 +95,7 @@ class ChatManager {
         cacheMsg.remove(msg);
         var messageData ='<message to="'+msg.senderId+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
             + '\n'+
-            '<body>'+msg.content+'</body>'
+            '<body>'+json.encode(msg.jsonData)+'</body>'
             +'\n'+
             '<x type="4" xmlns="jabber:x:data"/>'
             +'\n'+
@@ -227,6 +236,7 @@ class ChatManager {
 
     UserInfo userInfo = await ApiManager.getUserInfo();
     currentUserId = userInfo.id;
+    _chatStore.checkDBReady(currentUserId);
     loginStatus  = WebSocket.connecting;
     //ws://uc.aitelian.cn:5280/websocket/
 //ws://39.108.165.171:7070/ws/ headers: {'Sec-WebSocket-Protocol': 'xmpp'}
@@ -277,6 +287,11 @@ class ChatManager {
           var failure = xmlData['failure'];
           if(failure['not-authorized']!=null){
             loginStatus = WebSocket.closed;
+          }
+        }else if (xmlData['presence']!=null){
+          var presence = xmlData['presence'];
+          if(presence['kvgroup']!=null){
+
           }
         }else if (xmlData['message']!=null){
           var message = xmlData['message'];
@@ -355,8 +370,15 @@ class ChatManager {
   //出席
   static presence(){
     var presenceData ='<presence id="'+openId+'"><status></status><priority>0</priority></presence>';
-    print("客户端出席："+presenceData);
+    print("客户端个人呈现："+presenceData);
     socket.add(presenceData);
+
+    var getGroups ='<presence to="jid_autojoinmuc@conference.ul/'+currentUserId+'_call" xmlns="jabber:client">'+
+        '<x xmlns="http://jabber.org/protocol/muc"><history maxchars="0"/></x><kvgroup kvgname="groupmsg_timestamp_maps">'+
+            '{"timestamps":null,"timestamps_count":1}</kvgroup></presence>';
+    print("客户端出席："+getGroups);
+    socket.add(getGroups);
+
   }
   //获取session
   static aquireSession(){

@@ -31,7 +31,7 @@ class _ConversationsPageState extends State{
     var conersations = List<Conversation>();
     for(var index = 0; index < 10; index++) {
       Conversation value = Conversation();
-      value.name = 'ssss$index';
+      value.title = 'ssss$index';
       value.content='sssss222';
       conersations.add(value);
     }
@@ -64,7 +64,7 @@ class _ConversationsPageState extends State{
           tag: index,
           child: CommonUI.getAvatarWidget('https://pic3.zhimg.com/50/2b8be8010409012e7cdd764e1befc4d1_s.jpg',size: 24),//conversation.peerAvatar
         ),
-        title: new Text(conversation.name),
+        title: new Text(conversation.title),
         subtitle: new Text(conversation.content),
         trailing: new Text("9:00"),
       ),
