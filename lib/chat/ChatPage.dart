@@ -10,6 +10,7 @@ import 'package:flutter_app/util/ChatManager.dart';
 import 'package:flutter_app/chat/ConversationType.dart';
 import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:flutter_app/chat/entity/TextMessage.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/chat/ConversationType.dart';
 
 //import 'package:image_picker/image_picker.dart';
@@ -176,13 +177,13 @@ class ChatScreenState extends State<ChatScreen> {
       //send Text
        var message = chatModule.createSendTextMessage(content, peerId);
        //send location
-       var data = {};
-            data['body'] = 'http:\/\/maps.google.com\/?q=30.54145496656533,104.05876168946345&version=1.0';
-            data['title'] = '位置分享';
-            data['longitude'] = '104.05876168946345';
-            data['latitude'] = '30.54145496656533';
-            data['subTitle'] = '中国四川省成都市武侯区吉泰路';
-      message =  chatModule.createSendLocationMessage(data, peerId);
+//       var data = {};
+//            data['body'] = 'http:\/\/maps.google.com\/?q=30.54145496656533,104.05876168946345&version=1.0';
+//            data['title'] = '位置分享';
+//            data['longitude'] = '104.05876168946345';
+//            data['latitude'] = '30.54145496656533';
+//            data['subTitle'] = '中国四川省成都市武侯区吉泰路';
+//      message =  chatModule.createSendLocationMessage(data, peerId);
 
 
       ChatManager.sendMessage(message);
@@ -287,22 +288,7 @@ class ChatScreenState extends State<ChatScreen> {
               children: <Widget>[
                 isLastMessageLeft(index)
                     ? Material(
-                        child: CachedNetworkImage(
-                          placeholder: Container(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.0,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  GlobalConfig.themeColor()),
-                            ),
-                            width: 35.0,
-                            height: 35.0,
-                            padding: EdgeInsets.all(10.0),
-                          ),
-                          imageUrl: peerAvatar,
-                          width: 35.0,
-                          height: 35.0,
-                          fit: BoxFit.cover,
-                        ),
+                        child: CommonUI.getAvatarWidget(peerAvatar,size: 35),
                         borderRadius: BorderRadius.all(
                           Radius.circular(18.0),
                         ),

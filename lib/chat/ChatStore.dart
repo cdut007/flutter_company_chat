@@ -20,7 +20,7 @@ class ChatStore {
   final String columnServerDate = 'server_date';
   final String columnMessageCount = 'message_count';
   final String columnUnreadMessageCount = 'unread_message_count';
-  final String columnType = 'type';
+  final String columnMessageType = 'type';
   final String columnConversationType = 'conversation_type';
   final String columnStatus = 'status';
   final String columnErrorInfo = 'error_info';
@@ -34,7 +34,7 @@ class ChatStore {
       if(db!=null && db.isOpen ){
          print('聊天本地数据库已打开准备就绪');
       }else{
-        print('正在打开本地数据库...');
+        print('正在打开本地数据库...'+_currentUserId);
         open(currentUserId);
       }
   }
@@ -50,17 +50,27 @@ class ChatStore {
       if(isDbClose() && _currentUserId!=null ){
         open(_currentUserId);
       }else{
-        print('数据库尚未准备好 ，调用函数:'+methodName);
+        if( _currentUserId!=null){
+          print('数据库ready调用函数:'+methodName);
+        }else{
+          print('@@@数据库尚未准备好 ，调用函数:'+methodName);
+        }
+
       }
   }
 
+  bool initedOpenning=false;
   Future open(String userId) async {
-
+    if(initedOpenning){
+       print('数据库正在打开');
+       return;
+    }
+    initedOpenning = true;
     // Get a location using getDatabasesPath
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, userId + '_flutter.db');
-
-    db = await openDatabase(path, version: 1,
+    print('数据库存储路径：'+path);
+    db = await openDatabase(path, version: 2,
         onCreate: (Database db, int version) async {
       await db.execute('''
             create table $tableConversation ( 
@@ -78,7 +88,7 @@ class ChatStore {
               $columnMute integer default 0, 
               $columnSetTop integer default 0, 
               $columnSetTopTime TimeStamp,
-              $columnDate TimeStamp,
+              $columnDate TimeStamp not null default (datetime('now', 'localtime')),
               $columnErrorInfo text)
             ''');
 
@@ -89,7 +99,7 @@ class ChatStore {
               $columnConversationId text,
               $columnSenderId text,
               $columnContent text,
-              $columnType text,
+              $columnMessageType text,
               $columnConversationType text,
               $columnStatus text, 
               $columnJsonData text, 
@@ -97,7 +107,8 @@ class ChatStore {
               $columnServerDate TimeStamp,
               $columnErrorInfo text)
             ''');
-
+      print('数据库表创建完毕');
+      initedOpenning=false;
     });
   }
 
@@ -123,14 +134,15 @@ class ChatStore {
     await openDbIfNeed('getAllConversations');
     List<Map> maps ;
     if(conversationType == null){
-      maps = await db.query('SELECT * FROM $tableConversation');
+      maps = await db.rawQuery('SELECT * FROM $tableConversation');
     }else{
-      maps = await db.query('SELECT * FROM $tableConversation where $columnConversationType = $conversationType');
+      maps = await db.rawQuery('SELECT * FROM $tableConversation where $columnConversationType = "$conversationType"');
     }
     List<Conversation> conversations = List();
+    print('获取数据库会话总数：${maps.length}');
     if (maps.length > 0) {
      for(var data in maps){
-       Conversation conversation =  setMapToConversation(data);
+       Conversation conversation =  await setMapToConversation(data);
        conversations.add(conversation);
      }
       return conversations;
@@ -140,9 +152,9 @@ class ChatStore {
 
   Future<Conversation> getConversation(String peerId) async {
     await openDbIfNeed('getConversation');
-    List<Map> maps = await db.query('SELECT * FROM $tableConversation where $columnConversationId = $peerId');
+    List<Map> maps = await db.rawQuery('SELECT * FROM $tableConversation where $columnConversationId = "$peerId"');
     if (maps.length > 0) {
-      Conversation conversation =  setMapToConversation(maps.first);
+      Conversation conversation = await setMapToConversation(maps.first);
       return conversation;
     }
     return null;
@@ -158,19 +170,22 @@ class ChatStore {
     conversation.peerId = message.senderId;
     conversation.content = message.content;
     conversation.message = message;
+    //conversation.title
     conversation.type = message.chatType;
+    conversation.timestamp = message.timestamp;
     return conversation;
   }
 
-  setMapToConversation(var mapData) async{
+  Future<Conversation>setMapToConversation(var mapData) async{
     Conversation conversation = Conversation();
     var data =  mapData;
     conversation.peerId = data[columnConversationId];
-    conversation.title = data[columnTitle];
+    conversation.title = data[columnTitle] == null?conversation.peerId:data[columnTitle];
     conversation.senderId = data[columnSenderId];
-    conversation.content = data[columnContent];
+    conversation.content = data[columnContent] == null?'':data[columnContent];
     conversation.status = data[columnStatus];
     conversation.type = data[columnConversationType];
+    conversation.timestamp = data[columnDate];
     if(data[columnJsonData]!=null){
       conversation.jsonData = json.decode(data[columnJsonData]).cast<String, dynamic>();
     }
@@ -180,12 +195,13 @@ class ChatStore {
   }
 
   setConversationToMap(Conversation conversation){
-    var data = {};
+    Map<String, dynamic> data = {};
     data[columnConversationId]=conversation.peerId;
     data[columnTitle] = conversation.title;
     data[columnContent] = conversation.content;
     data[columnSenderId] = conversation.senderId;
     data[columnStatus] = conversation.status;
+    data[columnDate] = conversation.timestamp;
     data[columnConversationType] = conversation.type;
     if(conversation.jsonData!=null){
       data[columnJsonData] = json.encode(conversation.jsonData);
@@ -204,7 +220,8 @@ class ChatStore {
     message.conversationId = data[columnConversationId];
     message.content = data[columnContent];
     message.status = data[columnStatus];
-    message.type = data[columnType];
+    message.type = data[columnMessageType];
+    message.timestamp = data[columnDate];
     if(data[columnJsonData]!=null){
       message.jsonData = json.decode(data[columnJsonData]).cast<String, dynamic>();
     }
@@ -212,12 +229,13 @@ class ChatStore {
   }
 
   setMessageToMap(Message message){
-    var data = {};
+    Map<String, dynamic> data = {};
     data[columnSenderId]=message.senderId;
     data[columnMessageId] = message.id;
     data[columnConversationId] = message.conversationId;
     data[columnStatus] = message.status;
-    data[columnType] = message.type;
+    data[columnMessageType] = message.type;
+    data[columnDate] = message.timestamp;
     if(message.jsonData!=null){
       data[columnJsonData] = json.encode(message.jsonData);
     }
@@ -248,13 +266,16 @@ class ChatStore {
 
   Future<Message> insertMessage(Message message) async {
     var data = setMessageToMap(message);
-    db.insert(tableConversation, data);
+    db.insert(tableMessage, data);
     Conversation conversation = await getConversation(message.senderId);
     if(conversation!=null){
+       conversation.timestamp = message.timestamp;
        conversation.message = message;
+       conversation.content = message.content;
        updateConversation(conversation);
     }else{
        conversation = setMessageToConversation(message);
+
        insertConversation(conversation);
     }
 
@@ -263,7 +284,7 @@ class ChatStore {
 
   Future<List<Message>> getMessages(String peerId,String msgId,int count,bool prevOrNext) async {
     await openDbIfNeed('getMessages');
-    List<Map> maps = await db.query('SELECT * FROM $tableMessage where $columnConversationId = $peerId');
+    List<Map> maps = await db.rawQuery('SELECT * FROM $tableMessage where $columnConversationId = "$peerId"');
     List<Message> messages = List();
     if (maps.length > 0) {
       for(var data in maps){
@@ -278,7 +299,8 @@ class ChatStore {
 
   Future<Message> getMessage(String msgId) async {
     await openDbIfNeed('getMessage');
-    List<Map> maps = await db.query('SELECT * FROM $tableMessage where $columnMessageId = $msgId');
+    List<Map> maps = await db.rawQuery('SELECT * FROM $tableMessage where $columnMessageId = "$msgId"');
+    print('查询数据库消息是否存在：${maps.length},消息id=${msgId}');
     if (maps.length > 0) {
       Message message =  setMapToMessage(maps.first);
       return message;

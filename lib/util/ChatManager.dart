@@ -224,6 +224,7 @@ class ChatManager {
   }
 
   static login()  async{
+    print('login im server');
     if(socket!=null){
       try{
         socket.close(-1001,'可能由于网络问题，客户端主动关闭');

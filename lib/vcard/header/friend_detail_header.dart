@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalCo
 import 'package:flutter_app/vcard/header/diagonally_cut_colored_image.dart';
 import 'package:flutter_app/entity/Friend.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/chat/ChatPage.dart';
 import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';
 
@@ -33,10 +34,7 @@ class FriendDetailHeader extends StatelessWidget {
   Widget _buildAvatar() {
     return new Hero(
       tag: avatarTag,
-      child: new CircleAvatar(
-        backgroundImage: new NetworkImage(friend.avatar),
-        radius: 50.0,
-      ),
+      child: CommonUI.getAvatarWidget(friend.avatar,size: 50),
     );
   }
 

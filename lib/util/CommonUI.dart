@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/widget/LoadingDialog.dart';
@@ -86,8 +87,24 @@ class CommonUI {
     }
 
     if(avatarUrl!=null){
+//     Widget imageCache = CachedNetworkImage(
+//        placeholder: Container(
+//          child: CircularProgressIndicator(
+//            strokeWidth: 1.0,
+//            valueColor: AlwaysStoppedAnimation<Color>(
+//                GlobalConfig.themeColor()),
+//          ),
+//          width: _size*2,
+//          height: _size*2,
+//          padding: EdgeInsets.all(10.0),
+//        ),
+//        imageUrl: GlobalConfig.getHttpFilePath(avatarUrl),
+//        width: _size*2,
+//        height: _size*2,
+//        fit: BoxFit.cover,
+//      );
       return new CircleAvatar(
-          backgroundImage: new NetworkImage(GlobalConfig.getHttpFilePath(avatarUrl)),
+          backgroundImage:new CachedNetworkImageProvider(GlobalConfig.getHttpFilePath(avatarUrl)),
           radius: _size);
     }else{
       return new Image.asset(_defaultImgIcon,

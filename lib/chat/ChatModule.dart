@@ -37,17 +37,21 @@ class ChatModule {
 
 
    Future<List<Conversation>> getConversations({String conversationType}) async{
-    return ChatManager.getChatStore().getAllConversations(conversationType);
+    List<Conversation>  conversations = await ChatManager.getChatStore().getAllConversations(conversationType);
+    //从本地用户查询用户信息赋值
+    conversations.sort((left,right)=>left.timestamp - right.timestamp);
+    return conversations;
   }
 
 
   var _bindId;
 
    bindListener(var msgStatusChangeCall,var incomingNewMsgCall){
-     _bindId = toString();
+     _bindId = DateTime.now().millisecondsSinceEpoch.toString();
 
      var bindItem = {'msgStatusCall':msgStatusChangeCall,'incoming':incomingNewMsgCall};
      bindItem['id']=_bindId;
+     print('binding id='+_bindId);
      _bindMsgCallback.add(bindItem);
    }
 
@@ -83,14 +87,13 @@ class ChatModule {
       }
 
     msg.chatType = chatType;
-
+    msg.senderId = sendTo;
     if(msg.chatType != ConversationType.Group.toString()){
-      msg.conversationId = msg.senderId+'_'+ msg.chatType;
+      msg.conversationId = msg.senderId +'_'+ msg.chatType;
     }else{
       msg.conversationId = msg.senderId;
     }
 
-    msg.senderId = sendTo;
     msg.id = msg.senderId+DateTime.now().millisecondsSinceEpoch.toString();
     msg.timestamp =  DateTime.now().millisecondsSinceEpoch;
     msgContent['messageType'] = msg.type;
@@ -112,7 +115,7 @@ class ChatModule {
   }
 
   static void updateMsgStatus(String msgId,String chatType, String status) async{
-      print('消息状态::当前监听个数：${_bindMsgCallback.length}');
+      print('消息状态::当前监听通知个数：${_bindMsgCallback.length}');
       Message message = await ChatManager.getChatStore().getMessage(msgId);
       if(message == null){
         print('该消息本地没有找到，可能已被删除，或者是因为来了新消息，还没插入数据库，对方回执状态本地没有来得及更新');
@@ -141,7 +144,14 @@ class ChatModule {
      message.id =  body['id'];
      message.senderId = from;
     var jsonData = body['body']['\$t'];
-     message.jsonData = json.decode(jsonData).cast<String, dynamic>();
+     try{
+       message.jsonData = json.decode(jsonData).cast<String, dynamic>();
+     }catch (e){
+       print(e);
+       message.content='未知消息';
+       message.jsonData={};
+       message.type='TextMessage';
+     }
     if(type =='chat'){
       message.chatType = ConversationType.Single.toString();
       message.conversationId = from+'_'+ConversationType.Single.toString();
@@ -149,6 +159,7 @@ class ChatModule {
       message.conversationId = from;
       message.chatType = ConversationType.Group.toString();
     }
+     message.timestamp =  DateTime.now().millisecondsSinceEpoch;
      message = parseIncomingMsgInfo(message);
      message =  await ChatManager.getChatStore().insertOrUpdateMessage(message);
     for(var bindItem in _bindMsgCallback){

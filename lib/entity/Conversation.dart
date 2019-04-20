@@ -10,6 +10,9 @@ class Conversation extends Object {
   Message message;
   var content;
   var jsonData;
+  int timestamp;
+  var isTop;
+
 
   @override
   String toString() {
