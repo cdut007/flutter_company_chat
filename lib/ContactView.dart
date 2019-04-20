@@ -12,6 +12,7 @@ import 'package:flutter_app/entity/Friend.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:flutter_app/widget/VcardBannerView.dart';
 import 'dart:async';
+import 'package:flutter_app/util/ContactManager.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_app/vcard/ApplyVcardListPage.dart';
 
@@ -56,10 +57,8 @@ class _ContactViewState extends State {
   }
 
   Future<void> _loadFriends() async {
-    ApiManager.getFriendList({}).then((datas) {
-      List<Friend> vcardList = (datas as List) != null
-          ? (datas as List).map((i) => Friend.fromJson(i)).toList()
-          : null;
+    ContactManager.getFriendList({},localData: false).then((datas) {
+      List<Friend> vcardList = datas;
       var applyList = vcardList;
       setState(() {
         _friends = applyList;
@@ -78,6 +77,7 @@ class _ContactViewState extends State {
         }
       });
       print('*********getFriendList callback error print*********');
+      print(errorData);
       var error = ApiManager.parseErrorInfo(errorData);
       showErrorInfo(context, '错误码：${error.code}' + ' 错误原因：' + error.msg);
       print('*********getFriendList callback error print end*********');

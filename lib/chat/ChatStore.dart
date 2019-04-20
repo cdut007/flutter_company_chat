@@ -170,7 +170,8 @@ class ChatStore {
 
   setMessageToConversation(Message message){
     Conversation conversation = Conversation();
-    conversation.peerId = message.senderId;
+    conversation.peerId = message.conversationId;
+    conversation.senderId = message.senderId;
     conversation.content = message.content;
     conversation.message = message;
     //conversation.title

@@ -60,6 +60,23 @@ class ApiManager {
     return data;
   }
 
+
+  ///
+  /// 查询用户url
+  ///
+  static Future searchPeoplesInfo(var data) async {
+    String url = BASE_URL + "/user/findById";
+    var requestData = await putPublicParams(data);
+    Response response =
+    await reuqest(url, GlobalConfig.GET, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(parseResponseData(responseData));
+  }
+
   ///
   /// 忘记密码url
   ///

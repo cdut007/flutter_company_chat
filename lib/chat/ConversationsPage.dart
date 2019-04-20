@@ -9,7 +9,10 @@ import 'package:flutter_app/widget/HeaderListView.dart';
 import 'package:flutter_app/entity/Message.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter_app/util/ChatManager.dart';
+import 'package:flutter_app/util/ContactManager.dart';
 import 'package:flutter_app/chat/ChatStore.dart';
+import 'package:flutter_app/chat/ConversationType.dart';
 class ConversationsPage extends StatefulWidget{
   @override
   _ConversationsPageState createState() => new _ConversationsPageState();
@@ -59,6 +62,23 @@ class _ConversationsPageState extends State{
     print('【聊天列表页面收到新消息】');
     _loadConversations();
   }
+
+
+  void _bindUserInfo(Conversation conversation
+      ) {
+
+    ContactManager.searchPeopleInfo(conversation.senderId).then((friend){
+      conversation.title = friend.username;
+      conversation.peerAvatar = friend.avatar;
+      setState(() {
+
+      });
+    },onError: (error){
+      print('search people info with error');
+      print(error);
+    });
+  }
+
   @override
   void dispose() {
     chatDbSubscription.cancel();
@@ -72,6 +92,15 @@ class _ConversationsPageState extends State{
    _loadConversations()  {
    chatModule.getConversations().then((conversations){
    print('convesation  load length：${_conversations.length}');
+
+   for(Conversation conversation in conversations){
+     if(conversation.type != ConversationType.Group){
+       _bindUserInfo(conversation);
+     }
+
+   }
+
+
    setState(() {
    _conversations = conversations;
    if (_conversations.length > 0) {
@@ -96,6 +125,7 @@ class _ConversationsPageState extends State{
 
 
   void _navigateToConversationDetails(Conversation conversation, Object avatarTag) {
+   
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
@@ -177,15 +207,30 @@ class _ConversationsPageState extends State{
       );
     }
 
-    content = new ListView.builder(
-      itemCount: _conversations.length,
-      itemBuilder: _buildConversationListTile,
+//    content = new ListView.builder(
+//      itemCount: _conversations.length,
+//      itemBuilder: _buildConversationListTile,
+//    );
+
+    content = new HeaderListView(
+      _conversations,
+      headerList: [1],
+      itemWidgetCreator: _buildConversationListTile,
+      headerCreator: (BuildContext context, int position) {
+        if (position == 0) {
+          return new Container();
+        }
+      },
+      usePullToRefresh: false,
     );
 
     return content;
   }
 
+
+
   Container _buildListView(){
     return Container(child: getConversationList(),);
   }
+
 }
