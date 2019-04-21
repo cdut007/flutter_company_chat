@@ -43,7 +43,7 @@ class ChatModule {
       msg = parseMsgInfo(msg);
     }
     //从本地用户查询用户信息赋值
-    messages.sort((left, right) => right.timestamp - left.timestamp);
+    messages.sort((left, right) => left.timestamp - right.timestamp);
     return messages;
   }
 

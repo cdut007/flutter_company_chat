@@ -43,7 +43,7 @@ class _ConversationsPageState extends State{
     super.initState();
     chatModule.bindListener(msgStatusChangeCall, incomingNewMsgCall);
     //监听数据库初始化完毕加载
-    timer = new Timer(const Duration(milliseconds: 7000), () {
+    timer = new Timer(const Duration(milliseconds: 1000), () {
       _loadConversations();
     });
 

@@ -12,6 +12,9 @@ import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:flutter_app/chat/entity/TextMessage.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/chat/ConversationType.dart';
+import 'package:flutter_app/widget/LoadingWidget.dart';
+
+import 'package:flutter_app/widget/HeaderListView.dart';
 
 //import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -45,6 +48,7 @@ class ChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
 
+
   ChatScreen({Key key, @required this.peerId, @required this.peerAvatar})
       : super(key: key);
 
@@ -60,6 +64,7 @@ class ChatScreenState extends State<ChatScreen> {
   String peerAvatar;
   String id;
 
+  LoadingType loadingType = LoadingType.Loading;
   ChatModule chatModule;
   List<Message> listMessage = [];
 
@@ -90,6 +95,8 @@ class ChatScreenState extends State<ChatScreen> {
     readLocal();
   }
 
+
+
   msgStatusChangeCall(Message message){
     print('【聊天页面收到消息状态】');
     print(message);
@@ -119,8 +126,36 @@ class ChatScreenState extends State<ChatScreen> {
   readLocal() async {
 
     List<Message> messages = await chatModule.getMessages(peerId);
+
     setState(() {
       listMessage.addAll(messages);
+      if (listMessage.length > 0) {
+        loadingType = LoadingType.End;
+      } else {
+        loadingType = LoadingType.Empty;
+      }
+    });
+  }
+
+  Future<Null> pullToRefresh() async {
+    _loadMoreMessages();
+    return null;
+  }
+
+  Future<void> _loadMoreMessages() async {
+    String msgId = null;
+    if(listMessage.length>0){
+      msgId = listMessage[0].id;
+    }
+    List<Message> messages = await chatModule.getMessages(peerId,msgId: msgId);
+
+    setState(() {
+      listMessage.insertAll(0,messages);
+      if (listMessage.length > 0) {
+        loadingType = LoadingType.End;
+      } else {
+        loadingType = LoadingType.Empty;
+      }
     });
   }
 
@@ -192,8 +227,8 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  Widget buildItem(int index, Message message) {
-
+  Widget buildItem(BuildContext context, int index  ) {
+    Message message = listMessage[index];
     if (message.senderId == id) {
       // Right (my message)
       return Row(
@@ -636,22 +671,63 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Widget loadLocalMessageList() {
-    if (listMessage.length == 0) {
+
+    if (loadingType == LoadingType.Loading) {
       return Center(
-          child: CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(GlobalConfig.themeColor())));
-    } else {
-      return ListView.builder(
-        padding: EdgeInsets.all(10.0),
-        itemBuilder: (context, index) =>
-            buildItem(index, listMessage[index]),
-        itemCount:listMessage.length,
-        reverse: true,
-        controller: listScrollController,
+        child: Column(
+          children: <Widget>[
+            new LoadingWidget(
+              loadingType: LoadingType.Loading,
+            )
+          ],
+        ),
       );
     }
+
+    if (loadingType == LoadingType.Empty) {
+      return Center(
+        child: Column(
+          children: <Widget>[
+            new LoadingWidget(
+              loadingType: LoadingType.Empty,
+              clickCallback: () {
+                print('click empty ui');
+//                setState(() {
+//                  loadingType = LoadingType.Loading;
+//                });
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+
+//    return ListView.builder(
+//      padding: EdgeInsets.all(10.0),
+//      itemBuilder: (context, index) =>
+//          buildItem(index, listMessage[index]),
+//      itemCount:listMessage.length,
+//      reverse: true,
+//      controller: listScrollController,
+//    );
+    Widget content = new HeaderListView(
+      listMessage,
+      headerList: [1],
+      itemWidgetCreator: buildItem,
+      headerCreator: (BuildContext context, int position) {
+        if (position == 0) {
+          return new Container();
+        }
+      },
+      usePullToRefresh: true,
+      onHeaderRefresh: pullToRefresh,
+    );
+
+   return content;
   }
+
+
 
   Widget buildListMessage() {
 //    return Flexible(child: Center(

@@ -289,8 +289,16 @@ class ChatStore {
   }
 
   Future<List<Message>> getMessages(String peerId,String msgId,int count,bool prevOrNext) async {
-    await openDbIfNeed('getMessages');
-    List<Map> maps = await db.rawQuery('SELECT * FROM $tableMessage where $columnConversationId = "$peerId"');
+    await openDbIfNeed('getMessages ,参数peerId: $peerId,msgId: $msgId');
+    String msgIdCondition = '';
+    if(msgId!=null){
+      String beside_ = ">";
+      if(prevOrNext){
+         beside_="<";
+      }
+       msgIdCondition = ' and $columnId '+beside_+' (SELECT $columnId from $tableMessage where $columnMessageId = "$msgId") ';
+    }
+    List<Map> maps = await db.rawQuery('SELECT * FROM $tableMessage where $columnConversationId = "$peerId" '+msgIdCondition+'order by $columnDate desc limit $count');
     List<Message> messages = List();
     print('查询数据库消息getMessages count：${maps.length}');
     if (maps.length > 0) {
