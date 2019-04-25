@@ -77,7 +77,7 @@ class ChatScreenState extends State<ChatScreen> {
       new TextEditingController();
   final ScrollController listScrollController = new ScrollController();
   final FocusNode focusNode = new FocusNode();
-
+  double chatListViewOffset=0.0;
   @override
   void initState() {
     super.initState();
@@ -217,7 +217,7 @@ class ChatScreenState extends State<ChatScreen> {
       ChatManager.sendMessage(message);
 
        setState(() {
-         listMessage.insert(0,message);
+         listMessage.add(message);
        });
 
       listScrollController.animateTo(0.0,
@@ -722,7 +722,13 @@ class ChatScreenState extends State<ChatScreen> {
       },
       usePullToRefresh: true,
       onHeaderRefresh: pullToRefresh,
+      scrollOffset: chatListViewOffset,
+      setScrollOffset: (offset){
+        print('offset changed---->$offset');
+        chatListViewOffset = offset;
+      },
     );
+
 
    return content;
   }

@@ -15,27 +15,47 @@ class HeaderListView extends StatefulWidget {
   bool usePullToRefresh=false;
   var  onFooterRefresh;
   var  onHeaderRefresh;
-
+  double  scrollOffset =0.0;
+  var setScrollOffset;
   HeaderListView(List this.listData,
       {Key key,
         List this.headerList,
         ItemWidgetBuild this.itemWidgetCreator,
         HeaderWidgetBuild this.headerCreator, bool this.usePullToRefresh, var  this.onFooterRefresh,
-       var  this.onHeaderRefresh,})
+       var  this.onHeaderRefresh,double this.scrollOffset,var this.setScrollOffset})
       : super(key: key);
 
   @override
   HeaderListViewState createState() {
     return new HeaderListViewState();
   }
+
+
 }
 
 class HeaderListViewState extends State<HeaderListView> {
+
+
+  ScrollController scrollController;
+  @override
+  void initState() {
+    super.initState();
+    if(widget.setScrollOffset==null){
+      widget.setScrollOffset=(offset){};
+      widget.scrollOffset=0.0;
+    }
+    scrollController = new ScrollController(
+        initialScrollOffset: widget.scrollOffset,
+        keepScrollOffset: true
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     if(widget.usePullToRefresh == true){
-      return  new Refresh(
+      return new NotificationListener( child:Refresh(
+        scrollController: scrollController,
           onFooterRefresh: widget.onFooterRefresh,
           onHeaderRefresh:  widget.onHeaderRefresh,
           child: new ListView.builder(
@@ -45,7 +65,14 @@ class HeaderListViewState extends State<HeaderListView> {
         itemCount: _getListCount(),
         physics: new AlwaysScrollableScrollPhysics(),
         shrinkWrap: true,
-      ));
+      )),onNotification: (notification) {
+        print('###################notification########################');
+        print(notification);
+        if (notification is ScrollUpdateNotification) {
+         // widget.setScrollOffset(notification.metrics.);
+
+        }
+      },);
     }else{
       return new ListView.builder(
         itemBuilder: (BuildContext context, int position) {
