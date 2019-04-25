@@ -64,6 +64,7 @@ class ChatScreenState extends State<ChatScreen> {
   String peerAvatar;
   String id;
 
+  HeaderListView chatListView;
   LoadingType loadingType = LoadingType.Loading;
   ChatModule chatModule;
   List<Message> listMessage = [];
@@ -75,7 +76,6 @@ class ChatScreenState extends State<ChatScreen> {
 
   final TextEditingController textEditingController =
       new TextEditingController();
-  final ScrollController listScrollController = new ScrollController();
   final FocusNode focusNode = new FocusNode();
   double chatListViewOffset=0.0;
   @override
@@ -156,6 +156,8 @@ class ChatScreenState extends State<ChatScreen> {
       } else {
         loadingType = LoadingType.Empty;
       }
+
+      chatListView.scrollController.jumpTo(chatListViewOffset);
     });
   }
 
@@ -220,7 +222,7 @@ class ChatScreenState extends State<ChatScreen> {
          listMessage.add(message);
        });
 
-      listScrollController.animateTo(0.0,
+      chatListView.scrollController.animateTo(0.0,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
       Fluttertoast.showToast(msg: 'Nothing to send');
@@ -711,7 +713,7 @@ class ChatScreenState extends State<ChatScreen> {
 //      reverse: true,
 //      controller: listScrollController,
 //    );
-    Widget content = new HeaderListView(
+    chatListView = new HeaderListView(
       listMessage,
       headerList: [1],
       itemWidgetCreator: buildItem,
@@ -730,7 +732,7 @@ class ChatScreenState extends State<ChatScreen> {
     );
 
 
-   return content;
+   return chatListView;
   }
 
 

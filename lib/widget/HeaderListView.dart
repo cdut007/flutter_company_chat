@@ -6,74 +6,89 @@ typedef HeaderWidgetBuild = Widget Function(BuildContext context, int position);
 
 typedef ItemWidgetBuild = Widget Function(BuildContext context, int position);
 
-
 class HeaderListView extends StatefulWidget {
   List headerList;
   List listData;
   ItemWidgetBuild itemWidgetCreator;
   HeaderWidgetBuild headerCreator;
-  bool usePullToRefresh=false;
-  var  onFooterRefresh;
-  var  onHeaderRefresh;
-  double  scrollOffset =0.0;
+  bool usePullToRefresh = false;
+  var onFooterRefresh;
+  var onHeaderRefresh;
+  double scrollOffset = 0.0;
+
+  ScrollController scrollController;
   var setScrollOffset;
+
   HeaderListView(List this.listData,
       {Key key,
-        List this.headerList,
-        ItemWidgetBuild this.itemWidgetCreator,
-        HeaderWidgetBuild this.headerCreator, bool this.usePullToRefresh, var  this.onFooterRefresh,
-       var  this.onHeaderRefresh,double this.scrollOffset,var this.setScrollOffset})
+      List this.headerList,
+      ItemWidgetBuild this.itemWidgetCreator,
+      HeaderWidgetBuild this.headerCreator,
+      bool this.usePullToRefresh,
+      var this.onFooterRefresh,
+      var this.onHeaderRefresh,
+      double this.scrollOffset,
+      var this.setScrollOffset})
       : super(key: key);
 
   @override
   HeaderListViewState createState() {
     return new HeaderListViewState();
   }
-
-
 }
 
 class HeaderListViewState extends State<HeaderListView> {
-
-
-  ScrollController scrollController;
   @override
   void initState() {
     super.initState();
-    if(widget.setScrollOffset==null){
-      widget.setScrollOffset=(offset){};
-      widget.scrollOffset=0.0;
+    if (widget.setScrollOffset == null) {
+      widget.setScrollOffset = (offset) {};
+      widget.scrollOffset = 0.0;
     }
-    scrollController = new ScrollController(
-        initialScrollOffset: widget.scrollOffset,
-        keepScrollOffset: true
-    );
+    widget.scrollController = new ScrollController(
+        initialScrollOffset: widget.scrollOffset, keepScrollOffset: true);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.usePullToRefresh == true) {
+      if (widget.scrollController == null && widget.scrollOffset!=null) {
+        widget.scrollController = new ScrollController(
+            initialScrollOffset: widget.scrollOffset, keepScrollOffset: true);
+      }
+      return new NotificationListener(
+        child: Refresh(
+            scrollController: widget.scrollController,
+            onFooterRefresh: widget.onFooterRefresh,
+            onHeaderRefresh: widget.onHeaderRefresh,
+            child: new ListView.builder(
+              itemBuilder: (BuildContext context, int position) {
+                return buildItemWidget(context, position);
+              },
+              itemCount: _getListCount(),
+              physics: new AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+            )),
+        onNotification: (notification) {
+          if (notification is ScrollStartNotification) {
+            if (notification.dragDetails != null) {
+              widget.setScrollOffset(
+                  notification.dragDetails.globalPosition.distance);
+            }
 
-    if(widget.usePullToRefresh == true){
-      return new NotificationListener( child:Refresh(
-        scrollController: scrollController,
-          onFooterRefresh: widget.onFooterRefresh,
-          onHeaderRefresh:  widget.onHeaderRefresh,
-          child: new ListView.builder(
-        itemBuilder: (BuildContext context, int position) {
-          return buildItemWidget(context, position);
+            print(
+                '###################notification ScrollStartNotification########################');
+            // print(notification.dragDetails.globalPosition);
+          } else if (notification is ScrollEndNotification) {
+
+              print(
+                  '###################notification ScrollEndNotification########################');
+
+
+          }
         },
-        itemCount: _getListCount(),
-        physics: new AlwaysScrollableScrollPhysics(),
-        shrinkWrap: true,
-      )),onNotification: (notification) {
-        print('###################notification########################');
-        print(notification);
-        if (notification is ScrollUpdateNotification) {
-         // widget.setScrollOffset(notification.metrics.);
-
-        }
-      },);
-    }else{
+      );
+    } else {
       return new ListView.builder(
         itemBuilder: (BuildContext context, int position) {
           return buildItemWidget(context, position);
@@ -83,8 +98,6 @@ class HeaderListViewState extends State<HeaderListView> {
         shrinkWrap: true,
       );
     }
-
-
   }
 
   int _getListCount() {
