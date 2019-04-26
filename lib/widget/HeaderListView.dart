@@ -68,8 +68,19 @@ class HeaderListViewState extends State<HeaderListView> {
       )),onNotification: (notification) {
         print('###################notification########################');
         print(notification);
-        if (notification is ScrollUpdateNotification) {
+        print(scrollController);
+        print('###################scrollController.offset########################');
+        print(scrollController.position);
+        print(scrollController.offset);
+        print('###################scrollController.positions########################');
+        print(scrollController.positions);
+        if (notification is ScrollStartNotification) {
          // widget.setScrollOffset(notification.metrics.);
+          // 当前滑动距离
+       //   double currentExtent = scrollController.position.saveScrollOffset();
+       //   double maxExtent = scrollController.metrics.maxScrollExtent;
+
+
 
         }
       },);

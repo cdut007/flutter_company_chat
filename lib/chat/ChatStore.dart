@@ -56,6 +56,7 @@ class ChatStore {
           print('数据库ready调用函数:'+methodName);
         }else{
           print('@@@数据库尚未准备好 ，调用函数:'+methodName);
+        //ad await  openDbIfNeed(methodName);
         }
 
       }
