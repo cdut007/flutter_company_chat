@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/ChatManager.dart';
 
-var BASE_URL = "http://39.96.161.237:9090/api"; //"http://192.168.99.132:9091/api";//
+var BASE_URL = "http://stageapi.gtdollar.com"; //"http://192.168.99.132:9091/api";//
 var BASE_STAGE_URL = "https://ucstage.sealedchat.com/api";
 
 class ApiManager {
@@ -134,7 +134,7 @@ class ApiManager {
     if (response.statusCode == 200) {
       var data = response.data;
       var code = data['code'];
-      var msg = data['message'];
+      var msg =  data['errors'][0]['text'];
       if (code == null) {
         code = '-100';
       }
@@ -472,6 +472,18 @@ class ApiManager {
     return new Future.value(parseResponseData(responseData));
   }
 
+  static Future sendMsg(var data) async {
+    String url = BASE_URL + "/nlp/get-common-response";
+    var requestData = await putPublicParams(data);
+    Response response = await reuqest(url, GlobalConfig.POST, requestData);
+    ResponseEntity responseErrorEntity = await responseError(response);
+    if (responseErrorEntity != null) {
+      return new Future.error(responseErrorEntity);
+    }
+    var responseData = getResponseData(response);
+    return new Future.value(parseResponseData(responseData));
+  }
+
   ///
   /// 设置默认名片
   ///
@@ -506,26 +518,35 @@ class ApiManager {
   /// 登录请求url
   ///
   static Future login(var data) async {
-    String url = BASE_URL + "/user/login";
+    String url = BASE_URL + "/auth/login";
     Response response = await reuqest(url, GlobalConfig.POST, data);
     ResponseEntity responseErrorEntity = await responseError(response);
     if (responseErrorEntity != null) {
       return new Future.error(responseErrorEntity);
     }
     var responseData = getResponseData(response);
-    var token = parseResponseData(responseData);
-    var refreshTokeInfo =
-    await refreshToken(
-        {'token': token['token'], 'expireDay': GlobalConfig.Token_expireDay});
+//    var token = parseResponseData(responseData);
+//    var refreshTokeInfo =
+//    await refreshToken(
+//        {'token': token['token'], 'expireDay': GlobalConfig.Token_expireDay});
+//
+//    if (refreshTokeInfo is ResponseEntity) {
+//      return new Future.error(refreshTokeInfo);
+//    } else {
+//      token = refreshTokeInfo['token'];
+//      print('refresh token:' + token);
+//    }
 
-    if (refreshTokeInfo is ResponseEntity) {
-      return new Future.error(refreshTokeInfo);
-    } else {
-      token = refreshTokeInfo['token'];
-      print('refresh token:' + token);
-    }
+    var token = '';
+    response.headers.forEach((key,List<String> values){
+      if(key == 'set-cookie'){
+        token = values[0];
+        print('refresh token values:' + values.toString());
+      }
+    });
 
-    return new Future.value(token);
+    responseData['token'] = token;
+    return new Future.value(responseData);
   }
 
   static Future<UserInfo> getUserInfo() async {
@@ -645,7 +666,7 @@ class ApiManager {
           } else {
             try {
               responseEntity.code = data['code'];
-              responseEntity.msg = data['message'];
+              responseEntity.msg = data['errors'][0]['text'];
             } catch (e) {
               print(e);
             }
@@ -681,7 +702,7 @@ class ApiManager {
     if (response.statusCode == 200) {
       var data = response.data;
       var code = data['code'];
-      var msg = data['message'];
+      var msg =  data['errors'];
       if (code == null) {
         code = '-100';
       }
@@ -689,9 +710,9 @@ class ApiManager {
         msg = '未知格式';
       }
       print(code);
-      if (code != '100000') {
+      if (code != 'ok') {
         responseData.code = code;
-        responseData.msg = msg;
+        responseData.msg = msg[0]['text'];
         return new Future.error(responseData);
       } else {
         return null;
@@ -718,10 +739,12 @@ class ApiManager {
 //        baseUrl:"https://www.xx.com/api",
         connectTimeout: 7000,
         receiveTimeout: 3000,
-        contentType: ContentType.json);
+//        contentType: ContentType.json
+    );
     var token = data['token'];
     if (token != null) {
       options.headers['Authorization'] = 'Bearer ' + token;
+      options.headers['set-cookie'] = token;
     }
 
     Response response;
@@ -729,10 +752,12 @@ class ApiManager {
     print(url);
     print(data);
 
+    FormData formData = new FormData.from(data);
+
     if (httpRequsetType == GlobalConfig.GET) {
       response = await dio.get(url, options: options, data: data);
     } else if (httpRequsetType == GlobalConfig.POST) {
-      response = await dio.post(url, options: options, data: data);
+      response = await dio.post(url, options: options, data: formData);
     } else if (httpRequsetType == GlobalConfig.PATCH) {
       response = await dio.patch(url, options: options, data: data);
     } else if (httpRequsetType == GlobalConfig.PUT) {
@@ -742,7 +767,6 @@ class ApiManager {
     print('***************请求url参数地址结果START*************' + url);
     print(response.data);
     print(response.headers);
-    print(response.request);
     print(response.statusCode);
     print('***************请求url参数地址结果END*************' + url);
     return response;

@@ -96,7 +96,10 @@ class ChatModule {
   static List _bindMsgCallback = List();
 
   static getPeerId(String sendTo){
-
+    int index = sendTo.lastIndexOf("_");
+    if(index == -1){
+      return sendTo;
+    }
     return sendTo.substring(0,sendTo.lastIndexOf("_"));
 
   }

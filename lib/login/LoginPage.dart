@@ -4,6 +4,7 @@ import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/login/RegisterPage.dart';
 import 'package:flutter_app/IndexPage.dart';
+import 'package:flutter_app/chat/ChatPage.dart';
 import 'package:flutter_app/util/ChatManager.dart';
 import 'package:flutter_app/login/ForgetPasswordPage.dart';
 import 'package:flutter_app/util/StringUtil.dart';
@@ -40,16 +41,37 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-     Future userInfoFuture = ApiManager.getUserInfo();
+
+    _userPhoneController.text = 'qq@gtd.com';
+    _userPassController.text = '12345678';
+    Future userInfoFuture = ApiManager.getUserInfo();
      userInfoFuture.then((userInfo){
        setState(() {
          UserInfo userInfoData = userInfo as UserInfo;
          phone = userInfoData.phoneNumber;
-         _userPhoneController.text = phone;
+       //  _userPhoneController.text = phone;
        });
      },onError: (empty){
        //
      });
+  }
+
+  _go2ChatPage() async{
+
+   await ChatManager.init();
+    if(widget.fromSplashPage!=null && widget.fromSplashPage){
+      try {
+        Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
+            builder: (BuildContext context) => new ChatPage(key:Key('chat'),peerId:'robot',peerName:'robot',peerAvatar:null)), (//跳转到主页
+            Route route) => route == null);
+      } catch (e) {
+        print(e);
+      }
+    }else{
+      //设置变量
+      Navigator.pop(context,ApiManager.refresh_tag);
+    }
+
   }
 
   _go2HomePage(){
@@ -88,11 +110,10 @@ class _LoginPageState extends State<LoginPage> {
               padding: new EdgeInsets.fromLTRB(
                   leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
               child: new TextField(
-                keyboardType:TextInputType.phone,
                 style: hintTips,
                 controller: _userPhoneController,
                 decoration: new InputDecoration(
-                    hintText: "请输入手机号", prefixIcon: Icon(Icons.phone_iphone)),
+                    hintText: "请输入邮箱", prefixIcon: Icon(Icons.email)),
                 autofocus: true,
               ),
             ),
@@ -120,13 +141,13 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
 
                       if( _userPhoneController.text.isEmpty){
-                        showToast(context,'请输入手机号');
+                        showToast(context,'请输入邮箱');
                         return;
                       }
-                      if(!StringUtil.isChinaPhoneLegal(_userPhoneController.text)){
-                        showToast(context,'请输入正确的手机号码');
-                        return;
-                      }
+//                      if(!StringUtil.isChinaPhoneLegal(_userPhoneController.text)){
+//                        showToast(context,'请输入正确的手机号码');
+//                        return;
+//                      }
 
 
 
@@ -138,38 +159,48 @@ class _LoginPageState extends State<LoginPage> {
                       print("the pass is" + _userPassController.text);
 
                       showLoadingDialog(context);
-                      var data ={"account":_userPhoneController.text,"password":_userPassController.text,"loginType":"PHONE_PWD",'deviceInfo':'android'};
+                      var data ={"email":_userPhoneController.text,"password":_userPassController.text,"loginType":"PHONE_PWD",'deviceInfo':'android'};
                       final future = ApiManager.login(data);
                       future.then((data){
                         print('*********login callback*********');
                         closeLoadingDialog();
                         print(data);
-                         Future<bool> saved = ApiManager.saveToken(data);
+                         Future<bool> saved = ApiManager.saveToken(data['token']);
                          saved.then((success){
-                           var userProfileData = {};
-                           final userInfoFuture = ApiManager.getUserProfile(userProfileData);
-                           userInfoFuture.then((data){
-                             var userInfo = data as UserInfo;
+                           _go2ChatPage();
+                           var userProfileData = data['payload'];
 
-                             ApiManager.saveUserInfo(json.encode(userInfo)).then((result){
+                           ApiManager.saveUserInfo(json.encode(userProfileData)).then((result){
 
-                               _go2HomePage();
-                             },onError: (errorData){
-                               showToast(context,'本地保存数据失败');
-                             });
-
-
+                             _go2ChatPage();
                            },onError: (errorData){
-                             print('*********getUserProfile callback error print*********');
-                             var error =  ApiManager.parseErrorInfo(errorData);
-                             closeLoadingDialog();
-                             showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+                             showToast(context,'本地保存数据失败');
                            });
+
+//                           final userInfoFuture = ApiManager.getUserProfile(userProfileData);
+//                           userInfoFuture.then((data){
+//                             var userInfo = data as UserInfo;
+//
+//                             ApiManager.saveUserInfo(json.encode(userInfo)).then((result){
+//
+//                               _go2HomePage();
+//                             },onError: (errorData){
+//                               showToast(context,'本地保存数据失败');
+//                             });
+//
+//
+//                           },onError: (errorData){
+//                             print('*********getUserProfile callback error print*********');
+//                             var error =  ApiManager.parseErrorInfo(errorData);
+//                             closeLoadingDialog();
+//                             showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);
+//                           });
                          });
 
 
                       },onError: (errorData){
                         print('*********login callback error print*********');
+                        print(errorData);
                         var error =  ApiManager.parseErrorInfo(errorData);
                         closeLoadingDialog();
                         showErrorInfo(context,'错误码：${error.code}'+' 错误原因：'+error.msg);

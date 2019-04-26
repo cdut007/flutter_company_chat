@@ -157,7 +157,7 @@ class ChatScreenState extends State<ChatScreen> {
         loadingType = LoadingType.Empty;
       }
 
-      chatListView.scrollController.jumpTo(chatListViewOffset);
+      //chatListView.scrollController.jumpTo(chatListViewOffset);
     });
   }
 
@@ -219,11 +219,14 @@ class ChatScreenState extends State<ChatScreen> {
       ChatManager.sendMessage(message);
 
        setState(() {
+         loadingType = LoadingType.End;
          listMessage.add(message);
+
+         print('list msg length : ${listMessage.length}');
        });
 
-      chatListView.scrollController.animateTo(0.0,
-          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+//      chatListView.scrollController.animateTo(0.0,
+//          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
       Fluttertoast.showToast(msg: 'Nothing to send');
     }

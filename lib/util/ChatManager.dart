@@ -18,8 +18,13 @@ class ChatManager {
 
 
 
-  static init(){
+  static init() async{
     _chatStore = ChatStore();
+    UserInfo userInfo = await ApiManager.getUserInfo();
+    if(userInfo!=null){
+      currentUserId = userInfo.id;
+      _chatStore.checkDBReady(currentUserId);
+    }
 
   }
 
@@ -91,19 +96,24 @@ class ChatManager {
   }
 
 
-  static _sendMessage(Message msg){
+  static _sendMessage(Message msg) async{
         cacheMsg.remove(msg);
-        var messageData ='<message to="'+ChatModule.getPeerId(msg.conversationId)+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
-            + '\n'+
-            '<body>'+json.encode(msg.jsonData)+'</body>'
-            +'\n'+
-            '<x type="4" xmlns="jabber:x:data"/>'
-            +'\n'+
-            '</message>';
-        print("*****客户端发送消息*****" );
-        print(messageData);
-        print(msg);
-        socket.add(messageData);
+//        var messageData ='<message to="'+ChatModule.getPeerId(msg.conversationId)+_JIdNode()+_getDomain()+'" id="'+msg.id+'" type="chat" xmlns="jabber:client">'
+//            + '\n'+
+//            '<body>'+json.encode(msg.jsonData)+'</body>'
+//            +'\n'+
+//            '<x type="4" xmlns="jabber:x:data"/>'
+//            +'\n'+
+//            '</message>';
+//        print("*****客户端发送消息*****" );
+//        print(messageData);
+//        print(msg);
+//        socket.add(messageData);
+        Map<String, dynamic> data = {};
+        data['sentence']= msg.content;
+        data['language']= 'zh_cn';
+    data['userId']= currentUserId;
+       await ApiManager.sendMsg(data);
         ChatModule.insertOrUpdateSendMsg(msg);
   }
 
@@ -401,7 +411,7 @@ class ChatManager {
     socket.add(openBindData);
   }
 
-  static bool openfireServer = false;
+  static bool openfireServer = true;
 
   static changeImServer(){
 

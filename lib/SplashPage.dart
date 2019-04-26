@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/ApiManager.dart';
+import 'package:flutter_app/util/ChatManager.dart';
 import 'package:flutter_app/login/LoginPage.dart';
+import 'package:flutter_app/chat/ChatPage.dart';
 import 'package:flutter_app/IndexPage.dart';
 
 class SplashPage extends StatefulWidget {
@@ -16,9 +18,9 @@ class SplashState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    ApiManager.init();
+     ChatManager.init();
 
-    timer = new Timer(const Duration(milliseconds: 100), () {
+    timer = new Timer(const Duration(milliseconds: 2000), () {
       //'39.108.165.171'
       _go2Page();
     });
@@ -37,7 +39,7 @@ class SplashState extends State<SplashPage> {
        });
       try {
         Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
-            builder: (BuildContext context) => new IndexPage()), (//跳转到主页
+            builder: (BuildContext context) => new  ChatPage(key:Key('chat'),peerId:'robot',peerName:'robot',peerAvatar:null)), (//跳转到主页
             Route route) => route == null);
       } catch (e) {
           print(e);

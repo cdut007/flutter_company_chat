@@ -21,15 +21,14 @@ class UserInfo {
   UserInfo({this.id, this.username, this.passwd, this.email, this.phoneNumber, this.nickname, this.realname, this.createTime, this.gender, this.organizationId, this.fromName, this.fromId, this.randomCode, this.introduce, this.avatar, this.userType, this.blockStatus, this.lastLoginTime});
 
   UserInfo.fromJson(Map<String, dynamic> json) {    
-    this.id = json['id'];
+    this.id = "${json['qbId']}";
     this.username = json['username'];
-    this.passwd = json['passwd'];
+    this.passwd = '12345678';
     this.email = json['email'];
     this.phoneNumber = json['phoneNumber'];
     this.nickname = json['nickname'];
     this.realname = json['realname'];
     this.createTime = json['createTime'];
-    this.gender = json['gender'];
     this.organizationId = json['organizationId'];
     this.fromName = json['fromName'];
     this.fromId = json['fromId'];
