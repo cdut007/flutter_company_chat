@@ -434,10 +434,16 @@ class ApiManager {
     if (data is String) {
       return data;
     }
-    var dataList = data['list'];
+    var dataList = responseData['list'];
     if (dataList != null && dataList is List) {
       return dataList;
     }
+    var payload = responseData['payload'];
+    if (payload != null) {
+      return payload;
+    }
+
+
 
     return data;
   }
@@ -744,7 +750,7 @@ class ApiManager {
     var token = data['token'];
     if (token != null) {
       options.headers['Authorization'] = 'Bearer ' + token;
-      options.headers['set-cookie'] = token;
+      options.headers['Cookie'] = token;
     }
 
     Response response;

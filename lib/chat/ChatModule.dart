@@ -199,7 +199,13 @@ class ChatModule {
     return new Message();
   }
 
+static void callIncomingMsg( message){
+  for (var bindItem in _bindMsgCallback) {
+    var incomingMsgCall = bindItem['incoming'];
 
+    incomingMsgCall(message);
+  }
+}
 
 
   static void insertOrUpdateIncomingMsg(from, body, type) async {

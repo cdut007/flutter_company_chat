@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/ApiManager.dart';
 import 'package:flutter_app/entity/Message.dart';
+import 'package:flutter_app/chat/entity/TextMessage.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:flutter_app/chat/ChatModule.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_app/chat/ConversationType.dart';
 import 'package:flutter_app/chat/ChatStore.dart';
 class ChatManager {
 
@@ -113,8 +115,22 @@ class ChatManager {
         data['sentence']= msg.content;
         data['language']= 'zh_cn';
     data['userId']= currentUserId;
-       await ApiManager.sendMsg(data);
+     var dataResp =   await ApiManager.sendMsg(data);
         ChatModule.insertOrUpdateSendMsg(msg);
+        var incomingInfo = dataResp['recognizedInfo']['answer'];
+        TextMessage incomingMsg = new TextMessage() ;
+        incomingMsg.id = msg.id+"123";
+        incomingMsg.conversationId = msg.conversationId;
+        incomingMsg.senderId = "robot";
+        incomingMsg.type="TextMessage";
+        incomingMsg.text= incomingInfo;
+        incomingMsg.content = incomingInfo;
+        incomingMsg.messageTypeValue=1;
+        incomingMsg.timestamp = msg.timestamp;
+        incomingMsg.jsonData = json.decode(json.encode( msg.jsonData));
+        incomingMsg.jsonData['content'] = incomingMsg;
+        incomingMsg.chatType=ConversationType.Single.toString();
+        ChatModule.callIncomingMsg(incomingMsg);
   }
 
   static insertLocalMessages(Message message){

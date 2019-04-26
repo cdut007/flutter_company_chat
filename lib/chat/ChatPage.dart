@@ -104,6 +104,9 @@ class ChatScreenState extends State<ChatScreen> {
   incomingNewMsgCall(Message message){
     print('【聊天页面收到新消息】');
     print(message);
+    setState(() {
+      listMessage.add(message);
+    });
     ChatManager.readMsg(message);
   }
 
