@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:http/http.dart' as Http;
 import 'dart:io';
 import 'package:dio/dio.dart';
+
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_app/entity/ResponseEntity.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,6 +93,44 @@ class ApiManager {
     }
     var responseData = getResponseData(response);
     return new Future.value(parseResponseData(responseData));
+  }
+
+
+
+  ///
+  /// 上传百度英语识别
+  ///
+  static Future getSoundTTSText(String filePath) async {
+   
+    Dio dio = new Dio();
+
+    Response accessTokenResp = await dio.post('https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=nFzcwwpy1aCDvqrSwP6MDvvQrLaE1E7q&client_secret=7tNHN28N25tOOGlaKSKCZst5bGIYg4Ew');
+    print(accessTokenResp);
+    var token = accessTokenResp.data['access_token'];
+    print('baidu token :$token');
+    var fileData = File(filePath);
+    List<int>soundBytes = fileData.readAsBytesSync();
+
+    String base64Image = base64Encode(soundBytes);
+    var param =  { "format":"amr",
+      "rate":16000,
+      "channel":1,
+      "token":token,
+      "cuid":"baidu_workshop",
+      "len":fileData.lengthSync(),
+      "speech":base64Image,};
+
+    Options options = new Options(
+//        baseUrl:"https://www.xx.com/api",
+      connectTimeout: 7000,
+      receiveTimeout: 3000,
+        contentType: ContentType.json
+    );
+    Response response = await dio.post('http://vop.baidu.com/server_api',options: options, data: param);
+
+    print('file responseData==${response.toString()}');
+
+    return new Future.value(response.data);
   }
 
   ///

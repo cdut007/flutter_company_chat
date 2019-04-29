@@ -13,6 +13,10 @@ import 'package:flutter_app/chat/entity/TextMessage.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/chat/ConversationType.dart';
 import 'package:flutter_app/widget/LoadingWidget.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_app/util/ApiManager.dart';
+
+import 'package:flutter_sound/android_encoder.dart';
 
 import 'package:flutter_app/widget/HeaderListView.dart';
 
@@ -73,6 +77,19 @@ class ChatScreenState extends State<ChatScreen> {
   bool isLoading;
   bool isShowSticker;
   String imageUrl;
+  bool _isRecording = false;
+  StreamSubscription _recorderSubscription;
+  StreamSubscription _dbPeakSubscription;
+  StreamSubscription _playerSubscription;
+  FlutterSound flutterSound;
+
+  String _recorderTxt = '00:00:00';
+  String _playerTxt = '00:00:00';
+  double _dbLevel;
+  String record_path;
+
+  double slider_current_position = 0.0;
+  double max_duration = 1.0;
 
   final TextEditingController textEditingController =
       new TextEditingController();
@@ -81,6 +98,12 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+
+    flutterSound = new FlutterSound();
+    flutterSound.setSubscriptionDuration(0.01);
+    flutterSound.setDbPeakLevelUpdate(0.8);
+    flutterSound.setDbLevelEnabled(true);
+
     focusNode.addListener(onFocusChange);
 
     chatModule = new ChatModule();
@@ -164,8 +187,71 @@ class ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  void startRecorder() async{
+    try {
+      String path = await flutterSound.startRecorder(null,sampleRate:16000,numChannels: 1,androidEncoder:AndroidEncoder.AMR_NB);
+      print('startRecorder: $path');
+      record_path  = path;
+
+      _recorderSubscription = flutterSound.onRecorderStateChanged.listen((e) {
+
+      });
+      _dbPeakSubscription =
+          flutterSound.onRecorderDbPeakChanged.listen((value) {
+            print("got update -> $value");
+            setState(() {
+              this._dbLevel = value;
+            });
+          });
+
+      this.setState(() {
+        this._isRecording = true;
+      });
+    } catch (err) {
+      print('startRecorder error: $err');
+    }
+  }
+
+  void stopRecorder() async{
+    try {
+      String result = await flutterSound.stopRecorder();
+      print('stopRecorder: $result');
+
+      if (_recorderSubscription != null) {
+        _recorderSubscription.cancel();
+        _recorderSubscription = null;
+      }
+      if (_dbPeakSubscription != null) {
+        _dbPeakSubscription.cancel();
+        _dbPeakSubscription = null;
+      }
+
+      if(record_path!=null){
+         await ApiManager.getSoundTTSText(record_path);
+          String content = '111';
+        //  onSendMessage(content, 0);
+      }
+
+      this.setState(() {
+        this._isRecording = false;
+      });
+    } catch (err) {
+      print('stopRecorder error: $err');
+      this.setState(() {
+        this._isRecording = false;
+      });
+    }
+  }
+
+
   Future getImage() async {
-    ChatManager.changeImServer();
+
+    if(_isRecording==false){
+      startRecorder();
+    }else{
+      stopRecorder();
+    }
+//    ChatManager.changeImServer();
 //    imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
 //
 //    if (imageFile != null) {
@@ -620,7 +706,7 @@ class ChatScreenState extends State<ChatScreen> {
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
-                icon: new Icon(Icons.image),
+                icon: new Icon(_isRecording?Icons.mic:Icons.mic_none,color: _isRecording?Colors.red:Colors.blueGrey,),
                 onPressed: getImage,
                 color: GlobalConfig.themeColor(),
               ),
