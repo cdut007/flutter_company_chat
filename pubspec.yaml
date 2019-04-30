@@ -43,6 +43,8 @@ dependencies:
   qr_code_scanner: ^0.0.2
   xml2json: ^3.0.3
   sqflite: ^1.1.0
+  flutter_sound: ^1.4.0
+
 #  hf_sdk:
 #   path: hf_sdk
 
