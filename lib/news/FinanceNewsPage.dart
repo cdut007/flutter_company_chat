@@ -4,7 +4,7 @@
  * @Date 2019/03/12  14:13
  * @Version  1.0
  */
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_web/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:dio/dio.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';

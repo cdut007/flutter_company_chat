@@ -245,6 +245,8 @@ class ChatManager {
     if(openfireServer){
        im_server =  'ws://39.108.165.171:7070/ws/';
      await  _createIMUser(userInfo.id,userInfo.passwd);
+    }else{
+      userInfo.passwd = 'Bearer '+  await ApiManager.getToken();
     }
 
     WebSocket.connect(im_server,headers: {'Sec-WebSocket-Protocol': 'xmpp'}).then((webSocket) {
@@ -425,6 +427,7 @@ class ChatManager {
   }
 
   static _auth(var userId,var password){
+    print("客户端 用户 userId $userId password $password");
     var _userId = userId+_JIdNode();//james
     var _password = password;
     var datas = List<int>();
@@ -433,7 +436,8 @@ class ChatManager {
     datas.addAll(utf8.encode(_userId));
     datas.add(0);// /0
     datas.addAll(utf8.encode(_password));
-    var encodedToken =base64.encode(datas);//'AHpxenE0ZmM2NzE0ZTEzOTQ0YTc1OWY2MjUxOGFjM2MyOGFlYl91YwBhYWFhYWFh';// base64.encode(datas);
+    var encodedToken =base64.encode(datas);
+
     print("客户端认证base64："+utf8.decode(base64.decode(encodedToken)));
     var authData = "<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>" + encodedToken + "</auth>";
     print("客户端认证："+authData);

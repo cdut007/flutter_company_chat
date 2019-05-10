@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_web/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/flutter_calendar.dart';
 import 'package:flutter_app/market/enity/Stock.dart';
 import 'package:http/http.dart' as http;

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:ui' as ui;
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'flutter_ui/ui.dart' as ui;
+import 'package:flutter_web/foundation.dart';
+import 'package:flutter_web/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/widget/IndicatorWidget.dart';
 
 ///[indicatorWidget] indicator widget, position the indicator widget into container

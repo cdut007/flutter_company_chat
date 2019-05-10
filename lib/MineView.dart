@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'Mine/MInfoVC.dart';
 import 'Mine/MWalletVC.dart';

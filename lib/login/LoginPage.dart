@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_web/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/entity/UserInfo.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';

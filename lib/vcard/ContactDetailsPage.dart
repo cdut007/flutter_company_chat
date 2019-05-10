@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/vcard/footer/friend_detail_footer.dart';
 import 'package:flutter_app/vcard/friend_detail_body.dart';

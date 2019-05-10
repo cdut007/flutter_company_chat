@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter_web/services.dart';
 import 'package:hf_sdk/hf_sdk.dart';
 
 void main() => runApp(MyApp());

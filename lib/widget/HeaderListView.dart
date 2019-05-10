@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_refresh/flutter_refresh.dart';
 
@@ -48,6 +48,33 @@ class HeaderListViewState extends State<HeaderListView> {
         initialScrollOffset: widget.scrollOffset,
         keepScrollOffset: true
     );
+    scrollController.addListener(_scrollListener);
+  }
+
+  var lastPos = 0.0;
+  _scrollListener() {
+
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+       print('reach the bottom');
+    }
+
+
+
+    if (scrollController.offset <= scrollController.position.minScrollExtent &&
+        !scrollController.position.outOfRange) {
+      print('reach the top');
+
+      if(lastPos!= scrollController.position.extentAfter){
+
+        print(scrollController.position.extentAfter);
+
+        lastPos = scrollController.position.extentAfter;
+        scrollController.jumpTo(scrollController.offset);
+      }
+
+
+    }
   }
 
   @override
@@ -66,23 +93,7 @@ class HeaderListViewState extends State<HeaderListView> {
         physics: new AlwaysScrollableScrollPhysics(),
         shrinkWrap: true,
       )),onNotification: (notification) {
-        print('###################notification########################');
-        print(notification);
-        print(scrollController);
-        print('###################scrollController.offset########################');
-        print(scrollController.position);
-        print(scrollController.offset);
-        print('###################scrollController.positions########################');
-        print(scrollController.positions);
-        if (notification is ScrollStartNotification) {
-         // widget.setScrollOffset(notification.metrics.);
-          // 当前滑动距离
-       //   double currentExtent = scrollController.position.saveScrollOffset();
-       //   double maxExtent = scrollController.metrics.maxScrollExtent;
 
-
-
-        }
       },);
     }else{
       return new ListView.builder(

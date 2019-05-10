@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/util/ApiManager.dart';
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_web/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/StringUtil.dart';
 
 /// 墨水瓶（`InkWell`）可用时使用的字体样式。

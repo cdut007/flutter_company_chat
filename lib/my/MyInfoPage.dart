@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_web/cupertino.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 //import 'package:fluwx/fluwx.dart';
 import 'package:flutter_app/vcard/UserProfileQRCodePage.dart';

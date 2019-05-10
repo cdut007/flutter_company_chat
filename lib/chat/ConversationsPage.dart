@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/util/CommonUI.dart';
 import 'package:flutter_app/entity/Conversation.dart';

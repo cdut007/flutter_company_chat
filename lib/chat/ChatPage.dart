@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/entity/Message.dart';
@@ -138,6 +138,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Future<Null> pullToRefresh() async {
+
     _loadMoreMessages();
     return null;
   }
@@ -157,6 +158,8 @@ class ChatScreenState extends State<ChatScreen> {
         loadingType = LoadingType.Empty;
       }
     });
+
+
   }
 
   Future getImage() async {
@@ -220,8 +223,8 @@ class ChatScreenState extends State<ChatScreen> {
          listMessage.add(message);
        });
 
-      listScrollController.animateTo(0.0,
-          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+//      listScrollController.animateTo(0.0,
+//          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
       Fluttertoast.showToast(msg: 'Nothing to send');
     }

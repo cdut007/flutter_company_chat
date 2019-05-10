@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_web/material.dart';
 import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/vcard/ApplyVcardPage.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_web/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrCodeScanPage extends StatefulWidget{

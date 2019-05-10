@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
+import 'package:flutter_web/material.dart';import 'package:flutter_app/util/GlobalConfig.dart';
 import 'package:flutter_app/vcard/header/diagonally_cut_colored_image.dart';
 import 'package:flutter_app/entity/Friend.dart';
 import 'package:meta/meta.dart';
